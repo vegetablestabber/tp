@@ -2,9 +2,4 @@ Logging is enabled.
 Welcome to ModMate!
 Enter command ('exit' to quit, '-h' for help):
 Enter command ('exit' to quit, '-h' for help):
-Commands:
--h: Display this help message
-exit: Exit the application
-printmods: Print the list of mods
-Enter command ('exit' to quit, '-h' for help):
 Exiting...

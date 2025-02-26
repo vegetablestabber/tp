@@ -43,7 +43,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Enter command ('exit' to quit, '-h' for help): ");
+            System.out.println("Enter command ('exit' to quit, '-h' for help):");
             String input = scanner.nextLine().trim().toLowerCase();
             Log.saveLog("\n[MAIN]   Received input: " + input);
             switch (input) {

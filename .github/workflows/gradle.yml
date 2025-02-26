@@ -13,9 +13,6 @@ jobs:
       - name: Set up repository
         uses: actions/checkout@master
 
-      - name: Initialize and update submodules
-        run: git submodule update --init --recursive
-
       - name: Set up repository
         uses: actions/checkout@master
         with:
