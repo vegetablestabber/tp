@@ -1,1 +1,3 @@
-James Gosling
+Hello World!
+-h
+exit

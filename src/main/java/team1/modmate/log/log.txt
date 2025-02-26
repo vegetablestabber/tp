@@ -1,0 +1,3 @@
+
+[MAIN]   Received input: -h
+[MAIN]   Printing help message.
