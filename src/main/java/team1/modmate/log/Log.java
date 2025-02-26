@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Log {
     private static volatile boolean enableLogging = false;
-    private static final String LOG_DIRECTORY = "src/main/java/com/team1/modmate/log/";
+    private static final String LOG_DIRECTORY = "src/main/java/team1/modmate/log/";
     private static final String LOG_FILE = LOG_DIRECTORY + "log.txt";
     private static final DateTimeFormatter TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
