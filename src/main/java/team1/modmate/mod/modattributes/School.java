@@ -5,15 +5,15 @@ package team1.modmate.mod.modattributes;
  * This class stores the name of the school and provides methods to get and set it.
  */
 public class School {
-    private String school;
+    private final String name;
 
     /**
      * Constructs a School object with the specified school name.
      *
-     * @param school the name of the school
+     * @param name the name of the school
      */
-    public School(String school) {
-        this.school = school;
+    public School(String name) {
+        this.name = name;
     }
 
     /**
@@ -21,16 +21,7 @@ public class School {
      *
      * @return the name of the school
      */
-    public String getSchool() {
-        return school;
-    }
-
-    /**
-     * Sets the name of the school.
-     *
-     * @param school the name of the school to set
-     */
-    public void setSchool(String school) {
-        this.school = school;
+    public String getName() {
+        return this.name;
     }
 }
