@@ -1,6 +1,4 @@
-package team1.modmate.mod.events;
-
-import java.util.List;
+package modmate.event;
 
 /**
  * Represents a lecture event, which is a specific type of event that includes
@@ -8,7 +6,7 @@ import java.util.List;
  * the day, time, duration, cancelled weeks, and location.
  */
 public class Lecture extends Event {
-    private String lecturer;
+    private final String lecturer;
 
     /**
      * Constructs a Lecture object with the specified details.
@@ -20,14 +18,8 @@ public class Lecture extends Event {
      * @param location the location where the lecture takes place
      * @param lecturer the name of the lecturer delivering the lecture
      */
-    public Lecture(
-            String dayOfWeek,
-            String startTime,
-            double duration,
-            List<Integer> cancelledWeeks,
-            String location,
-            String lecturer) {
-        super(dayOfWeek, startTime, duration, cancelledWeeks, location);
+    public Lecture(Period period, String location, String lecturer) {
+        super(period, location);
         this.lecturer = lecturer;
     }
 
@@ -37,15 +29,6 @@ public class Lecture extends Event {
      * @return the name of the lecturer
      */
     public String getLecturer() {
-        return lecturer;
-    }
-
-    /**
-     * Sets the name of the lecturer for the lecture.
-     *
-     * @param lecturer the name of the lecturer to set
-     */
-    public void setLecturer(String lecturer) {
-        this.lecturer = lecturer;
+        return this.lecturer;
     }
 }

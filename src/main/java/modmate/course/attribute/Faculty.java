@@ -1,10 +1,10 @@
-package team1.modmate.mod.modattributes;
+package modmate.course.attribute;
 
 /**
  * Represents a school with a specific name.
  * This class stores the name of the school and provides methods to get and set it.
  */
-public class School {
+public class Faculty {
     private final String name;
 
     /**
@@ -12,7 +12,7 @@ public class School {
      *
      * @param name the name of the school
      */
-    public School(String name) {
+    public Faculty(String name) {
         this.name = name;
     }
 
@@ -23,5 +23,9 @@ public class School {
      */
     public String getName() {
         return this.name;
+    }
+
+    public Faculty updateName(String newName) {
+        return new Faculty(newName);
     }
 }

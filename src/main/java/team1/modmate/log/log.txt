@@ -1,6 +1,0 @@
-
-[MAIN]   Received input: -h
-[MAIN]   Printing help message.
-
-[MAIN]   Received input: fgb
-[MAIN]   Command: fgb is invalid

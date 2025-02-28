@@ -1,10 +1,10 @@
-package team1.modmate;
-
-import team1.modmate.mod.Mod;
-import team1.modmate.log.Log;
+package modmate;
 
 import java.util.List;
 import java.util.Scanner;
+
+import modmate.log.Log;
+import modmate.modmate.mod.Mod;
 
 /**
  * Main class that runs the ModMate application. This application interacts with a list of mods,

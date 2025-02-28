@@ -1,13 +1,13 @@
-package team1.modmate;
-
-import team1.modmate.mod.Mod;
-import team1.modmate.mod.events.Lecture;
-import team1.modmate.mod.events.Tutorial;
-import team1.modmate.mod.modattributes.Course;
-import team1.modmate.mod.modattributes.School;
+package modmate;
 
 import java.util.Arrays;
 import java.util.List;
+
+import modmate.course.Course;
+import modmate.course.attribute.Faculty;
+import modmate.modmate.mod.Mod;
+import modmate.modmate.mod.events.Lecture;
+import modmate.modmate.mod.events.Tutorial;
 
 /**
  * This class contains methods to test and display information about modules (mods).
@@ -45,7 +45,7 @@ public class ModTest {
 
         // Creating sample course and school
         Course course1 = new Course("Computer Science");
-        School school1 = new School("School of Computing");
+        Faculty school1 = new Faculty("School of Computing");
 
         // Creating mod objects with various attributes
         Mod mod1 = new Mod("CS1010", "Introduction to Programming", course1, school1, 4,
