@@ -5,15 +5,15 @@ package team1.modmate.mod.modattributes;
  * This class stores the name of the course and provides methods to get and set it.
  */
 public class Course {
-    private String course;
+    private final String name;
 
     /**
      * Constructs a Course object with the specified course name.
      *
-     * @param course the name of the course
+     * @param name the name of the course
      */
-    public Course(String course) {
-        this.course = course;
+    public Course(String name) {
+        this.name = name;
     }
 
     /**
@@ -21,16 +21,7 @@ public class Course {
      *
      * @return the name of the course
      */
-    public String getCourse() {
-        return course;
-    }
-
-    /**
-     * Sets the name of the course.
-     *
-     * @param course the name of the course to set
-     */
-    public void setCourse(String course) {
-        this.course = course;
+    public String getName() {
+        return name;
     }
 }
