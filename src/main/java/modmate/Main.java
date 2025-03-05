@@ -152,8 +152,6 @@ public class Main {
         String timetable = inputParts[1].trim();
         String courseName = inputParts[2].trim();
 
-        // Course courseToAdd = findCourseByName(courseName, allCourses);
-        // TODO Use searchCourses once it is implemented
         // TODO Check if user has timetable by that name
         // TODO add course to timetable if it does
     }
@@ -172,8 +170,6 @@ public class Main {
         String timetable = inputParts[1].trim();
         String courseName = inputParts[2].trim();
 
-        // Course courseToRemove = findCourseByName(courseName, allCourses);
-        // TODO Use searchCourses once it is implemented
         // TODO Check if user has timetable by that name
         // TODO remove course from timetable if it does
     }
