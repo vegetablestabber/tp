@@ -22,7 +22,7 @@ public class SampleCourses {
      *     <li>Course code (e.g., "CS1010")</li>
      *     <li>Course name (e.g., "Programming Methodology")</li>
      *     <li>Course description (e.g., "Introduction to programming")</li>
-     *     <li>Prerequisites (currently null for all courses)</li>
+     *     <li>Prerequisites (List of Course objects)</li>
      * </ul>
      *
      * @return a list of {@link Course} objects representing sample courses
@@ -86,7 +86,7 @@ public class SampleCourses {
                 semesterAvailability1,
                 4,
                 true,
-                null,
+                List.of(),
                 workload2);
 
         Course softwareEng = new Course(
@@ -101,7 +101,7 @@ public class SampleCourses {
                 semesterAvailability1and2,
                 4,
                 true,
-                null,
+                List.of(),
                 workload3);
 
         Course computerNetworks = new Course(
@@ -116,7 +116,7 @@ public class SampleCourses {
                 semesterAvailability1and2,
                 4,
                 false,
-                null,
+                List.of(),
                 workload2);
 
         Course operatingSystems = new Course(
@@ -131,7 +131,7 @@ public class SampleCourses {
                 semesterAvailability1,
                 4,
                 true,
-                null,
+                List.of(),
                 workload2);
 
         Course principlesOfAccounting = new Course(
