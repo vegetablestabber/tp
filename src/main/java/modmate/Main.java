@@ -75,6 +75,7 @@ public class Main {
                 for (Course course : courses) {
                     System.out.println(course);
                 }
+                System.out.println("");
             }
             default -> Log.saveLog("[MAIN]   Command: " + input + " is invalid");
             }

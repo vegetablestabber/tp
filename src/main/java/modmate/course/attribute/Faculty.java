@@ -34,4 +34,13 @@ public class Faculty {
     public Faculty updateName(String newName) {
         return new Faculty(newName);
     }
+
+    /**
+     * Returns a string representation of the faculty.
+     *
+     * @return a string representation of the faculty
+     */
+    public String toString() {
+        return this.name;
+    }
 }

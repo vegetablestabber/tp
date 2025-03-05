@@ -79,4 +79,13 @@ public class Course {
     public CourseAttributes getAttributes() {
         return attributes;
     }
+
+    /**
+     * Returns a string representation of the course.
+     *
+     * @return A string representation of the course.
+     */
+    public String toString() {
+        return code + ": " + name + "\n    " + description + "\n    " + attributes.getFaculty();
+    }
 }
