@@ -29,7 +29,7 @@ test {
 }
 
 application {
-    mainClass.set("team1.modmate.Main")
+    mainClass.set("modmate.Main")
 }
 
 shadowJar {

@@ -3,8 +3,8 @@ package modmate;
 import java.util.List;
 import java.util.Scanner;
 
+import modmate.course.Course;
 import modmate.log.Log;
-import modmate.modmate.mod.Mod;
 
 /**
  * Main class that runs the ModMate application. This application interacts with a list of mods,
@@ -35,7 +35,7 @@ public class Main {
             }
         }
 
-        List<Mod> mods = ModTest.getMods();
+        List<Course> courses = SampleCourses.getCourses();
 
         Log.printLog("Logging is enabled.");
         System.out.println("Welcome to ModMate!");
@@ -60,8 +60,8 @@ public class Main {
             case "printmods" -> {
                 Log.saveLog("[MAIN]   Displaying mod list.");
                 System.out.println("Mods list:");
-                for (Mod mod : mods) {
-                    System.out.println(mod);
+                for (Course course : courses) {
+                    System.out.println(course);
                 }
             }
             default -> Log.saveLog("[MAIN]   Command: " + input + " is invalid");

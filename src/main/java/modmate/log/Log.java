@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple logging utility that allows logging messages to the console and a file.
@@ -15,11 +15,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class Log {
     private static volatile boolean enableLogging = false;
-    private static final String LOG_DIRECTORY = "/";
+    private static final String LOG_DIRECTORY = "src/main/java/modmate/log/";
     private static final String LOG_FILE = LOG_DIRECTORY + "log.txt";
-    private static final DateTimeFormatter TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    private static boolean sessionStarted = false;
+    private static boolean isNewSession = true;
 
     /**
      * Private constructor to prevent instantiation.
@@ -33,11 +31,7 @@ public class Log {
      */
     public static void setLoggingEnabled(boolean enabled) {
         enableLogging = enabled;
-        if (enabled) {
-            ensureSessionHeader();
-        }
     }
-
 
     /**
      * Prints a log message to the console.
@@ -62,21 +56,15 @@ public class Log {
             }
 
             try (PrintWriter out = new PrintWriter(new FileWriter(LOG_FILE, true))) {
+                if (isNewSession) {
+                    String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                    out.println("\n\n===== New Logging Session: " + timeStamp + " =====");
+                    isNewSession = false;
+                }
                 out.println(message);
             }
         } catch (IOException e) {
             System.err.println("Failed to write log to file: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Ensures that the session header is written at the start of the log file for a new session.
-     */
-    private static synchronized void ensureSessionHeader() {
-        if (!sessionStarted) {
-            sessionStarted = true;
-            String sessionHeader = "\n\n~~~~ SESSION " + LocalDateTime.now().format(TIMESTAMP_FORMAT) + " ~~~~\n";
-            saveLog(sessionHeader);
         }
     }
 
