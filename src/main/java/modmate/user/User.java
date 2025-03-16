@@ -19,13 +19,27 @@ public class User {
 
     // Method to add a new timetable for the user
     public void addTimetable(String timetableName) {
-        System.out.println("Noone has implemented me yet!! AAARGH!!");
+        for (Timetable timetable : timetables) {
+            if (timetable.getName().equalsIgnoreCase(timetableName)) {
+                System.out.println("A timetable with the '" + timetable + "' already exists");
+                return;
+            }
+        }
+        Timetable newtimetable = new Timetable(timetableName);
+        timetables.add(newtimetable);
+        System.out.println("Timetable '" + timetableName + "' created successfully");
         // TODO add a new timetable with name to timetables
     }
 
     // Method to display the user's courses and timetables
     public String getTimetable(String timetableName) {
-        return("Noone has implemented me yet!! AAARGH!!");
+        for (Timetable timetable : timetables) {
+            if (timetable.getName().equalsIgnoreCase(timetableName)) {
+                return timetable.toString();
+            }
+        }
+        return "Timetable '" + timetableName + "' not found";
+        //return("Noone has implemented me yet!! AAARGH!!");
         // TODO print timetable if it exists, otherwise just print "nooooo" or something
     }
 
