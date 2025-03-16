@@ -43,5 +43,28 @@ public class User {
         // TODO print timetable if it exists, otherwise just print "nooooo" or something
     }
 
+    // Add course to timetables
+    public void addCourseToTimetable(String timetableName, Course course) {
+        for (Timetable timetable : timetables) {
+            if (timetable.getName().equalsIgnoreCase(timetableName)) {
+                timetable.addCourse(course);
+                return;
+            }
+        }
+        System.out.println("Timetable '" + timetableName + "' not found.");
+    }
+
+    //Remove course from timetables
+    public void removeCourseFromTimetable(String timetableName, Course course) {
+        for (Timetable timetable : timetables) {
+            if (timetable.getName().equalsIgnoreCase(timetableName)) {
+                timetable.removeCourse(course);
+                return;
+            }
+        }
+        System.out.println("Timetable '" + timetableName + "' not found.");
+    }
+
+
     // TODO getters and setters for bookmarks, timetables, and
 }

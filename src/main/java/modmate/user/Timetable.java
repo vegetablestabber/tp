@@ -20,11 +20,21 @@ public class Timetable {
     }
 
     public void addCourse(Course course) {
-        //implement!
+        if (courses.contains(course)) {
+            System.out.println("Course " + course.getCode() + " is already in the timetable.");
+            return;
+        }
+        courses.add(course);
+        System.out.println("Course " + course.getCode() + " added successfully to " + name);
     }
 
     public void removeCourse(Course course) {
-        //implement!
+        if (!courses.contains(course)) {
+            System.out.println("Course " + course.getCode() + " is not in the timetable.");
+            return;
+        }
+        courses.remove(course);
+        System.out.println("Course " + course.getCode() + " removed successfully from " + name);
     }
 
     /**

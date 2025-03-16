@@ -154,6 +154,13 @@ public class Main {
 
         // TODO Check if user has timetable by that name
         // TODO add course to timetable if it does
+        for (Course course : allCourses) {
+            if (course.getName().equalsIgnoreCase(courseName) || course.getCode().equalsIgnoreCase(courseName)) {
+                currentUser.addCourseToTimetable(timetable, course);
+                return;
+            }
+        }
+        System.out.println("Course '" + courseName + "' not found.");
     }
 
     /**
@@ -172,6 +179,13 @@ public class Main {
 
         // TODO Check if user has timetable by that name
         // TODO remove course from timetable if it does
+        for (Course course : allCourses) {
+            if (course.getName().equalsIgnoreCase(courseName) || course.getCode().equalsIgnoreCase(courseName)) {
+                currentUser.removeCourseFromTimetable(timetable, course);
+                return;
+            }
+        }
+        System.out.println("Course '" + courseName + "' not found.");
     }
 
     /**
