@@ -1,6 +1,7 @@
 package modmate;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import modmate.user.User;
@@ -123,7 +124,16 @@ public class Main {
         Log.saveLog("[MAIN]   Bookmarking mod.");
         String courseCode = inputParts[1].trim();
         // Bookmark a course for later reference
-        // TODO Add course to user's bookmarks
+
+        Course course = allCourses.stream().filter(c -> c.getCode().equalsIgnoreCase(courseCode)).findFirst().orElse(null);
+
+        if (course == null) {
+            Log.saveLog("[MAIN]   Course to bookmark not found.");
+            System.out.println("Course with code '" + courseCode + "' not found.");
+        } else {
+            currentUser.addBookmark(course);
+            System.out.println("Bookmark " + courseCode + " successfully added to your list.");
+        }
     }
 
     /**
@@ -134,7 +144,13 @@ public class Main {
     private static void getBookmarks(User currentUser) {
         Log.saveLog("[MAIN]   Viewing bookmarks.");
         // View all bookmarked courses
-        // TODO Print all courses in user's bookmarks
+        List<Course> bookmarks = currentUser.getBookmarks();
+
+        System.out.println("You have " + bookmarks.size() + " bookmarks.");
+
+        for (Course course : bookmarks) {
+            System.out.println(course);
+        }
     }
 
     /**

@@ -65,6 +65,17 @@ public class User {
         System.out.println("Timetable '" + timetableName + "' not found.");
     }
 
+    public List<Course> getBookmarks() {
+        return bookmarks;
+    }
 
-    // TODO getters and setters for bookmarks, timetables, and
+    public void addBookmark(Course toAdd) {
+        if (!bookmarks.contains(toAdd)) {
+            bookmarks.add(toAdd);
+        }
+    }
+
+    public void removeBookmark(Course toRemove) {
+        bookmarks.remove(toRemove);
+    }
 }
