@@ -39,24 +39,19 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        // Check for logging configuration in command-line arguments
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--log") && i + 1 < args.length) {
                 Log.setLoggingEnabled(Boolean.parseBoolean(args[i + 1]));
             }
         }
-
-        // Enable logging if specified and print welcome message
         Log.printLog("Logging is enabled.");
-        System.out.println("Welcome to ModMate!");
 
-        // Create a User object
         User currentUser = new User();
 
-        // Create scanner object to read user input
         Scanner scanner = new Scanner(System.in);
 
-        // Main command loop
+        System.out.println("Welcome to ModMate!");
+
         while (true) {
             System.out.println("Enter command ('exit' to quit, '-h' for help):");
             String input = scanner.nextLine().trim().toLowerCase();
@@ -96,6 +91,42 @@ public class Main {
     }
 
     /**
+     * Helper that searches for an exact matching course by its code or name.
+     *
+     * @param courseCode The code or name of the course to search for.
+     * @return The course that matches the given code or name, or null if no match is found.
+     */
+    private static Course courseFromCodeOrName(String courseCode) {
+        for (Course course : allCourses) {
+            if (course.getName().trim().equalsIgnoreCase(courseCode) || course.getCode().trim().equalsIgnoreCase(courseCode)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
+    private static String stringFromBetweenPartsXY(String[] inputParts, int x) {
+        return stringFromBetweenPartsXY(inputParts, x, inputParts.length);
+    }
+
+    private static String stringFromBetweenPartsXY(String[] inputParts, int x, int y) {
+        if (inputParts == null || inputParts.length == 0 || x < 0 || y > inputParts.length || x >= y) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = x; i < y; i++) {
+            sb.append(inputParts[i]);
+            if (i < y - 1) {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
+
+
+
+    /**
      * Displays details of a course given its course code.
      *
      * @param inputParts The command input split into parts, where the second part is the course code.
@@ -105,9 +136,15 @@ public class Main {
             return;
         }
         Log.saveLog("[MAIN]   Viewing mod details.");
-        String courseCode = inputParts[1].trim();
-        // TODO View details of a course
-        // TODO Find in allCourses list if it exists
+        String courseCode = stringFromBetweenPartsXY(inputParts, 1);
+        Course course = courseFromCodeOrName(courseCode);
+
+        if (course != null) {
+            System.out.println(course);
+        } else {
+            System.out.println("Course '" + courseCode + "' not found.");
+        }
+
     }
 
     /**
@@ -121,7 +158,7 @@ public class Main {
             return;
         }
         Log.saveLog("[MAIN]   Bookmarking mod.");
-        String courseCode = inputParts[1].trim();
+        String courseCode = stringFromBetweenPartsXY(inputParts, 1);
         // Bookmark a course for later reference
         // TODO Add course to user's bookmarks
     }
@@ -150,17 +187,14 @@ public class Main {
         }
         Log.saveLog("[MAIN]   Adding course to timetable.");
         String timetable = inputParts[1].trim();
-        String courseName = inputParts[2].trim();
+        String courseCode = stringFromBetweenPartsXY(inputParts, 2);
+        Course course = courseFromCodeOrName(courseCode);
 
-        // TODO Check if user has timetable by that name
-        // TODO add course to timetable if it does
-        for (Course course : allCourses) {
-            if (course.getName().equalsIgnoreCase(courseName) || course.getCode().equalsIgnoreCase(courseName)) {
-                currentUser.addCourseToTimetable(timetable, course);
-                return;
-            }
+        if (course != null) {
+            currentUser.addCourseToTimetable(timetable, course);
+        } else {
+            System.out.println("Course '" + courseCode + "' not found.");
         }
-        System.out.println("Course '" + courseName + "' not found.");
     }
 
     /**
@@ -175,17 +209,14 @@ public class Main {
             return;
         }
         String timetable = inputParts[1].trim();
-        String courseName = inputParts[2].trim();
+        String courseCode = stringFromBetweenPartsXY(inputParts, 2);
+        Course course = courseFromCodeOrName(courseCode);
 
-        // TODO Check if user has timetable by that name
-        // TODO remove course from timetable if it does
-        for (Course course : allCourses) {
-            if (course.getName().equalsIgnoreCase(courseName) || course.getCode().equalsIgnoreCase(courseName)) {
-                currentUser.removeCourseFromTimetable(timetable, course);
-                return;
-            }
+        if (course != null) {
+            currentUser.removeCourseFromTimetable(timetable, course);
+        } else {
+            System.out.println("Course '" + courseCode + "' not found.");
         }
-        System.out.println("Course '" + courseName + "' not found.");
     }
 
     /**
@@ -199,11 +230,9 @@ public class Main {
             return;
         }
 
-        // TODO Check if timetable already exists for user
         Log.saveLog("[MAIN]   Creating timetable.");
-        String timetableName = inputParts[1].trim();
+        String timetableName = stringFromBetweenPartsXY(inputParts, 1);
         currentUser.addTimetable(timetableName);
-        // TODO Implement this method in User
     }
 
     /**
@@ -217,9 +246,8 @@ public class Main {
             return;
         }
         Log.saveLog("[MAIN]   Displaying user's mod list.");
-        String timetableName = inputParts[1].trim();
+        String timetableName = stringFromBetweenPartsXY(inputParts, 1);
         System.out.println(currentUser.getTimetable(timetableName));
-        // TODO Implement this method in User
     }
 
     /**
@@ -240,7 +268,7 @@ public class Main {
      */
     private static void searchCourses(String[] inputParts, User currentUser) {
         Log.saveLog("[MAIN]   User is searching for a mod.");
-        List<Course> searchResults = getSearchResults(inputParts[1].trim());
+        List<Course> searchResults = getSearchResults(stringFromBetweenPartsXY(inputParts, 1));
         if (searchResults != null) {
             for (Course course : searchResults) {
                 System.out.println(course);
