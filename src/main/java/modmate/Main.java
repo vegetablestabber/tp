@@ -3,13 +3,13 @@ package modmate;
 import java.util.List;
 import java.util.Scanner;
 
+import modmate.mod.Mod;
 import modmate.user.User;
-import modmate.course.Course;
 import modmate.log.Log;
 
 /**
  * Main entry point for the ModMate application. It handles user input
- * and executes commands such as viewing courses, adding/removing courses
+ * and executes commands such as viewing mods, adding/removing mods
  * to/from timetables, and managing bookmarks.
  */
 public class Main {
@@ -18,18 +18,18 @@ public class Main {
         Commands:
         -h: Display this help message
         exit: Exit the application
-        viewmod <course_code>: View details of a mod by its course code
-        bookmark <course_code>: Bookmark a course for later reference
-        bookmarks: View all bookmarked courses
-        addmod <timetable> <course_name>: Add a mod to your list
-        removemod <timetable> <course_name>: Remove a mod from your list
+        viewmod <mod code/name>: View details of a mod by its mod code
+        bookmark <mod code/name>: Bookmark a mod for later reference
+        bookmarks: View all bookmarked mods
+        addmod <timetable> <mod_code>: Add a mod to your list
+        removemod <timetable> <mod code/name>: Remove a mod from your list
         createtimetable <timetable>: Create a new timetable
         timetable <timetable>: Display your mod timetable
         viewallmods: View all available mods
-        searchmod <course_code_or_name>: Search for a mod by its code or name
+        searchmod <mod code/name>: Search for a mod by its code or name
         """;
 
-    static List<Course> allCourses = SampleCourses.getCourses();
+    static List<Mod> allMods = SampleMods.getMods();
 
     /**
      * The main command loop of the application that processes user input
@@ -61,23 +61,23 @@ public class Main {
 
             switch (inputParts[0]) {
             case "-h" -> printHelp();
-            case "viewmod" -> viewCourse(stringFromBetweenPartsXY(inputParts, 1));
+            case "viewmod" -> viewMod(stringFromBetweenPartsXY(inputParts, 1));
             case "bookmark" -> bookmark(stringFromBetweenPartsXY(inputParts, 1), currentUser);
             case "bookmarks" -> getBookmarks(currentUser);
-            case "addmod" -> addCourseToTimetable(
+            case "addmod" -> addModToTimetable(
                     inputParts[1],
                     stringFromBetweenPartsXY(inputParts, 2),
                     currentUser
             );
-            case "removemod" -> removeCourseFromTimetable(
+            case "removemod" -> removeModFromTimetable(
                     inputParts[1],
                     stringFromBetweenPartsXY(inputParts, 2),
                     currentUser
             );
             case "createtimetable" -> createTimetable(stringFromBetweenPartsXY(inputParts, 1), currentUser);
             case "timetable" -> viewTimetable(stringFromBetweenPartsXY(inputParts, 1), currentUser);
-            case "viewallmods" -> viewAllCourses();
-            case "searchmod" -> searchCourses(stringFromBetweenPartsXY(inputParts, 1), currentUser);
+            case "viewallmods" -> viewAllMods();
+            case "searchmod" -> searchMods(stringFromBetweenPartsXY(inputParts, 1), currentUser);
 
             case "exit" -> {
                 Log.saveLog("[MAIN]   Exiting application.");
@@ -99,16 +99,16 @@ public class Main {
     }
 
     /**
-     * Helper method that searches for an exact matching course by its code or name.
+     * Helper method that searches for an exact matching mod by its code or name.
      *
-     * @param courseCode The code or name of the course to search for.
-     * @return The course that matches the given code or name, or null if no match is found.
+     * @param modCode The code or name of the mod to search for.
+     * @return The mod that matches the given code or name, or null if no match is found.
      */
-    private static Course courseFromNameOrCode(String courseCode) {
-        for (Course course : allCourses) {
-            if (course.getName().trim().equalsIgnoreCase(courseCode)
-                    || course.getCode().trim().equalsIgnoreCase(courseCode)) {
-                return course;
+    private static Mod modFromNameOrCode(String modCode) {
+        for (Mod mod : allMods) {
+            if (mod.getName().trim().equalsIgnoreCase(modCode)
+                    || mod.getCode().trim().equalsIgnoreCase(modCode)) {
+                return mod;
             }
         }
         return null;
@@ -149,76 +149,76 @@ public class Main {
     }
 
     /**
-     * Displays details of a course given its course code.
+     * Displays details of a mod given its mod code.
      *
-     * @param inputNameOrCode The course code or name to search for.
+     * @param inputNameOrCode The mod code or name to search for.
      */
-    private static void viewCourse(String inputNameOrCode) {
+    private static void viewMod(String inputNameOrCode) {
         Log.saveLog("[MAIN]   Viewing mod details.");
-        Course course = courseFromNameOrCode(inputNameOrCode);
+        Mod mod = modFromNameOrCode(inputNameOrCode);
 
-        if (course != null) {
-            System.out.println(course);
+        if (mod != null) {
+            System.out.println(mod);
         } else {
-            System.out.println("Course '" + inputNameOrCode + "' not found.");
+            System.out.println("Mod '" + inputNameOrCode + "' not found.");
         }
     }
 
     /**
-     * Bookmarks a course for later reference.
+     * Bookmarks a mod for later reference.
      *
-     * @param inputNameOrCode The course code or name to bookmark.
+     * @param inputNameOrCode The mod code or name to bookmark.
      * @param currentUser The user object representing the current user.
      */
     private static void bookmark(String inputNameOrCode, User currentUser) {
         Log.saveLog("[MAIN]   Bookmarking mod.");
-        // Bookmark a course for later reference
-        // TODO Add course to user's bookmarks
+        // Bookmark a mod for later reference
+        // TODO Add mod to user's bookmarks
     }
 
     /**
-     * Displays all courses bookmarked by the user.
+     * Displays all mods bookmarked by the user.
      *
      * @param currentUser The user object representing the current user.
      */
     private static void getBookmarks(User currentUser) {
         Log.saveLog("[MAIN]   Viewing bookmarks.");
-        // View all bookmarked courses
-        // TODO Print all courses in user's bookmarks
+        // View all bookmarked mods
+        // TODO Print all mods in user's bookmarks
     }
 
     /**
-     * Adds a course to the user's timetable.
+     * Adds a mod to the user's timetable.
      *
-     * @param timetable The name of the timetable to which the course should be added.
-     * @param inputNameOrCode The course code or name to add to the timetable.
+     * @param timetable The name of the timetable to which the mod should be added.
+     * @param inputNameOrCode The mod code or name to add to the timetable.
      * @param currentUser The user object representing the current user.
      */
-    private static void addCourseToTimetable(String timetable, String inputNameOrCode, User currentUser) {
-        Log.saveLog("[MAIN]   Adding course to timetable.");
-        Course course = courseFromNameOrCode(inputNameOrCode);
+    private static void addModToTimetable(String timetable, String inputNameOrCode, User currentUser) {
+        Log.saveLog("[MAIN]   Adding mod to timetable.");
+        Mod mod = modFromNameOrCode(inputNameOrCode);
 
-        if (course != null) {
-            currentUser.addCourseToTimetable(timetable, course);
+        if (mod != null) {
+            currentUser.addModToTimetable(timetable, mod);
         } else {
-            System.out.println("Course '" + inputNameOrCode + "' not found.");
+            System.out.println("Mod '" + inputNameOrCode + "' not found.");
         }
     }
 
     /**
-     * Removes a course from the user's timetable.
+     * Removes a mod from the user's timetable.
      *
-     * @param timetable The name of the timetable from which the course should be removed.
-     * @param inputNameOrCode The course code or name to remove from the timetable.
+     * @param timetable The name of the timetable from which the mod should be removed.
+     * @param inputNameOrCode The mod code or name to remove from the timetable.
      * @param currentUser The user object representing the current user.
      */
-    private static void removeCourseFromTimetable(String timetable, String inputNameOrCode, User currentUser) {
-        Course course = courseFromNameOrCode(inputNameOrCode);
+    private static void removeModFromTimetable(String timetable, String inputNameOrCode, User currentUser) {
+        Mod mod = modFromNameOrCode(inputNameOrCode);
 
-        if (course != null) {
-            currentUser.removeCourseFromTimetable(timetable, course);
+        if (mod != null) {
+            currentUser.removeModFromTimetable(timetable, mod);
         } else {
-            System.out.println("Course '" + inputNameOrCode + "' not found.");
+            System.out.println("Mod '" + inputNameOrCode + "' not found.");
         }
     }
 
@@ -246,27 +246,27 @@ public class Main {
     }
 
     /**
-     * Displays all available courses.
+     * Displays all available mods.
      */
-    private static void viewAllCourses() {
+    private static void viewAllMods() {
         Log.saveLog("[MAIN]   Viewing all mods.");
-        for (Course course : allCourses) {
-            System.out.println(course);
+        for (Mod mod : allMods) {
+            System.out.println(mod);
         }
     }
 
     /**
-     * Searches for courses by course code or name.
+     * Searches for mods by mod code or name.
      *
-     * @param inputSearchQuery The search term to search for (course code or name).
+     * @param inputSearchQuery The search term to search for (mod code or name).
      * @param currentUser The user object representing the current user.
      */
-    private static void searchCourses(String inputSearchQuery, User currentUser) {
+    private static void searchMods(String inputSearchQuery, User currentUser) {
         Log.saveLog("[MAIN]   User is searching for a mod.");
-        List<Course> searchResults = getSearchResults(inputSearchQuery);
+        List<Mod> searchResults = getSearchResults(inputSearchQuery);
         if (searchResults != null) {
-            for (Course course : searchResults) {
-                System.out.println(course);
+            for (Mod mod : searchResults) {
+                System.out.println(mod);
             }
         } else {
             System.out.println("No mods found.");
@@ -274,15 +274,15 @@ public class Main {
     }
 
     /**
-     * Searches for courses that match the given search term.
+     * Searches for mods that match the given search term.
      *
-     * @param searchTerm The term to search for (course code or name).
-     * @return A list of matching courses.
+     * @param searchTerm The term to search for (mod code or name).
+     * @return A list of matching mods.
      */
-    private static List<Course> getSearchResults(String searchTerm) {
+    private static List<Mod> getSearchResults(String searchTerm) {
         Log.saveLog("[MAIN]   Internally invoking search for " + searchTerm + ".");
-        // TODO Search for courses that contain the search term in their course code or name
-        // TODO Return a list of matching courses ordered by relevance
+        // TODO Search for mods that contain the search term in their mod code or name
+        // TODO Return a list of matching mods ordered by relevance
         return null;
     }
 }

@@ -1,33 +1,33 @@
 package modmate;
 
-import modmate.course.Course;
-import modmate.course.attribute.CourseAttributes;
-import modmate.course.attribute.Faculty;
-import modmate.course.attribute.SemesterAvailability;
-import modmate.course.attribute.WeeklyWorkload;
+import modmate.mod.Mod;
+import modmate.mod.attribute.ModAttributes;
+import modmate.mod.attribute.Faculty;
+import modmate.mod.attribute.SemesterAvailability;
+import modmate.mod.attribute.WeeklyWorkload;
 
 import java.util.List;
 
 /**
- * A utility class that provides a sample list of courses.
- * This class is used to generate a list of courses with details like course code, name, description, and prerequisites.
+ * A utility class that provides a sample list of mods.
+ * This class is used to generate a list of mods with details like mod code, name, description, and prerequisites.
  */
-public class SampleCourses {
+public class SampleMods {
 
     /**
-     * Returns a list of sample courses.
+     * Returns a list of sample mods.
      * <p>
-     * Each course is represented by a {@link Course} object containing the following details:
+     * Each mod is represented by a {@link Mod} object containing the following details:
      * <ul>
-     *     <li>Course code (e.g., "CS1010")</li>
-     *     <li>Course name (e.g., "Programming Methodology")</li>
-     *     <li>Course description (e.g., "Introduction to programming")</li>
-     *     <li>Prerequisites (List of Course objects)</li>
+     *     <li>Mod code (e.g., "CS1010")</li>
+     *     <li>Mod name (e.g., "Programming Methodology")</li>
+     *     <li>Mod description (e.g., "Introduction to programming")</li>
+     *     <li>Prerequisites (List of Mod objects)</li>
      * </ul>
      *
-     * @return a list of {@link Course} objects representing sample courses
+     * @return a list of {@link Mod} objects representing sample mods
      */
-    public static List<Course> getCourses() {
+    public static List<Mod> getMods() {
         // Faculties
         Faculty computingfaculty = new Faculty("School of Computing");
         Faculty businessfaculty = new Faculty("School of Business");
@@ -48,9 +48,9 @@ public class SampleCourses {
         WeeklyWorkload workload2 = new WeeklyWorkload(4, 8, 12, 16);
         WeeklyWorkload workload3 = new WeeklyWorkload(5, 10, 15, 20);
 
-        // Courses
+        // Mods
         // Programming Methodology I
-        CourseAttributes caProgMeth = new CourseAttributes(
+        ModAttributes caProgMeth = new ModAttributes(
                 computingfaculty,
                 semesterAvailability1and2,
                 4,
@@ -58,15 +58,15 @@ public class SampleCourses {
                 null,
                 workload1);
 
-        Course progMeth1 = new Course(
+        Mod progMeth1 = new Mod(
                 "Programming Methodology",
                 "CS1010",
                 "Introduction to programming",
                 caProgMeth);
 
         // Programming Methodology II
-        List<Course> prqProgMeth1 = List.of(progMeth1);
-        CourseAttributes caProgMeth2 = new CourseAttributes(
+        List<Mod> prqProgMeth1 = List.of(progMeth1);
+        ModAttributes caProgMeth2 = new ModAttributes(
                 computingfaculty,
                 semesterAvailability2,
                 4,
@@ -74,14 +74,14 @@ public class SampleCourses {
                 prqProgMeth1,
                 workload1);
 
-        Course progMeth2 = new Course(
+        Mod progMeth2 = new Mod(
                 "Programming Methodology II",
                 "CS2030",
                 "Advanced programming",
                 caProgMeth2);
 
         // Software Engineering
-        CourseAttributes caSoftwareEngineering = new CourseAttributes(
+        ModAttributes caSoftwareEngineering = new ModAttributes(
                 computingfaculty,
                 semesterAvailability1,
                 4,
@@ -89,14 +89,14 @@ public class SampleCourses {
                 List.of(),
                 workload2);
 
-        Course softwareEng = new Course(
+        Mod softwareEng = new Mod(
                 "Software Engineering",
                 "CS2103T",
                 "Introduction to software engineering",
                 caSoftwareEngineering);
 
         // Computer Networks
-        CourseAttributes caComputerNetworks = new CourseAttributes(
+        ModAttributes caComputerNetworks = new ModAttributes(
                 computingfaculty,
                 semesterAvailability1and2,
                 4,
@@ -104,14 +104,14 @@ public class SampleCourses {
                 List.of(),
                 workload3);
 
-        Course computerNetworks = new Course(
+        Mod computerNetworks = new Mod(
                 "Computer Networks",
                 "CS2105",
                 "Introduction to computer networks",
                 caComputerNetworks);
 
         // Operating Systems
-        CourseAttributes caOperatingSystems = new CourseAttributes(
+        ModAttributes caOperatingSystems = new ModAttributes(
                 computingfaculty,
                 semesterAvailability1and2,
                 4,
@@ -119,14 +119,14 @@ public class SampleCourses {
                 List.of(),
                 workload2);
 
-        Course operatingSystems = new Course(
+        Mod operatingSystems = new Mod(
                 "Operating Systems",
                 "CS2106",
                 "Introduction to operating systems",
                 caOperatingSystems);
 
         // Principles of Accounting
-        CourseAttributes caPrinciplesOfAccounting = new CourseAttributes(
+        ModAttributes caPrinciplesOfAccounting = new ModAttributes(
                 businessfaculty,
                 semesterAvailability1,
                 4,
@@ -134,7 +134,7 @@ public class SampleCourses {
                 List.of(),
                 workload2);
 
-        Course principlesOfAccounting = new Course(
+        Mod principlesOfAccounting = new Mod(
                 "Principles of Accounting",
                 "ACC1002",
                 "Introduction to accounting",
