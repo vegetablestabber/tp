@@ -105,13 +105,12 @@ public class Main {
      * @return The mod that matches the given code or name, or null if no match is found.
      */
     private static Mod modFromNameOrCode(String modCode) {
-        for (Mod mod : allMods) {
-            if (mod.getName().trim().equalsIgnoreCase(modCode)
-                    || mod.getCode().trim().equalsIgnoreCase(modCode)) {
-                return mod;
-            }
-        }
-        return null;
+        return allMods
+                .stream()
+                .filter(c ->
+                        c.getCode().equalsIgnoreCase(modCode))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -174,12 +173,7 @@ public class Main {
         Log.saveLog("[MAIN]   Bookmarking mod.");
         // Bookmark a mod for later reference
 
-        Mod mod = allMods
-                .stream()
-                .filter(c ->
-                        c.getCode().equalsIgnoreCase(inputNameOrCode))
-                .findFirst()
-                .orElse(null);
+        Mod mod = modFromNameOrCode(inputNameOrCode);
 
         if (mod == null) {
             Log.saveLog("[MAIN]   Course to bookmark not found.");
