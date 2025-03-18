@@ -29,7 +29,8 @@ public class Main {
         searchmod <mod code/name>: Search for a mod by its code or name
         """;
 
-    static List<Mod> allMods = SampleMods.getMods();
+    static List<String> allModCodes = ModDataRetreiver.getAllModCodes();
+    static List<Mod> sampleMods = ModDataRetreiver.getSampleMods();
 
     /**
      * The main command loop of the application that processes user input
@@ -42,6 +43,8 @@ public class Main {
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--log") && i + 1 < args.length) {
                 Log.setLoggingEnabled(Boolean.parseBoolean(args[i + 1]));
+            } else if (args[i].equals("--startYear") && i + 1 < args.length) {
+                allModCodes = ModDataRetreiver.getAllModCodes(args[i + 1]);
             }
         }
         Log.printLog("Logging is enabled.");
@@ -52,12 +55,14 @@ public class Main {
 
         System.out.println("Welcome to ModMate!");
 
+        System.out.println(ModDataRetreiver.getModFromAPIUsingCode("CS1010"));
+
         while (true) {
             System.out.println("Enter command ('exit' to quit, '-h' for help):");
             String input = scanner.nextLine().trim().toLowerCase();
             Log.saveLog("\n[MAIN]   Received input: " + input);
 
-            String[] inputParts = input.split(" "); // Split command and argument
+            String[] inputParts = input.split(" ");
 
             switch (inputParts[0]) {
             case "-h" -> printHelp();
@@ -105,7 +110,7 @@ public class Main {
      * @return The mod that matches the given code or name, or null if no match is found.
      */
     private static Mod modFromNameOrCode(String modCode) {
-        for (Mod mod : allMods) {
+        for (Mod mod : sampleMods) {
             if (mod.getName().trim().equalsIgnoreCase(modCode)
                     || mod.getCode().trim().equalsIgnoreCase(modCode)) {
                 return mod;
@@ -250,7 +255,7 @@ public class Main {
      */
     private static void viewAllMods() {
         Log.saveLog("[MAIN]   Viewing all mods.");
-        for (Mod mod : allMods) {
+        for (Mod mod : sampleMods) {
             System.out.println(mod);
         }
     }
