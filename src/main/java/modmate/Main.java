@@ -1,7 +1,6 @@
 package modmate;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 import modmate.user.User;
@@ -125,7 +124,12 @@ public class Main {
         String courseCode = inputParts[1].trim();
         // Bookmark a course for later reference
 
-        Course course = allCourses.stream().filter(c -> c.getCode().equalsIgnoreCase(courseCode)).findFirst().orElse(null);
+        Course course = allCourses
+                .stream()
+                .filter(c ->
+                        c.getCode().equalsIgnoreCase(courseCode))
+                .findFirst()
+                .orElse(null);
 
         if (course == null) {
             Log.saveLog("[MAIN]   Course to bookmark not found.");
