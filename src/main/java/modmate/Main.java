@@ -155,7 +155,9 @@ public class Main {
      * @param inputNameOrCode The mod code or name to search for.
      */
     private static void viewMod(String inputNameOrCode) {
-        assert inputNameOrCode != null && !inputNameOrCode.trim().isEmpty() : "Mod code or name cannot be null or empty"; // Assertion for mod code validity
+        assert inputNameOrCode != null
+                && !inputNameOrCode.trim().isEmpty() :
+                "Mod code or name cannot be null or empty";
         Log.saveLog("[MAIN]   Viewing mod details for: " + inputNameOrCode);
 
         Mod mod = modFromNameOrCode(inputNameOrCode);
@@ -217,14 +219,14 @@ public class Main {
      * @param currentUser The user object representing the current user.
      */
     private static void addModToTimetable(String timetable, String inputNameOrCode, User currentUser) {
-        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty"; // Assertion for timetable validity
+        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
         Log.saveLog("[MAIN]   Adding mod to timetable: " + timetable);
 
         Mod mod = modFromNameOrCode(inputNameOrCode);
 
         if (mod != null) {
             currentUser.addModToTimetable(timetable, mod);
-            Log.saveLog("[MAIN]   Mod " + mod.getCode() + " added to timetable " + timetable); // Logging the addition
+            Log.saveLog("[MAIN]   Mod " + mod.getCode() + " added to timetable " + timetable);
         } else {
             System.out.println("Mod '" + inputNameOrCode + "' not found.");
             Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
@@ -240,14 +242,14 @@ public class Main {
      * @param currentUser The user object representing the current user.
      */
     private static void removeModFromTimetable(String timetable, String inputNameOrCode, User currentUser) {
-        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty"; // Assertion for timetable validity
+        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
         Log.saveLog("[MAIN]   Removing mod from timetable: " + timetable);
 
         Mod mod = modFromNameOrCode(inputNameOrCode);
 
         if (mod != null) {
             currentUser.removeModFromTimetable(timetable, mod);
-            Log.saveLog("[MAIN]   Mod " + mod.getCode() + " removed from timetable " + timetable); // Logging the removal
+            Log.saveLog("[MAIN]   Mod " + mod.getCode() + " removed from timetable " + timetable);
         } else {
             System.out.println("Mod '" + inputNameOrCode + "' not found.");
             Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
@@ -262,7 +264,9 @@ public class Main {
      * @param currentUser The user object representing the current user.
      */
     private static void createTimetable(String inputTimetableName, User currentUser) {
-        assert inputTimetableName != null && !inputTimetableName.trim().isEmpty() : "Timetable name cannot be null or empty"; // Assertion for timetable name validity
+        assert inputTimetableName != null
+                && !inputTimetableName.trim().isEmpty() :
+                "Timetable name cannot be null or empty";
         Log.saveLog("[MAIN]   Creating timetable: " + inputTimetableName);
 
         if (currentUser.hasTimetable(inputTimetableName)) {
