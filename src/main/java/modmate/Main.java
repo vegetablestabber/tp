@@ -26,8 +26,9 @@ public class Main {
         createtimetable <timetable>: Create a new timetable
         timetable <timetable>: Display your mod timetable
         viewallmods: View all available mods
-        searchmod <mod code/name>: Search for a mod by its code or name
         """;
+    // searchmod <mod code/name>: Search for a mod by its code or name
+    // Add back when implemented
 
     static List<Mod> allMods = SampleMods.getMods();
 
@@ -53,7 +54,7 @@ public class Main {
         System.out.println("Welcome to ModMate!");
 
         while (true) {
-            System.out.println("Enter command ('exit' to quit, '-h' for help):");
+            System.out.println("\nEnter command ('exit' to quit, '-h' for help):");
             String input = scanner.nextLine().trim().toLowerCase();
             Log.saveLog("\n[MAIN]   Received input: " + input);
 
@@ -113,6 +114,7 @@ public class Main {
                 .orElse(null);
     }
 
+
     /**
      * Helper method to extract a substring from the command input.
      *
@@ -153,15 +155,20 @@ public class Main {
      * @param inputNameOrCode The mod code or name to search for.
      */
     private static void viewMod(String inputNameOrCode) {
-        Log.saveLog("[MAIN]   Viewing mod details.");
+        assert inputNameOrCode != null && !inputNameOrCode.trim().isEmpty() : "Mod code or name cannot be null or empty"; // Assertion for mod code validity
+        Log.saveLog("[MAIN]   Viewing mod details for: " + inputNameOrCode);
+
         Mod mod = modFromNameOrCode(inputNameOrCode);
 
         if (mod != null) {
             System.out.println(mod);
+            Log.saveLog("[MAIN]   Mod details displayed.");
         } else {
             System.out.println("Mod '" + inputNameOrCode + "' not found.");
+            Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
         }
     }
+
 
     /**
      * Bookmarks a mod for later reference.
@@ -210,15 +217,20 @@ public class Main {
      * @param currentUser The user object representing the current user.
      */
     private static void addModToTimetable(String timetable, String inputNameOrCode, User currentUser) {
-        Log.saveLog("[MAIN]   Adding mod to timetable.");
+        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty"; // Assertion for timetable validity
+        Log.saveLog("[MAIN]   Adding mod to timetable: " + timetable);
+
         Mod mod = modFromNameOrCode(inputNameOrCode);
 
         if (mod != null) {
             currentUser.addModToTimetable(timetable, mod);
+            Log.saveLog("[MAIN]   Mod " + mod.getCode() + " added to timetable " + timetable); // Logging the addition
         } else {
             System.out.println("Mod '" + inputNameOrCode + "' not found.");
+            Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
         }
     }
+
 
     /**
      * Removes a mod from the user's timetable.
@@ -228,14 +240,20 @@ public class Main {
      * @param currentUser The user object representing the current user.
      */
     private static void removeModFromTimetable(String timetable, String inputNameOrCode, User currentUser) {
+        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty"; // Assertion for timetable validity
+        Log.saveLog("[MAIN]   Removing mod from timetable: " + timetable);
+
         Mod mod = modFromNameOrCode(inputNameOrCode);
 
         if (mod != null) {
             currentUser.removeModFromTimetable(timetable, mod);
+            Log.saveLog("[MAIN]   Mod " + mod.getCode() + " removed from timetable " + timetable); // Logging the removal
         } else {
             System.out.println("Mod '" + inputNameOrCode + "' not found.");
+            Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
         }
     }
+
 
     /**
      * Creates a new timetable for the user.
@@ -244,10 +262,18 @@ public class Main {
      * @param currentUser The user object representing the current user.
      */
     private static void createTimetable(String inputTimetableName, User currentUser) {
-        Log.saveLog("[MAIN]   Creating timetable.");
-        currentUser.addTimetable(inputTimetableName.replaceAll("\\s+", ""));
-        // Removing all whitespaces from the timetable name to avoid issues with the add and remove methods
+        assert inputTimetableName != null && !inputTimetableName.trim().isEmpty() : "Timetable name cannot be null or empty"; // Assertion for timetable name validity
+        Log.saveLog("[MAIN]   Creating timetable: " + inputTimetableName);
+
+        if (currentUser.hasTimetable(inputTimetableName)) {
+            System.out.println("Timetable with this name already exists.");
+            Log.saveLog("[MAIN]   Timetable " + inputTimetableName + " already exists.");
+        } else {
+            currentUser.addTimetable(inputTimetableName.replaceAll("\\s+", ""));
+            Log.saveLog("[MAIN]   Timetable " + inputTimetableName + " created successfully.");
+        }
     }
+
 
     /**
      * Displays the user's timetable for a specific timetable name.
