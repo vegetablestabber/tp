@@ -1,4 +1,4 @@
-package modmate.course.attribute;
+package modmate.mod.attribute;
 
 /**
  * Represents the weekly workload of a student for various activities, including lectures, tutorials,

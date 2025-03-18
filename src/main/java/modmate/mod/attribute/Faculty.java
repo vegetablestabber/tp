@@ -1,4 +1,4 @@
-package modmate.course.attribute;
+package modmate.mod.attribute;
 
 /**
  * Represents a faculty with a specific name.

@@ -1,17 +1,17 @@
 package modmate.user;
 
-import modmate.course.Course;
+import modmate.mod.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private List<Course> bookmarks;
+    private List<Mod> bookmarks;
 
     // List to store the user's timetables
     private List<Timetable> timetables;
 
-    // Constructor to initialize the user's courses and timetables
+    // Constructor to initialize the user's mods and timetables
     public User() {
         this.timetables = new ArrayList<>();
         this.bookmarks = new ArrayList<>();
@@ -31,7 +31,7 @@ public class User {
         // TODO add a new timetable with name to timetables
     }
 
-    // Method to display the user's courses and timetables
+    // Method to display the user's mods and timetables
     public String getTimetable(String timetableName) {
         for (Timetable timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
@@ -43,39 +43,39 @@ public class User {
         // TODO print timetable if it exists, otherwise just print "nooooo" or something
     }
 
-    // Add course to timetables
-    public void addCourseToTimetable(String timetableName, Course course) {
+    // Add mod to timetables
+    public void addModToTimetable(String timetableName, Mod mod) {
         for (Timetable timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
-                timetable.addCourse(course);
+                timetable.addMod(mod);
                 return;
             }
         }
         System.out.println("Timetable '" + timetableName + "' not found.");
     }
 
-    //Remove course from timetables
-    public void removeCourseFromTimetable(String timetableName, Course course) {
+    //Remove mod from timetables
+    public void removeModFromTimetable(String timetableName, Mod mod) {
         for (Timetable timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
-                timetable.removeCourse(course);
+                timetable.removeMod(mod);
                 return;
             }
         }
         System.out.println("Timetable '" + timetableName + "' not found.");
     }
 
-    public List<Course> getBookmarks() {
+    public List<Mod> getBookmarks() {
         return bookmarks;
     }
 
-    public void addBookmark(Course toAdd) {
+    public void addBookmark(Mod toAdd) {
         if (!bookmarks.contains(toAdd)) {
             bookmarks.add(toAdd);
         }
     }
 
-    public void removeBookmark(Course toRemove) {
+    public void removeBookmark(Mod toRemove) {
         bookmarks.remove(toRemove);
     }
 }

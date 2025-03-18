@@ -1,33 +1,33 @@
-package modmate.course.attribute;
+package modmate.mod.attribute;
 
 import java.util.List;
 
-import modmate.course.Course;
+import modmate.mod.Mod;
 
 /**
- * Represents various attributes of a course, including faculty, semester availability,
+ * Represents various attributes of a mod, including faculty, semester availability,
  * unit count, grading status, prerequisites, and workload.
  */
-public class CourseAttributes {
+public class ModAttributes {
     private Faculty faculty;
     private List<SemesterAvailability> semesterAvailability;
     private int units;
     private boolean isGraded;
-    private List<Course> prerequisites;
+    private List<Mod> prerequisites;
     private WeeklyWorkload workload;
 
     /**
-     * Constructs a CourseAttributes object with the given attributes.
+     * Constructs a ModAttributes object with the given attributes.
      *
-     * @param faculty               The faculty offering the course.
-     * @param semesterAvailability  A list indicating the semesters in which the course is available.
-     * @param units                 The number of units the course is worth.
-     * @param isGraded              Whether the course is graded or pass/fail.
-     * @param prerequisites         A list of prerequisite courses required for enrollment.
-     * @param workload              The expected weekly workload for the course.
+     * @param faculty               The faculty offering the mod.
+     * @param semesterAvailability  A list indicating the semesters in which the mod is available.
+     * @param units                 The number of units the mod is worth.
+     * @param isGraded              Whether the mod is graded or pass/fail.
+     * @param prerequisites         A list of prerequisite mods required for enrollment.
+     * @param workload              The expected weekly workload for the mod.
      */
-    public CourseAttributes(Faculty faculty, List<SemesterAvailability> semesterAvailability,
-                            int units, boolean isGraded, List<Course> prerequisites, WeeklyWorkload workload) {
+    public ModAttributes(Faculty faculty, List<SemesterAvailability> semesterAvailability,
+                         int units, boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
         this.faculty = faculty;
         this.semesterAvailability = semesterAvailability;
         this.units = units;
@@ -37,16 +37,16 @@ public class CourseAttributes {
     }
 
     /**
-     * Gets the faculty offering the course.
+     * Gets the faculty offering the mod.
      *
-     * @return The faculty of the course.
+     * @return The faculty of the mod.
      */
     public Faculty getFaculty() {
         return faculty;
     }
 
     /**
-     * Sets the faculty offering the course.
+     * Sets the faculty offering the mod.
      *
      * @param faculty The faculty to set.
      */
@@ -55,7 +55,7 @@ public class CourseAttributes {
     }
 
     /**
-     * Gets the list of semesters in which the course is available.
+     * Gets the list of semesters in which the mod is available.
      *
      * @return A list of SemesterAvailability objects.
      */
@@ -64,7 +64,7 @@ public class CourseAttributes {
     }
 
     /**
-     * Sets the list of semesters in which the course is available.
+     * Sets the list of semesters in which the mod is available.
      *
      * @param semesterAvailability A list of SemesterAvailability objects.
      */
@@ -73,7 +73,7 @@ public class CourseAttributes {
     }
 
     /**
-     * Gets the number of units the course is worth.
+     * Gets the number of units the mod is worth.
      *
      * @return The number of units.
      */
@@ -82,7 +82,7 @@ public class CourseAttributes {
     }
 
     /**
-     * Sets the number of units the course is worth.
+     * Sets the number of units the mod is worth.
      *
      * @param units The number of units to set.
      */
@@ -91,43 +91,43 @@ public class CourseAttributes {
     }
 
     /**
-     * Checks if the course is graded.
+     * Checks if the mod is graded.
      *
-     * @return true if the course is graded, false otherwise.
+     * @return true if the mod is graded, false otherwise.
      */
     public boolean isGraded() {
         return isGraded;
     }
 
     /**
-     * Sets whether the course is graded.
+     * Sets whether the mod is graded.
      *
-     * @param isGraded true if the course should be graded, false otherwise.
+     * @param isGraded true if the mod should be graded, false otherwise.
      */
     public void setGraded(boolean isGraded) {
         this.isGraded = isGraded;
     }
 
     /**
-     * Gets the list of prerequisite courses required for enrollment.
+     * Gets the list of prerequisite mods required for enrollment.
      *
-     * @return A list of prerequisite courses.
+     * @return A list of prerequisite mods.
      */
-    public List<Course> getPrerequisites() {
+    public List<Mod> getPrerequisites() {
         return prerequisites;
     }
 
     /**
-     * Sets the list of prerequisite courses required for enrollment.
+     * Sets the list of prerequisite mods required for enrollment.
      *
-     * @param prerequisites A list of prerequisite courses.
+     * @param prerequisites A list of prerequisite mods.
      */
-    public void setPrerequisites(List<Course> prerequisites) {
+    public void setPrerequisites(List<Mod> prerequisites) {
         this.prerequisites = prerequisites;
     }
 
     /**
-     * Gets the expected weekly workload for the course.
+     * Gets the expected weekly workload for the mod.
      *
      * @return The WeeklyWorkload object representing the workload.
      */
@@ -136,7 +136,7 @@ public class CourseAttributes {
     }
 
     /**
-     * Sets the expected weekly workload for the course.
+     * Sets the expected weekly workload for the mod.
      *
      * @param workload The WeeklyWorkload object to set.
      */

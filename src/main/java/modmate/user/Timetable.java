@@ -1,13 +1,13 @@
 package modmate.user;
 
-import modmate.course.Course;
+import modmate.mod.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Timetable {
     private String name; // Name of the timetable
-    private List<Course> courses; // List of courses in this timetable
+    private List<Mod> mods; // List of mods in this timetable
 
     /**
      * Constructs a new Timetable with the given name.
@@ -16,25 +16,25 @@ public class Timetable {
      */
     public Timetable(String name) {
         this.name = name;
-        this.courses = new ArrayList<>();
+        this.mods = new ArrayList<>();
     }
 
-    public void addCourse(Course course) {
-        if (courses.contains(course)) {
-            System.out.println("Course " + course.getCode() + " is already in the timetable.");
+    public void addMod(Mod mod) {
+        if (mods.contains(mod)) {
+            System.out.println("Mod " + mod.getCode() + " is already in the timetable.");
             return;
         }
-        courses.add(course);
-        System.out.println("Course " + course.getCode() + " added successfully to " + name);
+        mods.add(mod);
+        System.out.println("Mod " + mod.getCode() + " added successfully to " + name);
     }
 
-    public void removeCourse(Course course) {
-        if (!courses.contains(course)) {
-            System.out.println("Course " + course.getCode() + " is not in the timetable.");
+    public void removeMod(Mod mod) {
+        if (!mods.contains(mod)) {
+            System.out.println("Mod " + mod.getCode() + " is not in the timetable.");
             return;
         }
-        courses.remove(course);
-        System.out.println("Course " + course.getCode() + " removed successfully from " + name);
+        mods.remove(mod);
+        System.out.println("Mod " + mod.getCode() + " removed successfully from " + name);
     }
 
     /**
@@ -47,22 +47,22 @@ public class Timetable {
     }
 
     /**
-     * Returns the list of courses in the timetable.
+     * Returns the list of mods in the timetable.
      *
-     * @return The list of courses.
+     * @return The list of mods.
      */
-    public List<Course> getCourses() {
-        return courses;
+    public List<Mod> getMods() {
+        return mods;
     }
 
     @Override
     public String toString() {
         String result = "Timetable: " + name + "\n";
-        if (courses.isEmpty()) {
-            result += "  No courses added yet.\n";
+        if (mods.isEmpty()) {
+            result += "  No mods added yet.\n";
         } else {
-            for (Course course : courses) {
-                result += "  " + course.toString().replace("\n", "\n  ") + "\n";
+            for (Mod mod : mods) {
+                result += "  " + mod.toString().replace("\n", "\n  ") + "\n";
             }
         }
         return result;
