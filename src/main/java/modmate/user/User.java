@@ -28,7 +28,6 @@ public class User {
         Timetable newtimetable = new Timetable(timetableName);
         timetables.add(newtimetable);
         System.out.println("Timetable '" + timetableName + "' created successfully");
-        // TODO add a new timetable with name to timetables
     }
 
     // Method to display the user's mods and timetables
@@ -39,11 +38,8 @@ public class User {
             }
         }
         return "Timetable '" + timetableName + "' not found";
-        //return("Noone has implemented me yet!! AAARGH!!");
-        // TODO print timetable if it exists, otherwise just print "nooooo" or something
     }
 
-    // Add mod to timetables
     public void addModToTimetable(String timetableName, Mod mod) {
         for (Timetable timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
@@ -54,7 +50,15 @@ public class User {
         System.out.println("Timetable '" + timetableName + "' not found.");
     }
 
-    //Remove mod from timetables
+    public boolean hasTimetable(String inputTimetableName) {
+        for (Timetable timetable : timetables) {
+            if (timetable.getName().equalsIgnoreCase(inputTimetableName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void removeModFromTimetable(String timetableName, Mod mod) {
         for (Timetable timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
@@ -78,4 +82,6 @@ public class User {
     public void removeBookmark(Mod toRemove) {
         bookmarks.remove(toRemove);
     }
+
+
 }
