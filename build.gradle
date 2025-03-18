@@ -37,6 +37,14 @@ shadowJar {
     archiveClassifier.set("")
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'modmate.Main'
+        )
+    }
+}
+
 checkstyle {
     toolVersion = '10.2'
 }
