@@ -65,17 +65,17 @@ public class User {
         System.out.println("Timetable '" + timetableName + "' not found.");
     }
 
-    public List<Course> getBookmarks() {
+    public List<Mod> getBookmarks() {
         return bookmarks;
     }
 
-    public void addBookmark(Course toAdd) {
+    public void addBookmark(Mod toAdd) {
         if (!bookmarks.contains(toAdd)) {
             bookmarks.add(toAdd);
         }
     }
 
-    public void removeBookmark(Course toRemove) {
+    public void removeBookmark(Mod toRemove) {
         bookmarks.remove(toRemove);
     }
 }

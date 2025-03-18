@@ -172,21 +172,21 @@ public class Main {
      */
     private static void bookmark(String inputNameOrCode, User currentUser) {
         Log.saveLog("[MAIN]   Bookmarking mod.");
-        // Bookmark a course for later reference
+        // Bookmark a mod for later reference
 
-        Course course = allCourses
+        Mod mod = allMods
                 .stream()
                 .filter(c ->
-                        c.getCode().equalsIgnoreCase(courseCode))
+                        c.getCode().equalsIgnoreCase(inputNameOrCode))
                 .findFirst()
                 .orElse(null);
 
-        if (course == null) {
+        if (mod == null) {
             Log.saveLog("[MAIN]   Course to bookmark not found.");
-            System.out.println("Course with code '" + courseCode + "' not found.");
+            System.out.println("Course with code '" + inputNameOrCode + "' not found.");
         } else {
-            currentUser.addBookmark(course);
-            System.out.println("Bookmark " + courseCode + " successfully added to your list.");
+            currentUser.addBookmark(mod);
+            System.out.println("Bookmark " + inputNameOrCode + " successfully added to your list.");
         }
     }
 
@@ -199,12 +199,12 @@ public class Main {
         Log.saveLog("[MAIN]   Viewing bookmarks.");
 
         // View all bookmarked courses
-        List<Course> bookmarks = currentUser.getBookmarks();
+        List<Mod> bookmarks = currentUser.getBookmarks();
 
         System.out.println("You have " + bookmarks.size() + " bookmarks.");
 
-        for (Course course : bookmarks) {
-            System.out.println(course);
+        for (Mod mod : bookmarks) {
+            System.out.println(mod);
         }
     }
 
