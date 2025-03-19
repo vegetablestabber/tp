@@ -1,6 +1,8 @@
 package modmate;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
 import modmate.mod.Mod;
@@ -18,20 +20,19 @@ public class Main {
         Commands:
         -h: Display this help message
         exit: Exit the application
-        viewmod <mod code/name>: View details of a mod by its mod code
-        bookmark <mod code/name>: Bookmark a mod for later reference
+        viewmod <mod code or name>: View details of a mod by its mod code or name
+        bookmark <mod code or name>: Bookmark a mod for later reference
         bookmarks: View all bookmarked mods
-        addmod <timetable> <mod_code>: Add a mod to your list
-        removemod <timetable> <mod code/name>: Remove a mod from your list
+        addmod <timetable> <mod code or name>: Add a mod to your list
+        removemod <timetable> <mod code or name>: Remove a mod from your list
         createtimetable <timetable>: Create a new timetable
         timetable <timetable>: Display your mod timetable
         viewallmods: View all available mods
         """;
-    // searchmod <mod code/name>: Search for a mod by its code or name
+    // searchmod <mod code or name>: Search for a mod by its code or name
     // Add back when implemented
 
-    static List<String> allModCodes = ModDataRetreiver.getAllModCodes();
-    static List<Mod> sampleMods = ModDataRetreiver.getSampleMods();
+    static Map<String, String> allModCodesAndNames = ModDataRetreiver.getAllModCodes();
 
     /**
      * The main command loop of the application that processes user input
@@ -45,7 +46,7 @@ public class Main {
             if (args[i].equals("--log") && i + 1 < args.length) {
                 Log.setLoggingEnabled(Boolean.parseBoolean(args[i + 1]));
             } else if (args[i].equals("--startYear") && i + 1 < args.length) {
-                allModCodes = ModDataRetreiver.getAllModCodes(args[i + 1]);
+                allModCodesAndNames = ModDataRetreiver.getAllModCodes(args[i + 1]);
             }
         }
         Log.printLog("Logging is enabled.");
@@ -56,7 +57,9 @@ public class Main {
 
         System.out.println("Welcome to ModMate!");
 
-        System.out.println(ModDataRetreiver.getModFromAPIUsingCode("CS1010"));
+        ModDataRetreiver.getModFromAPIUsingCode("DSS5210")
+                .ifPresent(mod -> System.out.println(mod.toStringDetailed()));
+
 
         while (true) {
             System.out.println("\nEnter command ('exit' to quit, '-h' for help):");
@@ -83,7 +86,7 @@ public class Main {
             case "createtimetable" -> createTimetable(stringFromBetweenPartsXY(inputParts, 1), currentUser);
             case "timetable" -> viewTimetable(stringFromBetweenPartsXY(inputParts, 1), currentUser);
             case "viewallmods" -> viewAllMods();
-            case "searchmod" -> searchMods(stringFromBetweenPartsXY(inputParts, 1), currentUser);
+            case "searchmod" -> searchMods(stringFromBetweenPartsXY(inputParts, 1));
 
             case "exit" -> {
                 Log.saveLog("[MAIN]   Exiting application.");
@@ -107,16 +110,29 @@ public class Main {
     /**
      * Helper method that searches for an exact matching mod by its code or name.
      *
-     * @param modCode The code or name of the mod to search for.
+     * @param modCodeOrNameGiven The code or name of the mod to search for.
      * @return The mod that matches the given code or name, or null if no match is found.
      */
-    private static Optional<Mod> modFromNameOrCode(String modCode) {
-        return allMods
+    private static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven) {
+        // First, check for a match with the module code (key)
+        Optional<Map.Entry<String, String>> modCodeFound = allModCodesAndNames.entrySet()
                 .stream()
-                .filter(c ->
-                        c.getCode().equalsIgnoreCase(modCode))
+                .filter(entry -> entry.getKey().equalsIgnoreCase(modCodeOrNameGiven)) // match by code
                 .findFirst();
+
+        // If no match was found by code, try matching by title (value)
+        if (modCodeFound.isEmpty()) {
+            modCodeFound = allModCodesAndNames.entrySet()
+                    .stream()
+                    .filter(entry -> entry.getValue().equalsIgnoreCase(modCodeOrNameGiven)) // match by title
+                    .findFirst();
+        }
+
+        // If a match is found, retrieve mod details using the module code
+        return modCodeFound.flatMap(entry ->
+                ModDataRetreiver.getModFromAPIUsingCode(entry.getKey()));
     }
+
 
 
     /**
@@ -154,22 +170,22 @@ public class Main {
     }
 
     /**
-     * Displays details of a mod given its mod code.
+     * Displays details of a mod given its mod code or name.
      *
-     * @param inputNameOrCode The mod code or name to search for.
+     * @param inputCodeOrName The mod code or name to search for.
      */
-    private static void viewMod(String inputNameOrCode) {
-        assert inputNameOrCode != null
-                && !inputNameOrCode.trim().isEmpty() :
+    private static void viewMod(String inputCodeOrName) {
+        assert inputCodeOrName != null
+                && !inputCodeOrName.trim().isEmpty() :
                 "Mod code or name cannot be null or empty";
-        Log.saveLog("[MAIN]   Viewing mod details for: " + inputNameOrCode);
+        Log.saveLog("[MAIN]   Viewing mod details for: " + inputCodeOrName);
 
-        modFromNameOrCode(inputNameOrCode).ifPresentOrElse(mod -> {
-            System.out.println(mod);
+        modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
+            System.out.println(mod.toStringDetailed());
             Log.saveLog("[MAIN]   Mod details displayed.");
         }, () -> {
-            System.out.println("Mod '" + inputNameOrCode + "' not found.");
-            Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
+            System.out.println("Mod '" + inputCodeOrName + "' not found.");
+            Log.saveLog("[MAIN]   Mod '" + inputCodeOrName + "' not found.");
         });
     }
 
@@ -177,19 +193,19 @@ public class Main {
     /**
      * Bookmarks a mod for later reference.
      *
-     * @param inputNameOrCode The mod code or name to bookmark.
+     * @param inputCodeOrName The mod code or name to bookmark.
      * @param currentUser The user object representing the current user.
      */
-    private static void bookmark(String inputNameOrCode, User currentUser) {
+    private static void bookmark(String inputCodeOrName, User currentUser) {
         Log.saveLog("[MAIN]   Bookmarking mod.");
         // Bookmark a mod for later reference
 
-        modFromNameOrCode(inputNameOrCode).ifPresentOrElse(mod -> {
+        modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
             currentUser.addBookmark(mod);
-            System.out.println("Bookmark " + inputNameOrCode + " successfully added to your list.");
+            System.out.println("Bookmark " + inputCodeOrName + " successfully added to your list.");
         }, () -> {
             Log.saveLog("[MAIN]   Course to bookmark not found.");
-            System.out.println("Course with code '" + inputNameOrCode + "' not found.");
+            System.out.println("Course with code '" + inputCodeOrName + "' not found.");
         });
     }
 
@@ -215,19 +231,19 @@ public class Main {
      * Adds a mod to the user's timetable.
      *
      * @param timetable The name of the timetable to which the mod should be added.
-     * @param inputNameOrCode The mod code or name to add to the timetable.
+     * @param inputCodeOrName The mod code or name to add to the timetable.
      * @param currentUser The user object representing the current user.
      */
-    private static void addModToTimetable(String timetable, String inputNameOrCode, User currentUser) {
+    private static void addModToTimetable(String timetable, String inputCodeOrName, User currentUser) {
         assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
         Log.saveLog("[MAIN]   Adding mod to timetable: " + timetable);
 
-        modFromNameOrCode(inputNameOrCode).ifPresentOrElse(mod -> {
+        modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
             currentUser.addModToTimetable(timetable, mod);
             Log.saveLog("[MAIN]   Mod " + mod.getCode() + " added to timetable " + timetable);
         }, () -> {
-            System.out.println("Mod '" + inputNameOrCode + "' not found.");
-            Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
+            System.out.println("Mod '" + inputCodeOrName + "' not found.");
+            Log.saveLog("[MAIN]   Mod '" + inputCodeOrName + "' not found.");
         });
     }
 
@@ -236,19 +252,19 @@ public class Main {
      * Removes a mod from the user's timetable.
      *
      * @param timetable The name of the timetable from which the mod should be removed.
-     * @param inputNameOrCode The mod code or name to remove from the timetable.
+     * @param inputCodeOrName The mod code or name to remove from the timetable.
      * @param currentUser The user object representing the current user.
      */
-    private static void removeModFromTimetable(String timetable, String inputNameOrCode, User currentUser) {
+    private static void removeModFromTimetable(String timetable, String inputCodeOrName, User currentUser) {
         assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
         Log.saveLog("[MAIN]   Removing mod from timetable: " + timetable);
 
-        modFromNameOrCode(inputNameOrCode).ifPresentOrElse(mod -> {
+        modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
             currentUser.removeModFromTimetable(timetable, mod);
             Log.saveLog("[MAIN]   Mod " + mod.getCode() + " removed from timetable " + timetable);
         }, () -> {
-            System.out.println("Mod '" + inputNameOrCode + "' not found.");
-            Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
+            System.out.println("Mod '" + inputCodeOrName + "' not found.");
+            Log.saveLog("[MAIN]   Mod '" + inputCodeOrName + "' not found.");
         });
     }
 
@@ -291,18 +307,17 @@ public class Main {
      */
     private static void viewAllMods() {
         Log.saveLog("[MAIN]   Viewing all mods.");
-        for (Mod mod : sampleMods) {
-            System.out.println(mod);
-        }
+        allModCodesAndNames.forEach((modCode, title) ->
+                System.out.println(modCode + ": " + title));
     }
+
 
     /**
      * Searches for mods by mod code or name.
      *
      * @param inputSearchQuery The search term to search for (mod code or name).
-     * @param currentUser The user object representing the current user.
      */
-    private static void searchMods(String inputSearchQuery, User currentUser) {
+    private static void searchMods(String inputSearchQuery) {
         Log.saveLog("[MAIN]   User is searching for a mod.");
         List<Mod> searchResults = getSearchResults(inputSearchQuery);
         if (searchResults != null) {
