@@ -53,7 +53,7 @@ public class ModDataRetreiver {
      * @return an {@link Optional} containing the {@link Mod} object if the data is successfully fetched,
      *     or empty if not
      */
-    public static Optional<Mod> getModFromAPIUsingCode(String modCode) {
+    public static Optional<Mod> fetchModuleByCode(String modCode) {
         modCode = modCode.toUpperCase();
         String startYear = String.valueOf(getAdjustedYear());
         String urlString = "https://api.nusmods.com/v2/" + startYear + "-" + (Integer.parseInt(startYear) + 1)
@@ -143,8 +143,8 @@ public class ModDataRetreiver {
      * @param startYear the start year of the academic year (e.g., "2024")
      * @return a map of module codes and titles
      */
-    public static Map<String, String> getAllModCodes(String startYear) {
-        retreiveJsonFromAPIToFile(startYear);
+    public static Map<String, String> fetchAllModCodes(String startYear) {
+        downloadJSONToFile(startYear);
         return loadAllModCodesAndNamesFromFile(startYear);
     }
 
@@ -155,9 +155,9 @@ public class ModDataRetreiver {
      *
      * @return a map of module codes and titles
      */
-    public static Map<String, String> getAllModCodes() {
+    public static Map<String, String> fetchAllModCodes() {
         String startYear = String.valueOf(getAdjustedYear());
-        retreiveJsonFromAPIToFile(startYear);
+        downloadJSONToFile(startYear);
         return loadAllModCodesAndNamesFromFile(startYear);
     }
 
@@ -166,7 +166,7 @@ public class ModDataRetreiver {
      *
      * @param startYear the start year of the academic year
      */
-    private static void retreiveJsonFromAPIToFile(String startYear) {
+    private static void downloadJSONToFile(String startYear) {
         try {
             String urlString = "https://api.nusmods.com/v2/" +
                     startYear +
