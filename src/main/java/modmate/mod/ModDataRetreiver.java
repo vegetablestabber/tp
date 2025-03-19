@@ -44,6 +44,11 @@ public class ModDataRetreiver {
         return (today.getMonthValue() >= Month.AUGUST.getValue()) ? currentYear : currentYear - 1;
     }
 
+    public static Optional<Mod> fetchModuleByCode(String modCode) {
+        return fetchModuleByCode(modCode, getAdjustedYear());
+    }
+
+
     /**
      * Retrieves module information from the NUS Mod API using a module code.
      * This fetches data for the module, such as the title, description, faculty, semester availability,
@@ -53,10 +58,9 @@ public class ModDataRetreiver {
      * @return an {@link Optional} containing the {@link Mod} object if the data is successfully fetched,
      *     or empty if not
      */
-    public static Optional<Mod> fetchModuleByCode(String modCode) {
+    public static Optional<Mod> fetchModuleByCode(String modCode, int startYear) {
         modCode = modCode.toUpperCase();
-        String startYear = String.valueOf(getAdjustedYear());
-        String urlString = "https://api.nusmods.com/v2/" + startYear + "-" + (Integer.parseInt(startYear) + 1)
+        String urlString = "https://api.nusmods.com/v2/" + startYear + "-" + (startYear + 1)
                 + "/modules/" + modCode + ".json";
 
         try {
@@ -75,50 +79,7 @@ public class ModDataRetreiver {
                 }
                 JSONObject jsonObject = new JSONObject(jsonResponse);
 
-                Mod mod = new Mod(
-                        jsonObject.getString("title"),
-                        jsonObject.getString("moduleCode"),
-                        jsonObject.getString("description"),
-                        new ModAttributes(
-                                new Faculty(jsonObject.getString("faculty")),
-                                jsonObject.getJSONArray("semesterData").toList().stream()
-                                        .filter(obj -> obj instanceof Map) // Ensure obj is a Map before casting
-                                        .map(obj -> {
-                                            Map<?, ?> map = (Map<?, ?>) obj; // Safe cast
-                                            Object semesterObj = map.get("semester");
-
-                                            // Map the semester number to the corresponding enum
-                                            if (semesterObj instanceof Integer semester) {
-                                                return switch (semester) {
-                                                case 1 -> Semester.SEMESTER_1;
-                                                case 2 -> Semester.SEMESTER_2;
-                                                case 3 -> Semester.SPECIAL_TERM_1;
-                                                case 4 -> Semester.SPECIAL_TERM_2;
-                                                default -> throw new IllegalArgumentException(
-                                                        "Unknown semester: " + semester
-                                                );
-                                                };
-                                            } else {
-                                                throw new IllegalArgumentException(
-                                                        "Invalid semester format: " + semesterObj
-                                                );
-                                            }
-                                        })
-                                        .collect(Collectors.toList()),
-                                jsonObject.getInt("moduleCredit"),
-                                jsonObject.getString("gradingBasisDescription").equals("Graded"),
-                                null,
-                                // I know having null here isn't ideal, but it is an unfinished feature,
-                                // so it can serve as a reminder to implement it
-                                new WeeklyWorkload(
-                                        jsonObject.getJSONArray("workload").getDouble(0),
-                                        jsonObject.getJSONArray("workload").getDouble(1),
-                                        jsonObject.getJSONArray("workload").getDouble(3),
-                                        jsonObject.getJSONArray("workload").getDouble(4)
-                                )
-                        )
-                );
-                return Optional.of(mod);
+                return Optional.of(modBuilder(jsonObject));
 
             } else {
                 Log.saveLog("\n[MODDATARETREIVER]   Request failed. Response Code: " + responseCode);
@@ -135,6 +96,61 @@ public class ModDataRetreiver {
 
         return Optional.empty();
     }
+
+    /**
+     * Builds a {@link Mod} object from a {@link JSONObject}.
+     *
+     * @param jsonObject the JSON object containing the module data
+     * @return a {@link Mod} object
+     */
+
+    private static Mod modBuilder(JSONObject jsonObject) {
+        return new Mod(
+                jsonObject.getString("title"),
+                jsonObject.getString("moduleCode"),
+                jsonObject.getString("description"),
+                new ModAttributes(
+                        new Faculty(jsonObject.getString("faculty")),
+                        jsonObject.getJSONArray("semesterData").toList().stream()
+                                .filter(obj -> obj instanceof Map) // Ensure obj is a Map before casting
+                                .map(obj -> {
+                                    Map<?, ?> map = (Map<?, ?>) obj; // Safe cast
+                                    Object semesterObj = map.get("semester");
+
+                                    // Map the semester number to the corresponding enum
+                                    if (semesterObj instanceof Integer semester) {
+                                        return switch (semester) {
+                                        case 1 -> Semester.SEMESTER_1;
+                                        case 2 -> Semester.SEMESTER_2;
+                                        case 3 -> Semester.SPECIAL_TERM_1;
+                                        case 4 -> Semester.SPECIAL_TERM_2;
+                                        default -> throw new IllegalArgumentException(
+                                                "Unknown semester: " + semester
+                                        );
+                                        };
+                                    } else {
+                                        throw new IllegalArgumentException(
+                                                "Invalid semester format: " + semesterObj
+                                        );
+                                    }
+                                })
+                                .collect(Collectors.toList()),
+                        jsonObject.getInt("moduleCredit"),
+                        jsonObject.getString("gradingBasisDescription").equals("Graded"),
+                        null,
+                        // I know having null here isn't ideal, but it is an unfinished feature,
+                        // so it can serve as a reminder to implement it
+                        new WeeklyWorkload(
+                                jsonObject.getJSONArray("workload").getDouble(0),
+                                jsonObject.getJSONArray("workload").getDouble(1),
+                                jsonObject.getJSONArray("workload").getDouble(3),
+                                jsonObject.getJSONArray("workload").getDouble(4)
+                        )
+                )
+        );
+    }
+
+
 
     /**
      * Retrieves a list of all module codes for a given academic year from the NUS Mod API.
