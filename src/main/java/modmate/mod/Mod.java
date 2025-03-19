@@ -68,7 +68,15 @@ public class Mod {
      * @return The description of the mod.
      */
     public String toStringDetailed() {
-        return "Code: " + code + "\nName: " + name + "\nDescription: " + description + "\nFaculty: " + attributes.getFaculty() + "\nAvailability: " + attributes.getSemesterAvailability() + "\nUnits: " + attributes.getUnits() + "\nGraded: " + attributes.isGraded() + "\nPrerequisites: " + attributes.getPrerequisites() + "\nWorkload: " + attributes.getWorkload();
+        return "Code: " + code +
+                "\nName: " + name +
+                "\nDescription: " + description +
+                "\nFaculty: " + attributes.getFaculty() +
+                "\nAvailability: " + attributes.getAvailabilityToString() +
+                "\nUnits: " + attributes.getUnits() +
+                "\nGraded: " + attributes.isGraded() +
+                "\nPrerequisites: " + attributes.getPrerequisites() +
+                "\nWorkload: " + attributes.getWorkload();
     }
 
     /**

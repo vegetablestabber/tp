@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import modmate.mod.Mod;
+import modmate.mod.ModDataRetreiver;
 import modmate.user.User;
 import modmate.log.Log;
 
@@ -15,6 +16,8 @@ import modmate.log.Log;
  * to/from timetables, and managing bookmarks.
  */
 public class Main {
+
+    static Map<String, String> allModCodesAndNames = ModDataRetreiver.getAllModCodes();
 
     static String helpMessage = """
         Commands:
@@ -31,8 +34,6 @@ public class Main {
         """;
     // searchmod <mod code or name>: Search for a mod by its code or name
     // Add back when implemented
-
-    static Map<String, String> allModCodesAndNames = ModDataRetreiver.getAllModCodes();
 
     /**
      * The main command loop of the application that processes user input
@@ -56,10 +57,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to ModMate!");
-
-        ModDataRetreiver.getModFromAPIUsingCode("DSS5210")
-                .ifPresent(mod -> System.out.println(mod.toStringDetailed()));
-
 
         while (true) {
             System.out.println("\nEnter command ('exit' to quit, '-h' for help):");

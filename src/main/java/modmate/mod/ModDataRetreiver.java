@@ -1,7 +1,6 @@
-package modmate;
+package modmate.mod;
 
 import modmate.log.Log;
-import modmate.mod.Mod;
 import modmate.mod.attribute.ModAttributes;
 import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.SemesterAvailability;
@@ -14,17 +13,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
  * A utility class that provides functionality for retrieving and managing module data from an external API.
- * This class can fetch sample module data, retrieve module data by code, and fetch module codes for a given academic year.
+ * This class can fetch sample module data,
+ * retrieve module data by code, and fetch module codes for a given academic year.
  */
 public class ModDataRetreiver {
 
@@ -48,7 +50,8 @@ public class ModDataRetreiver {
      * and workload information.
      *
      * @param modCode the module code (e.g., "CS1010")
-     * @return an {@link Optional} containing the {@link Mod} object if the data is successfully fetched, or empty if not
+     * @return an {@link Optional} containing the {@link Mod} object if the data is successfully fetched,
+     *     or empty if not
      */
     public static Optional<Mod> getModFromAPIUsingCode(String modCode) {
         modCode = modCode.toUpperCase();
@@ -87,14 +90,18 @@ public class ModDataRetreiver {
                                             // Map the semester number to the corresponding enum
                                             if (semesterObj instanceof Integer semester) {
                                                 return switch (semester) {
-                                                    case 1 -> SemesterAvailability.SEMESTER_1;
-                                                    case 2 -> SemesterAvailability.SEMESTER_2;
-                                                    case 3 -> SemesterAvailability.SPECIAL_TERM_1;
-                                                    case 4 -> SemesterAvailability.SPECIAL_TERM_2;
-                                                    default -> throw new IllegalArgumentException("Unknown semester: " + semester);
+                                                case 1 -> SemesterAvailability.SEMESTER_1;
+                                                case 2 -> SemesterAvailability.SEMESTER_2;
+                                                case 3 -> SemesterAvailability.SPECIAL_TERM_1;
+                                                case 4 -> SemesterAvailability.SPECIAL_TERM_2;
+                                                default -> throw new IllegalArgumentException(
+                                                        "Unknown semester: " + semester
+                                                );
                                                 };
                                             } else {
-                                                throw new IllegalArgumentException("Invalid semester format: " + semesterObj);
+                                                throw new IllegalArgumentException(
+                                                        "Invalid semester format: " + semesterObj
+                                                );
                                             }
                                         })
                                         .collect(Collectors.toList()),
@@ -161,7 +168,11 @@ public class ModDataRetreiver {
      */
     private static void retreiveJsonFromAPIToFile(String startYear) {
         try {
-            String urlString = "https://api.nusmods.com/v2/" + startYear + "-" + (Integer.parseInt(startYear) + 1) + "/moduleList.json";
+            String urlString = "https://api.nusmods.com/v2/" +
+                    startYear +
+                    "-" +
+                    (Integer.parseInt(startYear) + 1) +
+                    "/moduleList.json";
             URL url = new URL(urlString);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -173,7 +184,13 @@ public class ModDataRetreiver {
                 InputStream inputStream = connection.getInputStream();
 
                 // Write the content of the API response to a file
-                FileOutputStream fileOutputStream = new FileOutputStream("src/main/java/modmate/modsjson/allmods" + startYear + "-" + (Integer.parseInt(startYear) + 1) + ".json");
+                FileOutputStream fileOutputStream = new FileOutputStream(
+                        "src/main/java/modmate/modsjson/allmods" +
+                                startYear +
+                                "-" +
+                                (Integer.parseInt(startYear) + 1) +
+                                ".json"
+                );
 
                 byte[] buffer = new byte[4096];
                 int bytesRead;
@@ -185,7 +202,13 @@ public class ModDataRetreiver {
                 fileOutputStream.close();
                 inputStream.close();
 
-                Log.saveLog("\n[MODDATARETREIVER]   Data saved successfully to: src/main/java/modmate/modsjson/allmods" + startYear + "-" + (Integer.parseInt(startYear) + 1) + ".json");
+                Log.saveLog("\n[MODDATARETREIVER]   Data saved successfully to: " +
+                        "src/main/java/modmate/modsjson/allmods" +
+                        startYear +
+                        "-" +
+                        (Integer.parseInt(startYear) + 1) +
+                        ".json"
+                );
             } else {
                 Log.saveLog("\n[MODDATARETREIVER]   Request failed. Response Code: " + responseCode);
             }
@@ -196,18 +219,22 @@ public class ModDataRetreiver {
             for (StackTraceElement element : e.getStackTrace()) {
                 Log.saveLog("\t" + element.toString());
             }
-            }
+        }
     }
 
     /**
      * Loads the module codes from the previously saved file.
      *
      * @param startYear the start year of the academic year
-     * @return a a map of module codes and titles extracted from the file
+     * @return a map of module codes and titles extracted from the file
      */
     private static Map<String, String> loadAllModCodesAndNamesFromFile(String startYear) {
         Map<String, String> modulesMap = new HashMap<>();
-        String filePath = "src/main/java/modmate/modsjson/allmods" + startYear + "-" + (Integer.parseInt(startYear) + 1) + ".json";
+        String filePath = "src/main/java/modmate/modsjson/allmods" +
+                startYear +
+                "-" +
+                (Integer.parseInt(startYear) + 1) +
+                ".json";
 
         try {
             // Read file content as a string

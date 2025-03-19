@@ -55,24 +55,6 @@ public class ModAttributes {
     }
 
     /**
-     * Gets the list of semesters in which the mod is available.
-     *
-     * @return A list of SemesterAvailability objects.
-     */
-    public List<SemesterAvailability> getSemesterAvailability() {
-        return semesterAvailability;
-    }
-
-    /**
-     * Sets the list of semesters in which the mod is available.
-     *
-     * @param semesterAvailability A list of SemesterAvailability objects.
-     */
-    public void setSemesterAvailability(List<SemesterAvailability> semesterAvailability) {
-        this.semesterAvailability = semesterAvailability;
-    }
-
-    /**
      * Gets the number of units the mod is worth.
      *
      * @return The number of units.
@@ -100,30 +82,12 @@ public class ModAttributes {
     }
 
     /**
-     * Sets whether the mod is graded.
-     *
-     * @param isGraded true if the mod should be graded, false otherwise.
-     */
-    public void setGraded(boolean isGraded) {
-        this.isGraded = isGraded;
-    }
-
-    /**
      * Gets the list of prerequisite mods required for enrollment.
      *
      * @return A list of prerequisite mods.
      */
     public List<Mod> getPrerequisites() {
         return prerequisites;
-    }
-
-    /**
-     * Sets the list of prerequisite mods required for enrollment.
-     *
-     * @param prerequisites A list of prerequisite mods.
-     */
-    public void setPrerequisites(List<Mod> prerequisites) {
-        this.prerequisites = prerequisites;
     }
 
     /**
@@ -135,12 +99,27 @@ public class ModAttributes {
         return workload;
     }
 
-    /**
-     * Sets the expected weekly workload for the mod.
-     *
-     * @param workload The WeeklyWorkload object to set.
-     */
-    public void setWorkload(WeeklyWorkload workload) {
-        this.workload = workload;
+    public String getAvailabilityToString() {
+        assert (semesterAvailability != null && !semesterAvailability.isEmpty());
+        StringBuilder availability = new StringBuilder();
+        for (SemesterAvailability semester : semesterAvailability) {
+            switch (semester) {
+            case SEMESTER_1:
+                availability.append("Semester 1, ");
+                break;
+            case SEMESTER_2:
+                availability.append("Semester 2, ");
+                break;
+            case SPECIAL_TERM_1:
+                availability.append("Special Term 1, ");
+                break;
+            case SPECIAL_TERM_2:
+                availability.append("Special Term 2, ");
+                break;
+            default:
+                break;
+            }
+        }
+        return availability.substring(0, availability.length() - 2);
     }
 }
