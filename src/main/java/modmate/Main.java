@@ -334,6 +334,9 @@ public class Main {
      */
     private static List<Mod> getSearchResults(String searchTerm) {
         Log.saveLog("[MAIN]   Internally invoking search for " + searchTerm + ".");
+        // Search inside Map allModCodesAndNames for matches
+        // Will have to search through both halves of the map, code and name
+        // If found, return list of getModFromAPIUsingCode(Code of Map pair found)
         // TODO Search for mods that contain the search term in their mod code or name
         // TODO Return a list of matching mods ordered by relevance
         return null;
