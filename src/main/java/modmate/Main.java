@@ -178,7 +178,7 @@ public class Main {
         Log.saveLog("[MAIN]   Viewing mod details for: " + inputCodeOrName);
 
         modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
-            System.out.println(mod.toStringDetailed());
+            System.out.println(mod.getDetailedString());
             Log.saveLog("[MAIN]   Mod details displayed.");
         }, () -> {
             System.out.println("Mod '" + inputCodeOrName + "' not found.");

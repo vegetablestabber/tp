@@ -67,7 +67,7 @@ public class Mod {
      *
      * @return The description of the mod.
      */
-    public String toStringDetailed() {
+    public String getDetailedString() {
         return "Code: " + code +
                 "\nName: " + name +
                 "\nDescription: " + description +
