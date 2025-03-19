@@ -1,6 +1,7 @@
 package modmate;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import modmate.mod.Mod;
@@ -105,13 +106,12 @@ public class Main {
      * @param modCode The code or name of the mod to search for.
      * @return The mod that matches the given code or name, or null if no match is found.
      */
-    private static Mod modFromNameOrCode(String modCode) {
+    private static Optional<Mod> modFromNameOrCode(String modCode) {
         return allMods
                 .stream()
                 .filter(c ->
                         c.getCode().equalsIgnoreCase(modCode))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
 
@@ -160,15 +160,13 @@ public class Main {
                 "Mod code or name cannot be null or empty";
         Log.saveLog("[MAIN]   Viewing mod details for: " + inputNameOrCode);
 
-        Mod mod = modFromNameOrCode(inputNameOrCode);
-
-        if (mod != null) {
+        modFromNameOrCode(inputNameOrCode).ifPresentOrElse(mod -> {
             System.out.println(mod);
             Log.saveLog("[MAIN]   Mod details displayed.");
-        } else {
+        }, () -> {
             System.out.println("Mod '" + inputNameOrCode + "' not found.");
             Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
-        }
+        });
     }
 
 
@@ -182,15 +180,13 @@ public class Main {
         Log.saveLog("[MAIN]   Bookmarking mod.");
         // Bookmark a mod for later reference
 
-        Mod mod = modFromNameOrCode(inputNameOrCode);
-
-        if (mod == null) {
-            Log.saveLog("[MAIN]   Course to bookmark not found.");
-            System.out.println("Course with code '" + inputNameOrCode + "' not found.");
-        } else {
+        modFromNameOrCode(inputNameOrCode).ifPresentOrElse(mod -> {
             currentUser.addBookmark(mod);
             System.out.println("Bookmark " + inputNameOrCode + " successfully added to your list.");
-        }
+        }, () -> {
+            Log.saveLog("[MAIN]   Course to bookmark not found.");
+            System.out.println("Course with code '" + inputNameOrCode + "' not found.");
+        });
     }
 
     /**
@@ -222,15 +218,13 @@ public class Main {
         assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
         Log.saveLog("[MAIN]   Adding mod to timetable: " + timetable);
 
-        Mod mod = modFromNameOrCode(inputNameOrCode);
-
-        if (mod != null) {
+        modFromNameOrCode(inputNameOrCode).ifPresentOrElse(mod -> {
             currentUser.addModToTimetable(timetable, mod);
             Log.saveLog("[MAIN]   Mod " + mod.getCode() + " added to timetable " + timetable);
-        } else {
+        }, () -> {
             System.out.println("Mod '" + inputNameOrCode + "' not found.");
             Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
-        }
+        });
     }
 
 
@@ -245,15 +239,13 @@ public class Main {
         assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
         Log.saveLog("[MAIN]   Removing mod from timetable: " + timetable);
 
-        Mod mod = modFromNameOrCode(inputNameOrCode);
-
-        if (mod != null) {
+        modFromNameOrCode(inputNameOrCode).ifPresentOrElse(mod -> {
             currentUser.removeModFromTimetable(timetable, mod);
             Log.saveLog("[MAIN]   Mod " + mod.getCode() + " removed from timetable " + timetable);
-        } else {
+        }, () -> {
             System.out.println("Mod '" + inputNameOrCode + "' not found.");
             Log.saveLog("[MAIN]   Mod '" + inputNameOrCode + "' not found.");
-        }
+        });
     }
 
 
