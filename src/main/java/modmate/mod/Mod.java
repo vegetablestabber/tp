@@ -72,7 +72,7 @@ public class Mod {
                 "\nName: " + name +
                 "\nDescription: " + description +
                 "\nFaculty: " + attributes.getFaculty() +
-                "\nAvailability: " + attributes.getAvailabilityToString() +
+                "\nAvailability: " + attributes.listAvailableSemesters() +
                 "\nUnits: " + attributes.getUnits() +
                 "\nGraded: " + attributes.isGraded() +
                 "\nPrerequisites: " + attributes.getPrerequisites() +

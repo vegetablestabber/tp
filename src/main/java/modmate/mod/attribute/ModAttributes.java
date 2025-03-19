@@ -1,6 +1,7 @@
 package modmate.mod.attribute;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 import modmate.mod.Mod;
 
@@ -10,7 +11,7 @@ import modmate.mod.Mod;
  */
 public class ModAttributes {
     private final Faculty faculty;
-    private final List<SemesterAvailability> semesterAvailability;
+    private final List<Semester> availableSemesters;
     private final int units;
     private final boolean isGraded;
     private final List<Mod> prerequisites;
@@ -20,16 +21,16 @@ public class ModAttributes {
      * Constructs a ModAttributes object with the given attributes.
      *
      * @param faculty               The faculty offering the mod.
-     * @param semesterAvailability  A list indicating the semesters in which the mod is available.
+     * @param semesters    A list indicating the semesters in which the mod is available.
      * @param units                 The number of units the mod is worth.
      * @param isGraded              Whether the mod is graded or pass/fail.
      * @param prerequisites         A list of prerequisite mods required for enrollment.
      * @param workload              The expected weekly workload for the mod.
      */
-    public ModAttributes(Faculty faculty, List<SemesterAvailability> semesterAvailability,
-                         int units, boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
+    public ModAttributes(Faculty faculty, List<Semester> semesters, int units,
+                         boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
         this.faculty = faculty;
-        this.semesterAvailability = semesterAvailability;
+        this.availableSemesters = semesters;
         this.units = units;
         this.isGraded = isGraded;
         this.prerequisites = prerequisites;
@@ -81,27 +82,17 @@ public class ModAttributes {
         return workload;
     }
 
-    public String getAvailabilityToString() {
-        assert (semesterAvailability != null && !semesterAvailability.isEmpty());
-        StringBuilder availability = new StringBuilder();
-        for (SemesterAvailability semester : semesterAvailability) {
-            switch (semester) {
-            case SEMESTER_1:
-                availability.append("Semester 1, ");
-                break;
-            case SEMESTER_2:
-                availability.append("Semester 2, ");
-                break;
-            case SPECIAL_TERM_1:
-                availability.append("Special Term 1, ");
-                break;
-            case SPECIAL_TERM_2:
-                availability.append("Special Term 2, ");
-                break;
-            default:
-                break;
-            }
-        }
-        return availability.substring(0, availability.length() - 2);
+    /**
+     * Gets a comma-separated string of the semesters in which the mod is available.
+     *
+     * @return A string listing the available semesters.
+     */
+    public String listAvailableSemesters() {
+        assert (availableSemesters != null && !availableSemesters.isEmpty());
+
+        StringJoiner sj = new StringJoiner(", ");
+        availableSemesters.forEach(semester -> sj.add(semester.toString()));
+
+        return sj.toString();
     }
 }

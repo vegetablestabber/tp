@@ -3,7 +3,7 @@ package modmate.mod;
 import modmate.log.Log;
 import modmate.mod.attribute.ModAttributes;
 import modmate.mod.attribute.Faculty;
-import modmate.mod.attribute.SemesterAvailability;
+import modmate.mod.attribute.Semester;
 import modmate.mod.attribute.WeeklyWorkload;
 
 import java.io.FileOutputStream;
@@ -90,10 +90,10 @@ public class ModDataRetreiver {
                                             // Map the semester number to the corresponding enum
                                             if (semesterObj instanceof Integer semester) {
                                                 return switch (semester) {
-                                                case 1 -> SemesterAvailability.SEMESTER_1;
-                                                case 2 -> SemesterAvailability.SEMESTER_2;
-                                                case 3 -> SemesterAvailability.SPECIAL_TERM_1;
-                                                case 4 -> SemesterAvailability.SPECIAL_TERM_2;
+                                                case 1 -> Semester.SEMESTER_1;
+                                                case 2 -> Semester.SEMESTER_2;
+                                                case 3 -> Semester.SPECIAL_TERM_1;
+                                                case 4 -> Semester.SPECIAL_TERM_2;
                                                 default -> throw new IllegalArgumentException(
                                                         "Unknown semester: " + semester
                                                 );
