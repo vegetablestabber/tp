@@ -9,12 +9,12 @@ import modmate.mod.Mod;
  * unit count, grading status, prerequisites, and workload.
  */
 public class ModAttributes {
-    private Faculty faculty;
-    private List<SemesterAvailability> semesterAvailability;
-    private int units;
-    private boolean isGraded;
-    private List<Mod> prerequisites;
-    private WeeklyWorkload workload;
+    private final Faculty faculty;
+    private final List<SemesterAvailability> semesterAvailability;
+    private final int units;
+    private final boolean isGraded;
+    private final List<Mod> prerequisites;
+    private final WeeklyWorkload workload;
 
     /**
      * Constructs a ModAttributes object with the given attributes.
@@ -46,30 +46,12 @@ public class ModAttributes {
     }
 
     /**
-     * Sets the faculty offering the mod.
-     *
-     * @param faculty The faculty to set.
-     */
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
-    /**
      * Gets the number of units the mod is worth.
      *
      * @return The number of units.
      */
     public int getUnits() {
         return units;
-    }
-
-    /**
-     * Sets the number of units the mod is worth.
-     *
-     * @param units The number of units to set.
-     */
-    public void setUnits(int units) {
-        this.units = units;
     }
 
     /**
