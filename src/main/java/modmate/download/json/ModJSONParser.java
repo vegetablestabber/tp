@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import modmate.mod.Mod;
@@ -34,7 +35,7 @@ public class ModJSONParser {
      *
      * @return a Mod object
      */
-    public Mod getModule() {
+    public Mod getModule() throws JSONException {
         return new Mod(
                 getName(),
                 getCode(),
@@ -47,7 +48,7 @@ public class ModJSONParser {
      *
      * @return the name of the module
      */
-    private String getName() {
+    public String getName() throws JSONException {
         return this.jsonUtils.getString(ModJSONKey.NAME);
     }
 
@@ -56,7 +57,7 @@ public class ModJSONParser {
      *
      * @return the code of the module
      */
-    private String getCode() {
+    public String getCode() throws JSONException {
         return this.jsonUtils.getString(ModJSONKey.CODE);
     }
 
@@ -65,7 +66,7 @@ public class ModJSONParser {
      *
      * @return the description of the module
      */
-    private String getDescription() {
+    private String getDescription() throws JSONException {
         return this.jsonUtils.getString(ModJSONKey.DESCRIPTION);
     }
 
@@ -74,7 +75,7 @@ public class ModJSONParser {
      *
      * @return the attributes of the module
      */
-    private ModAttributes getModAttributes() {
+    private ModAttributes getModAttributes() throws JSONException {
         return new ModAttributes(
                 getFaculty(),
                 getAvailableSemesters(),
@@ -89,7 +90,7 @@ public class ModJSONParser {
      *
      * @return the faculty of the module
      */
-    private Faculty getFaculty() {
+    private Faculty getFaculty() throws JSONException {
         return new Faculty(this.jsonUtils.getString(ModJSONKey.FACULTY));
     }
 
@@ -98,7 +99,7 @@ public class ModJSONParser {
      *
      * @return a list of available semesters
      */
-    private List<Semester> getAvailableSemesters() {
+    private List<Semester> getAvailableSemesters() throws JSONException {
         return this.jsonUtils.getJSONArray(ModJSONKey.AVAILABLE_SEMESTERS)
                 .toList()
                 .stream()
@@ -123,7 +124,7 @@ public class ModJSONParser {
      *
      * @return the number of units
      */
-    private int getUnits() {
+    private int getUnits() throws JSONException {
         return this.jsonUtils.getInt(ModJSONKey.UNITS);
     }
 
@@ -132,7 +133,7 @@ public class ModJSONParser {
      *
      * @return a list of prerequisite modules
      */
-    private List<Mod> getPrerequisites() {
+    private List<Mod> getPrerequisites() throws JSONException {
         return Collections.emptyList();
     }
 
@@ -141,7 +142,7 @@ public class ModJSONParser {
      *
      * @return true if the module is graded, false otherwise
      */
-    private boolean getIsGraded() {
+    private boolean getIsGraded() throws JSONException {
         return this.jsonUtils.getString(ModJSONKey.IS_GRADED).equals("Graded");
     }
 
@@ -150,8 +151,9 @@ public class ModJSONParser {
      *
      * @return the weekly workload
      */
-    private WeeklyWorkload getWorkload() {
+    private WeeklyWorkload getWorkload() throws JSONException {
         JSONArray workloadJSONArray = this.jsonUtils.getJSONArray(ModJSONKey.WORKLOAD);
+
         return new WeeklyWorkload(
                 workloadJSONArray.getDouble(0),
                 workloadJSONArray.getDouble(1),
