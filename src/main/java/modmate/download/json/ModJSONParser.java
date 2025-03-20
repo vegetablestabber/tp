@@ -48,7 +48,7 @@ public class ModJSONParser {
      * @return the name of the module
      */
     private String getName() {
-        return this.jsonUtils.getString(JSONKey.NAME);
+        return this.jsonUtils.getString(ModJSONKey.NAME);
     }
 
     /**
@@ -57,7 +57,7 @@ public class ModJSONParser {
      * @return the code of the module
      */
     private String getCode() {
-        return this.jsonUtils.getString(JSONKey.CODE);
+        return this.jsonUtils.getString(ModJSONKey.CODE);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ModJSONParser {
      * @return the description of the module
      */
     private String getDescription() {
-        return this.jsonUtils.getString(JSONKey.DESCRIPTION);
+        return this.jsonUtils.getString(ModJSONKey.DESCRIPTION);
     }
 
     /**
@@ -90,7 +90,7 @@ public class ModJSONParser {
      * @return the faculty of the module
      */
     private Faculty getFaculty() {
-        return new Faculty(this.jsonUtils.getString(JSONKey.FACULTY));
+        return new Faculty(this.jsonUtils.getString(ModJSONKey.FACULTY));
     }
 
     /**
@@ -99,7 +99,7 @@ public class ModJSONParser {
      * @return a list of available semesters
      */
     private List<Semester> getAvailableSemesters() {
-        return this.jsonUtils.getJSONArray(JSONKey.AVAILABLE_SEMESTERS)
+        return this.jsonUtils.getJSONArray(ModJSONKey.AVAILABLE_SEMESTERS)
                 .toList()
                 .stream()
                 .filter(obj -> obj instanceof Map) // Ensure obj is a Map
@@ -124,7 +124,7 @@ public class ModJSONParser {
      * @return the number of units
      */
     private int getUnits() {
-        return this.jsonUtils.getInt(JSONKey.UNITS);
+        return this.jsonUtils.getInt(ModJSONKey.UNITS);
     }
 
     /**
@@ -142,7 +142,7 @@ public class ModJSONParser {
      * @return true if the module is graded, false otherwise
      */
     private boolean getIsGraded() {
-        return this.jsonUtils.getString(JSONKey.IS_GRADED).equals("Graded");
+        return this.jsonUtils.getString(ModJSONKey.IS_GRADED).equals("Graded");
     }
 
     /**
@@ -151,7 +151,7 @@ public class ModJSONParser {
      * @return the weekly workload
      */
     private WeeklyWorkload getWorkload() {
-        JSONArray workloadJSONArray = this.jsonUtils.getJSONArray(JSONKey.WORKLOAD);
+        JSONArray workloadJSONArray = this.jsonUtils.getJSONArray(ModJSONKey.WORKLOAD);
         return new WeeklyWorkload(
                 workloadJSONArray.getDouble(0),
                 workloadJSONArray.getDouble(1),

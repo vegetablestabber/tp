@@ -3,7 +3,7 @@ package modmate.download.json;
 /**
  * Enum representing the keys used in JSON data for module information.
  */
-public enum JSONKey {
+public enum ModJSONKey {
 
     /**
      * The name of the module.
@@ -50,11 +50,11 @@ public enum JSONKey {
     private final String text;
 
     /**
-     * Constructor for JSONKey enum.
+     * Constructor for ModJSONKey enum.
      *
      * @param text The text representation of the JSON key.
      */
-    private JSONKey(String text) {
+    private ModJSONKey(String text) {
         this.text = text;
     }
 

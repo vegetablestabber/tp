@@ -11,15 +11,15 @@ public class JSONUtils {
         this.jsonObject = jsonObject;
     }
 
-    public String getString(JSONKey key) {
+    public String getString(ModJSONKey key) {
         return this.jsonObject.getString(key.toString());
     }
 
-    public int getInt(JSONKey key) {
+    public int getInt(ModJSONKey key) {
         return this.jsonObject.getInt(key.toString());
     }
 
-    public JSONArray getJSONArray(JSONKey key) {
+    public JSONArray getJSONArray(ModJSONKey key) {
         return this.jsonObject.getJSONArray(key.toString());
     }
 
