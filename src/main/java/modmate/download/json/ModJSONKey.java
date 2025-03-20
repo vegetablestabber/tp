@@ -8,7 +8,7 @@ public enum ModJSONKey {
     /**
      * The name of the module.
      */
-    NAME("name"),
+    NAME("title"),
 
     /**
      * The code of the module.
