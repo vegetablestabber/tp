@@ -1,6 +1,7 @@
 package modmate.mod.attribute;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 import modmate.mod.Mod;
 
@@ -9,27 +10,27 @@ import modmate.mod.Mod;
  * unit count, grading status, prerequisites, and workload.
  */
 public class ModAttributes {
-    private Faculty faculty;
-    private List<SemesterAvailability> semesterAvailability;
-    private int units;
-    private boolean isGraded;
-    private List<Mod> prerequisites;
-    private WeeklyWorkload workload;
+    private final Faculty faculty;
+    private final List<Semester> availableSemesters;
+    private final int units;
+    private final boolean isGraded;
+    private final List<Mod> prerequisites;
+    private final WeeklyWorkload workload;
 
     /**
      * Constructs a ModAttributes object with the given attributes.
      *
      * @param faculty               The faculty offering the mod.
-     * @param semesterAvailability  A list indicating the semesters in which the mod is available.
+     * @param semesters    A list indicating the semesters in which the mod is available.
      * @param units                 The number of units the mod is worth.
      * @param isGraded              Whether the mod is graded or pass/fail.
      * @param prerequisites         A list of prerequisite mods required for enrollment.
      * @param workload              The expected weekly workload for the mod.
      */
-    public ModAttributes(Faculty faculty, List<SemesterAvailability> semesterAvailability,
-                         int units, boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
+    public ModAttributes(Faculty faculty, List<Semester> semesters, int units,
+                         boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
         this.faculty = faculty;
-        this.semesterAvailability = semesterAvailability;
+        this.availableSemesters = semesters;
         this.units = units;
         this.isGraded = isGraded;
         this.prerequisites = prerequisites;
@@ -46,48 +47,12 @@ public class ModAttributes {
     }
 
     /**
-     * Sets the faculty offering the mod.
-     *
-     * @param faculty The faculty to set.
-     */
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
-
-    /**
-     * Gets the list of semesters in which the mod is available.
-     *
-     * @return A list of SemesterAvailability objects.
-     */
-    public List<SemesterAvailability> getSemesterAvailability() {
-        return semesterAvailability;
-    }
-
-    /**
-     * Sets the list of semesters in which the mod is available.
-     *
-     * @param semesterAvailability A list of SemesterAvailability objects.
-     */
-    public void setSemesterAvailability(List<SemesterAvailability> semesterAvailability) {
-        this.semesterAvailability = semesterAvailability;
-    }
-
-    /**
      * Gets the number of units the mod is worth.
      *
      * @return The number of units.
      */
     public int getUnits() {
         return units;
-    }
-
-    /**
-     * Sets the number of units the mod is worth.
-     *
-     * @param units The number of units to set.
-     */
-    public void setUnits(int units) {
-        this.units = units;
     }
 
     /**
@@ -100,30 +65,12 @@ public class ModAttributes {
     }
 
     /**
-     * Sets whether the mod is graded.
-     *
-     * @param isGraded true if the mod should be graded, false otherwise.
-     */
-    public void setGraded(boolean isGraded) {
-        this.isGraded = isGraded;
-    }
-
-    /**
      * Gets the list of prerequisite mods required for enrollment.
      *
      * @return A list of prerequisite mods.
      */
     public List<Mod> getPrerequisites() {
         return prerequisites;
-    }
-
-    /**
-     * Sets the list of prerequisite mods required for enrollment.
-     *
-     * @param prerequisites A list of prerequisite mods.
-     */
-    public void setPrerequisites(List<Mod> prerequisites) {
-        this.prerequisites = prerequisites;
     }
 
     /**
@@ -136,11 +83,16 @@ public class ModAttributes {
     }
 
     /**
-     * Sets the expected weekly workload for the mod.
+     * Gets a comma-separated string of the semesters in which the mod is available.
      *
-     * @param workload The WeeklyWorkload object to set.
+     * @return A string listing the available semesters.
      */
-    public void setWorkload(WeeklyWorkload workload) {
-        this.workload = workload;
+    public String listAvailableSemesters() {
+        assert (availableSemesters != null && !availableSemesters.isEmpty());
+
+        StringJoiner sj = new StringJoiner(", ");
+        availableSemesters.forEach(semester -> sj.add(semester.toString()));
+
+        return sj.toString();
     }
 }

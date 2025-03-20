@@ -33,13 +33,9 @@ public class WeeklyWorkload {
         this.preparationHours = preparationHours;
     }
 
-    /**
-     * Calculates the total weekly workload by summing the hours spent on lectures, tutorials, projects,
-     * and preparation.
-     *
-     * @return The total number of hours per week spent on all activities.
-     */
-    public double getTotalWorkload() {
-        return this.lectureHours + this.tutorialHours + this.projectHours + this.preparationHours;
+    @Override
+    public String toString() {
+        return "Lectures: " + this.lectureHours + " hours, Tutorials: " + this.tutorialHours + " hours, "
+                + "Projects: " + this.projectHours + " hours, Preparation: " + this.preparationHours + " hours";
     }
 }

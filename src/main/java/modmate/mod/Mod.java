@@ -63,21 +63,20 @@ public class Mod {
     }
 
     /**
-     * Returns a brief description of the mod.
+     * Returns the description of the mod.
      *
      * @return The description of the mod.
      */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Returns the attributes associated with the mod.
-     *
-     * @return The attributes of the mod.
-     */
-    public ModAttributes getAttributes() {
-        return attributes;
+    public String getDetailedString() {
+        return "Code: " + code +
+                "\nName: " + name +
+                "\nDescription: " + description +
+                "\nFaculty: " + attributes.getFaculty() +
+                "\nAvailability: " + attributes.listAvailableSemesters() +
+                "\nUnits: " + attributes.getUnits() +
+                "\nGraded: " + attributes.isGraded() +
+                "\nPrerequisites: " + attributes.getPrerequisites() +
+                "\nWorkload: " + attributes.getWorkload();
     }
 
     /**
