@@ -1,10 +1,4 @@
-package modmate.mod;
-
-import modmate.log.Log;
-import modmate.mod.attribute.ModAttributes;
-import modmate.mod.attribute.Faculty;
-import modmate.mod.attribute.Semester;
-import modmate.mod.attribute.WeeklyWorkload;
+package modmate.download;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,15 +7,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import modmate.log.Log;
+import modmate.mod.Mod;
 
 /**
  * A utility class that provides functionality for retrieving and managing module data from an external API.
@@ -77,9 +73,11 @@ public class ModDataRetreiver {
                 if (jsonResponse.isEmpty()) {
                     throw new IllegalArgumentException("JSON response is empty or null");
                 }
-                JSONObject jsonObject = new JSONObject(jsonResponse);
 
-                return Optional.of(modBuilder(jsonObject));
+                JSONObject jsonObject = new JSONObject(jsonResponse);
+                JSONReader jsonReader = new JSONReader(jsonObject);
+
+                return Optional.of(jsonReader.getModule());
 
             } else {
                 Log.saveLog("\n[MODDATARETREIVER]   Request failed. Response Code: " + responseCode);
@@ -96,61 +94,6 @@ public class ModDataRetreiver {
 
         return Optional.empty();
     }
-
-    /**
-     * Builds a {@link Mod} object from a {@link JSONObject}.
-     *
-     * @param jsonObject the JSON object containing the module data
-     * @return a {@link Mod} object
-     */
-
-    private static Mod modBuilder(JSONObject jsonObject) {
-        return new Mod(
-                jsonObject.getString("title"),
-                jsonObject.getString("moduleCode"),
-                jsonObject.getString("description"),
-                new ModAttributes(
-                        new Faculty(jsonObject.getString("faculty")),
-                        jsonObject.getJSONArray("semesterData").toList().stream()
-                                .filter(obj -> obj instanceof Map) // Ensure obj is a Map before casting
-                                .map(obj -> {
-                                    Map<?, ?> map = (Map<?, ?>) obj; // Safe cast
-                                    Object semesterObj = map.get("semester");
-
-                                    // Map the semester number to the corresponding enum
-                                    if (semesterObj instanceof Integer semester) {
-                                        return switch (semester) {
-                                        case 1 -> Semester.SEMESTER_1;
-                                        case 2 -> Semester.SEMESTER_2;
-                                        case 3 -> Semester.SPECIAL_TERM_1;
-                                        case 4 -> Semester.SPECIAL_TERM_2;
-                                        default -> throw new IllegalArgumentException(
-                                                "Unknown semester: " + semester
-                                        );
-                                        };
-                                    } else {
-                                        throw new IllegalArgumentException(
-                                                "Invalid semester format: " + semesterObj
-                                        );
-                                    }
-                                })
-                                .collect(Collectors.toList()),
-                        jsonObject.getInt("moduleCredit"),
-                        jsonObject.getString("gradingBasisDescription").equals("Graded"),
-                        null,
-                        // I know having null here isn't ideal, but it is an unfinished feature,
-                        // so it can serve as a reminder to implement it
-                        new WeeklyWorkload(
-                                jsonObject.getJSONArray("workload").getDouble(0),
-                                jsonObject.getJSONArray("workload").getDouble(1),
-                                jsonObject.getJSONArray("workload").getDouble(3),
-                                jsonObject.getJSONArray("workload").getDouble(4)
-                        )
-                )
-        );
-    }
-
-
 
     /**
      * Retrieves a list of all module codes for a given academic year from the NUS Mod API.

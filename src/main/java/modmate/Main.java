@@ -6,8 +6,8 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import modmate.mod.Mod;
-import modmate.mod.ModDataRetreiver;
 import modmate.user.User;
+import modmate.download.ModDataRetreiver;
 import modmate.log.Log;
 
 /**
