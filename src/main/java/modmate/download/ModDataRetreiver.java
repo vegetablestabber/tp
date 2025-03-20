@@ -16,6 +16,7 @@ import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import modmate.download.json.ModJSONParser;
 import modmate.log.Log;
 import modmate.mod.Mod;
 
@@ -75,7 +76,7 @@ public class ModDataRetreiver {
                 }
 
                 JSONObject jsonObject = new JSONObject(jsonResponse);
-                JSONReader jsonReader = new JSONReader(jsonObject);
+                ModJSONParser jsonReader = new ModJSONParser(jsonObject);
 
                 return Optional.of(jsonReader.getModule());
 

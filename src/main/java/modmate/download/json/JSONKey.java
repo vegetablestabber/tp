@@ -1,4 +1,4 @@
-package modmate.download;
+package modmate.download.json;
 
 /**
  * Enum representing the keys used in JSON data for module information.

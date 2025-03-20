@@ -1,4 +1,4 @@
-package modmate.download;
+package modmate.download.json;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

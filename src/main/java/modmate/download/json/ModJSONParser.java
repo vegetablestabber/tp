@@ -1,4 +1,4 @@
-package modmate.download;
+package modmate.download.json;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,18 +14,18 @@ import modmate.mod.attribute.Semester;
 import modmate.mod.attribute.WeeklyWorkload;
 
 /**
- * JSONReader is responsible for reading and parsing JSON data to create Mod objects.
+ * ModJSONParser is responsible for reading and parsing JSON data to create Mod objects.
  */
-public class JSONReader {
+public class ModJSONParser {
 
     private final JSONUtils jsonUtils;
 
     /**
-     * Constructs a JSONReader with the given JSONObject.
+     * Constructs a ModJSONParser with the given JSONObject.
      *
      * @param jsonObject the JSONObject to read from
      */
-    public JSONReader(JSONObject jsonObject) {
+    public ModJSONParser(JSONObject jsonObject) {
         this.jsonUtils = new JSONUtils(jsonObject);
     }
 
