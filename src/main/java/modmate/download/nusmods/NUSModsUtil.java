@@ -9,6 +9,8 @@ public class NUSModsUtil {
     private static final String MODULE_URL = "https://api.nusmods.com/v2/%d-%d/modules/%s.json";
 
     public static URL getUrlForModuleList(int startYear) throws MalformedURLException {
+        assert startYear > 2020;
+
         int endYear = startYear + 1;
         String urlString = String.format(MODULE_LIST_URL, startYear, endYear);
 
@@ -16,6 +18,8 @@ public class NUSModsUtil {
     }
 
     public static URL getUrlForModule(String moduleCode, int startYear) throws MalformedURLException {
+        assert startYear > 2020;
+
         int endYear = startYear + 1;
         String urlString = String.format(MODULE_URL, startYear, endYear, moduleCode.toString());
 
