@@ -5,8 +5,8 @@ import java.net.URL;
 
 public class NUSModsUtil {
 
-    private static final String MODULE_LIST_URL = "https://api.nusmods.com/v2/%d-%d/modules/%s.json";
-    private static final String MODULE_URL = "https://api.nusmods.com/v2/%d-%d/moduleList.json";
+    private static final String MODULE_LIST_URL = "https://api.nusmods.com/v2/%d-%d/moduleList.json";
+    private static final String MODULE_URL = "https://api.nusmods.com/v2/%d-%d/modules/%s.json";
 
     public static URL getUrlForModuleList(int startYear) throws MalformedURLException {
         int endYear = startYear + 1;
