@@ -15,11 +15,12 @@ import modmate.mod.attribute.Semester;
 import modmate.mod.attribute.WeeklyWorkload;
 
 /**
- * ModJSONParser is responsible for reading and parsing JSON data to create Mod objects.
+ * ModJSONParser is responsible for reading and parsing JSON data to create Mod
+ * objects.
  */
 public class ModJSONParser {
 
-    private final ModJSONUtil jsonUtils;
+    private final ModJSONUtil jsonUtil;
 
     /**
      * Constructs a ModJSONParser with the given JSONObject.
@@ -27,13 +28,14 @@ public class ModJSONParser {
      * @param jsonObject the JSONObject to read from
      */
     public ModJSONParser(JSONObject jsonObject) {
-        this.jsonUtils = new ModJSONUtil(jsonObject);
+        this.jsonUtil = new ModJSONUtil(jsonObject);
     }
 
     /**
      * Retrieves a Mod object from the JSON data.
      *
      * @return a Mod object
+     * @throws JSONException if there is an error parsing the JSON data
      */
     public Mod getModule() throws JSONException {
         return new Mod(
@@ -47,33 +49,37 @@ public class ModJSONParser {
      * Retrieves the name of the module from the JSON data.
      *
      * @return the name of the module
+     * @throws JSONException if there is an error parsing the JSON data
      */
     public String getName() throws JSONException {
-        return this.jsonUtils.getString(ModJSONKey.NAME);
+        return this.jsonUtil.getString(ModJSONKey.NAME);
     }
 
     /**
      * Retrieves the code of the module from the JSON data.
      *
      * @return the code of the module
+     * @throws JSONException if there is an error parsing the JSON data
      */
     public String getCode() throws JSONException {
-        return this.jsonUtils.getString(ModJSONKey.CODE);
+        return this.jsonUtil.getString(ModJSONKey.CODE);
     }
 
     /**
      * Retrieves the description of the module from the JSON data.
      *
      * @return the description of the module
+     * @throws JSONException if there is an error parsing the JSON data
      */
     private String getDescription() throws JSONException {
-        return this.jsonUtils.getString(ModJSONKey.DESCRIPTION);
+        return this.jsonUtil.getString(ModJSONKey.DESCRIPTION);
     }
 
     /**
      * Retrieves the attributes of the module from the JSON data.
      *
      * @return the attributes of the module
+     * @throws JSONException if there is an error parsing the JSON data
      */
     private ModAttributes getModAttributes() throws JSONException {
         return new ModAttributes(
@@ -89,18 +95,20 @@ public class ModJSONParser {
      * Retrieves the faculty of the module from the JSON data.
      *
      * @return the faculty of the module
+     * @throws JSONException if there is an error parsing the JSON data
      */
     private Faculty getFaculty() throws JSONException {
-        return new Faculty(this.jsonUtils.getString(ModJSONKey.FACULTY));
+        return new Faculty(this.jsonUtil.getString(ModJSONKey.FACULTY));
     }
 
     /**
      * Retrieves the available semesters of the module from the JSON data.
      *
      * @return a list of available semesters
+     * @throws JSONException if there is an error parsing the JSON data
      */
     private List<Semester> getAvailableSemesters() throws JSONException {
-        return this.jsonUtils.getJSONArray(ModJSONKey.AVAILABLE_SEMESTERS)
+        return this.jsonUtil.getJSONArray(ModJSONKey.AVAILABLE_SEMESTERS)
                 .toList()
                 .stream()
                 .filter(obj -> obj instanceof Map) // Ensure obj is a Map
@@ -123,15 +131,17 @@ public class ModJSONParser {
      * Retrieves the number of units of the module from the JSON data.
      *
      * @return the number of units
+     * @throws JSONException if there is an error parsing the JSON data
      */
     private int getUnits() throws JSONException {
-        return this.jsonUtils.getInt(ModJSONKey.UNITS);
+        return this.jsonUtil.getInt(ModJSONKey.UNITS);
     }
 
     /**
      * Retrieves the prerequisites of the module from the JSON data.
      *
      * @return a list of prerequisite modules
+     * @throws JSONException if there is an error parsing the JSON data
      */
     private List<Mod> getPrerequisites() throws JSONException {
         return Collections.emptyList();
@@ -141,18 +151,20 @@ public class ModJSONParser {
      * Checks if the module is graded from the JSON data.
      *
      * @return true if the module is graded, false otherwise
+     * @throws JSONException if there is an error parsing the JSON data
      */
     private boolean getIsGraded() throws JSONException {
-        return this.jsonUtils.getString(ModJSONKey.IS_GRADED).equals("Graded");
+        return this.jsonUtil.getString(ModJSONKey.IS_GRADED).equals("Graded");
     }
 
     /**
      * Retrieves the weekly workload of the module from the JSON data.
      *
      * @return the weekly workload
+     * @throws JSONException if there is an error parsing the JSON data
      */
     private WeeklyWorkload getWorkload() throws JSONException {
-        JSONArray workloadJSONArray = this.jsonUtils.getJSONArray(ModJSONKey.WORKLOAD);
+        JSONArray workloadJSONArray = this.jsonUtil.getJSONArray(ModJSONKey.WORKLOAD);
 
         return new WeeklyWorkload(
                 workloadJSONArray.getDouble(0),
