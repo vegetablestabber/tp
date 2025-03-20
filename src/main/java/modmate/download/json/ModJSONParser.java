@@ -19,7 +19,7 @@ import modmate.mod.attribute.WeeklyWorkload;
  */
 public class ModJSONParser {
 
-    private final JSONUtils jsonUtils;
+    private final ModJSONUtil jsonUtils;
 
     /**
      * Constructs a ModJSONParser with the given JSONObject.
@@ -27,7 +27,7 @@ public class ModJSONParser {
      * @param jsonObject the JSONObject to read from
      */
     public ModJSONParser(JSONObject jsonObject) {
-        this.jsonUtils = new JSONUtils(jsonObject);
+        this.jsonUtils = new ModJSONUtil(jsonObject);
     }
 
     /**

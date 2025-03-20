@@ -4,11 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JSONUtils {
+public class ModJSONUtil {
 
     private final JSONObject jsonObject;
 
-    public JSONUtils(JSONObject jsonObject) {
+    public ModJSONUtil(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
     }
 

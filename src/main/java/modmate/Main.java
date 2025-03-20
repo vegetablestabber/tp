@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import modmate.mod.Mod;
 import modmate.user.User;
-import modmate.download.ModDataRetreiver;
+import modmate.download.nusmods.NUSModsAPI;
 import modmate.log.Log;
 
 /**
@@ -17,7 +17,7 @@ import modmate.log.Log;
  */
 public class Main {
 
-    static Map<String, String> allModCodesAndNames = ModDataRetreiver.fetchAllModCodes();
+    static Map<String, String> allModCodesAndNames = NUSModsAPI.fetchAllModCodes();
 
     static String helpMessage = """
         Commands:
@@ -47,7 +47,8 @@ public class Main {
             if (args[i].equals("--log") && i + 1 < args.length) {
                 Log.setLoggingEnabled(Boolean.parseBoolean(args[i + 1]));
             } else if (args[i].equals("--startYear") && i + 1 < args.length) {
-                allModCodesAndNames = ModDataRetreiver.fetchAllModCodes(args[i + 1]);
+                int startYear = Integer.parseInt(args[i + 1]);
+                allModCodesAndNames = NUSModsAPI.fetchAllModCodes(startYear);
             }
         }
         Log.printLog("Logging is enabled.");
@@ -127,7 +128,7 @@ public class Main {
 
         // If a match is found, retrieve mod details using the module code
         return modCodeFound.flatMap(entry ->
-                ModDataRetreiver.fetchModuleByCode(entry.getKey()));
+                NUSModsAPI.fetchModuleByCode(entry.getKey()));
     }
 
 
