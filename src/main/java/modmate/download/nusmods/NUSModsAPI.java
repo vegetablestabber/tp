@@ -2,8 +2,10 @@ package modmate.download.nusmods;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Month;
@@ -78,14 +80,14 @@ public class NUSModsAPI {
      */
     public static Optional<Mod> fetchModuleByCode(String moduleCode, int startYear) {
         try {
-            URL url = NUSModsUtil.getUrlForModule(moduleCode, startYear);
-            String jsonResponse = HttpUtil.retrieveDataFromURL(url);
+            URI uri = NUSModsUtil.getUriForModule(moduleCode, startYear);
+            String jsonResponse = HttpUtil.retrieveDataFromURL(uri).join();
 
             JSONObject jsonObject = new JSONObject(jsonResponse);
             ModJSONParser jsonReader = new ModJSONParser(jsonObject);
 
             return Optional.of(jsonReader.getModule());
-        } catch (IOException e) {
+        } catch (URISyntaxException e) {
             // Log the stack trace to the log file for better tracking
             Log.saveLog("\n[MODDATARETREIVER]   Error fetching module data: " + e.getMessage());
             Log.saveLog("\n[MODDATARETREIVER]   Stack Trace: ");
@@ -127,19 +129,25 @@ public class NUSModsAPI {
      * @param startYear the start year of the academic year
      */
     private static void downloadModListJSON(int startYear) {
+        System.out.println("Downloading has started.");
+
         try {
-            URL url = NUSModsUtil.getUrlForModuleList(startYear);
-            String jsonResponse = HttpUtil.retrieveDataFromURL(url);
+            URI uri = NUSModsUtil.getUriForModuleList(startYear);
+            String jsonResponse = HttpUtil.retrieveDataFromURL(uri).join();
 
             // Write the content of the API response to a file
             String filePath = createModListFilePath(startYear);
-            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
 
+            Path dataDirectory = Paths.get(filePath);
+            Files.createDirectories(dataDirectory.getParent());
+
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             fileOutputStream.write(jsonResponse.getBytes());
             fileOutputStream.close();
 
+            System.out.println("Data has been downloaded");
             Log.saveLog("\n[MODDATARETREIVER]   Data saved successfully to: " + filePath);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             // Log the error message and stack trace for better tracking
             Log.saveLog("\n[MODDATARETREIVER]   Error retrieving data from API: " + e.getMessage());
             Log.saveLog("\n[MODDATARETREIVER]   Stack Trace: ");
