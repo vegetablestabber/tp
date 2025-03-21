@@ -13,7 +13,7 @@ public class NUSModsUtil {
      * For example, if the academic year is 2023-2024, the file path will be:
      * "src/main/java/modmate/download/nusmods/nusmods_condensed_2023-2024.json".
      */
-    private static final String CONDENSED_MODS_FILE_PATH = "src/main/java/modmate/download/nusmods/nusmods_condensed_%d-%d.json";
+    private static final String MOD_LIST_FILE_PATH = "src/main/java/modmate/download/nusmods/nusmods_condensed_%d-%d.json";
 
     /**
      * The base URI for retrieving the list of modules from NUSMods API.
@@ -21,14 +21,14 @@ public class NUSModsUtil {
      * For example, to get the module list for the academic year 2021/2022, the URI would be:
      * https://api.nusmods.com/v2/2021-2022/moduleList.json
      */
-    private static final String MODULE_LIST_URI = "https://api.nusmods.com/v2/%d-%d/moduleList.json";
+    private static final String MOD_LIST_URI = "https://api.nusmods.com/v2/%d-%d/moduleList.json";
 
     /**
      * The base URI for accessing module information from the NUSMods API.
      * The URI is formatted with the academic year and module code.
      * Example usage: String.format(MODULE_URI, 2021, 2022, "CS2113");
      */
-    private static final String MODULE_URI = "https://api.nusmods.com/v2/%d-%d/modules/%s.json";
+    private static final String MOD_URI = "https://api.nusmods.com/v2/%d-%d/modules/%s.json";
 
     /**
      * Generates a URI for the module list for a given academic year.
@@ -41,7 +41,7 @@ public class NUSModsUtil {
         assert startYear > 2020;
 
         int endYear = startYear + 1;
-        String uriString = String.format(MODULE_LIST_URI, startYear, endYear);
+        String uriString = String.format(MOD_LIST_URI, startYear, endYear);
 
         return new URI(uriString);
     }
@@ -58,7 +58,7 @@ public class NUSModsUtil {
         assert startYear > 2020;
 
         int endYear = startYear + 1;
-        String uriString = String.format(MODULE_URI, startYear, endYear, moduleCode.toString());
+        String uriString = String.format(MOD_URI, startYear, endYear, moduleCode.toString());
 
         return new URI(uriString);
     }
@@ -83,9 +83,9 @@ public class NUSModsUtil {
      * @param startYear the start year of the academic year
      * @return the file path as a string
      */
-    public static String createModListFilePath(int startYear) {
+    public static String buildModListFilePath(int startYear) {
         int endYear = startYear + 1;
-        return String.format(CONDENSED_MODS_FILE_PATH,
+        return String.format(MOD_LIST_FILE_PATH,
                 startYear, endYear);
     }
 

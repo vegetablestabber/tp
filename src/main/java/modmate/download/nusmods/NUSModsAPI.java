@@ -114,7 +114,7 @@ public class NUSModsAPI {
             String jsonResponse = HttpUtil.retrieveDataFromURL(uri).join();
 
             // Write the content of the API response to a file
-            String filePath = NUSModsUtil.createModListFilePath(startYear);
+            String filePath = NUSModsUtil.buildModListFilePath(startYear);
 
             Path dataDirectory = Paths.get(filePath);
             Files.createDirectories(dataDirectory.getParent());
@@ -143,7 +143,7 @@ public class NUSModsAPI {
      * @return a map of module codes and titles extracted from the file
      */
     private static Map<String, String> loadCondensedModData(int startYear) {
-        String filePath = NUSModsUtil.createModListFilePath(startYear);
+        String filePath = NUSModsUtil.buildModListFilePath(startYear);
         Map<String, String> modulesMap = new HashMap<>();
 
         try {
