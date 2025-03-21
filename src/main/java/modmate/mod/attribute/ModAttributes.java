@@ -30,7 +30,8 @@ public class ModAttributes {
      * @param workload              The expected weekly workload for the mod.
      */
     public ModAttributes(Faculty faculty, List<Semester> semesters, int units,
-                         boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload, List<ClassSlot> classSlots) {
+                         boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload,
+                         List<ClassSlot> classSlots) {
         this.faculty = faculty;
         this.availableSemesters = semesters;
         this.units = units;

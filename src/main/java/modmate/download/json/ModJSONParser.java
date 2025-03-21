@@ -3,7 +3,11 @@ package modmate.download.json;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Collections;
 
 import modmate.event.Event;
 import modmate.event.EventFactory;
@@ -106,18 +110,18 @@ public class ModJSONParser {
         List<Event> events = getAllModEvents();
         Map<String, List<Event>> eventMap = new HashMap<>();
 
-        // Group events by class number
         for (Event event : events) {
             eventMap.computeIfAbsent(event.getClassNo(), k -> new ArrayList<>()).add(event);
         }
 
-        // Create ClassSlot objects
         List<ClassSlot> classSlots = new ArrayList<>();
         for (Map.Entry<String, List<Event>> entry : eventMap.entrySet()) {
             classSlots.add(new ClassSlot(entry.getValue(), entry.getKey()));
         }
 
         classSlots.sort((slot1, slot2) -> {
+            // This is just to compare class numbers in the format of "1A", "1B", "1C", etc.
+            // Its unnecessary but it was annoying me
             String classNo1 = slot1.getClassNo();
             String classNo2 = slot2.getClassNo();
 
@@ -152,6 +156,7 @@ public class ModJSONParser {
      */
     private List<Event> getAllModEvents() {
         JSONObject jsonObject = jsonUtil.getJSONObject();
+        // I know, I'm sorry, I'm too tired to figure out how the abstract version works sorry
         List<Event> events = new ArrayList<>();
 
         JSONArray semesterDataArray = jsonObject.getJSONArray("semesterData");
@@ -173,14 +178,14 @@ public class ModJSONParser {
                 HashMap<Integer, Boolean> occurrenceByWeek = new HashMap<>();
 
                 for (int week : weeks) {
-                    occurrenceByWeek.put(week, true); // Assuming true means it occurs in that week
+                    occurrenceByWeek.put(week, true);
                 }
 
                 Period period = new Period(
-                        DayOfWeek.valueOf(eventObj.getString("day").toUpperCase()), // Fix: Convert string to DayOfWeek
-                        LocalTime.parse(eventObj.getString("startTime"), DateTimeFormatter.ofPattern("HHmm")), // Fix: Parsing start time
-                        LocalTime.parse(eventObj.getString("endTime"), DateTimeFormatter.ofPattern("HHmm")), // Fix: Parsing end time
-                        occurrenceByWeek // Pass the occurrence map
+                        DayOfWeek.valueOf(eventObj.getString("day").toUpperCase()),
+                        LocalTime.parse(eventObj.getString("startTime"), DateTimeFormatter.ofPattern("HHmm")),
+                        LocalTime.parse(eventObj.getString("endTime"), DateTimeFormatter.ofPattern("HHmm")),
+                        occurrenceByWeek
                 );
 
                 // Create a new Event of the correct type for it
@@ -188,7 +193,7 @@ public class ModJSONParser {
                         eventObj.getString("lessonType"),
                         period,
                         eventObj.getString("venue"),
-                        eventObj.getString("classNo") // Change from int to String
+                        eventObj.getString("classNo")
                 ));
             }
         }
