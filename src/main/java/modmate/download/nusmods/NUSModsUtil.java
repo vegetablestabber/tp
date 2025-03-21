@@ -36,7 +36,7 @@ public class NUSModsUtil {
      *
      * @return the adjusted year
      */
-    static int getAdjustedYear() {
+    public static int getAdjustedYear() {
         LocalDate today = LocalDate.now();
         int currentYear = today.getYear();
 
@@ -49,7 +49,7 @@ public class NUSModsUtil {
      * @param startYear the start year of the academic year
      * @return the file path as a string
      */
-    static String createModListFilePath(int startYear) {
+    public static String createModListFilePath(int startYear) {
         int endYear = startYear + 1;
         return String.format(CONDENSED_MODS_FILE_PATH,
                 startYear, endYear);
