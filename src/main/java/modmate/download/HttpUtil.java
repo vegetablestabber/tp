@@ -16,7 +16,7 @@ public class HttpUtil {
     /**
      * Retrieves data from the specified URL using HttpClient.
      *
-     * @param url the URL to retrieve data from
+     * @param uri the URL to retrieve data from
      * @return a CompletableFuture containing the response data as a String
      */
     public static CompletableFuture<String> retrieveDataFromURL(URI uri) {

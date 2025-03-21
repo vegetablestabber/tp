@@ -9,16 +9,19 @@ public class NUSModsUtil {
 
     /**
      * The file path template for the condensed NUSMods JSON files.
-     * The placeholders %d-%d in the file path will be replaced with the academic year range.
+     * The placeholders %d-%d in the file path will be replaced with the academic
+     * year range.
      * For example, if the academic year is 2023-2024, the file path will be:
      * "src/main/java/modmate/download/nusmods/nusmods_condensed_2023-2024.json".
      */
-    private static final String MOD_LIST_FILE_PATH = "src/main/java/modmate/download/nusmods/nusmods_condensed_%d-%d.json";
+    private static final String MOD_LIST_FILE_PATH = "src/main/java/modmate/download/nusmods/"
+            + "nusmods_condensed_%d-%d.json";
 
     /**
      * The base URI for retrieving the list of modules from NUSMods API.
      * The URI is formatted with two integer values representing the academic year.
-     * For example, to get the module list for the academic year 2021/2022, the URI would be:
+     * For example, to get the module list for the academic year 2021/2022, the URI
+     * would be:
      * https://api.nusmods.com/v2/2021-2022/moduleList.json
      */
     private static final String MOD_LIST_URI = "https://api.nusmods.com/v2/%d-%d/moduleList.json";
@@ -33,7 +36,8 @@ public class NUSModsUtil {
     /**
      * Generates a URI for the module list for a given academic year.
      *
-     * @param startYear The starting year of the academic year (must be greater than 2020).
+     * @param startYear The starting year of the academic year (must be greater than
+     *                  2020).
      * @return A URI pointing to the module list for the specified academic year.
      * @throws URISyntaxException If the generated URI string is not a valid URI.
      */
@@ -50,7 +54,8 @@ public class NUSModsUtil {
      * Generates a URI for the specified module code and academic year.
      *
      * @param moduleCode The code of the module (e.g., "CS2113").
-     * @param startYear The starting year of the academic year (e.g., 2023 for the academic year 2023/2024).
+     * @param startYear  The starting year of the academic year (e.g., 2023 for the
+     *                   academic year 2023/2024).
      * @return A URI object representing the module's URL.
      * @throws URISyntaxException If the generated URI string is not a valid URI.
      */
