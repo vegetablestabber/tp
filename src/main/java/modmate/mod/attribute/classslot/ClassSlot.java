@@ -19,8 +19,6 @@ public class ClassSlot {
 
     @Override
     public String toString() {
-        return "ClassSlot{" +
-                "classNo='" + classNo + '\'' +
-                '}';
+        return "ClassSlot " + classNo + '\'';
     }
 }

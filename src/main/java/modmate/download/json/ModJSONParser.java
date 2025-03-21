@@ -1,9 +1,13 @@
 package modmate.download.json;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import modmate.event.Event;
 import modmate.event.EventFactory;
+import modmate.event.Period;
 import modmate.mod.attribute.classslot.ClassSlot;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,11 +117,32 @@ public class ModJSONParser {
             classSlots.add(new ClassSlot(entry.getValue(), entry.getKey()));
         }
 
-        // Sort ClassSlots alphabetically by class number
-        classSlots.sort(Comparator.comparing(ClassSlot::getClassNo));
+        classSlots.sort((slot1, slot2) -> {
+            String classNo1 = slot1.getClassNo();
+            String classNo2 = slot2.getClassNo();
+
+            String[] parts1 = classNo1.split("(?<=\\d)(?=\\D)");
+            String[] parts2 = classNo2.split("(?<=\\d)(?=\\D)");
+
+            int numComparison = Integer.compare(Integer.parseInt(parts1[0]), Integer.parseInt(parts2[0]));
+            if (numComparison != 0) {
+                return numComparison;
+            }
+
+            if (parts1.length > 1 && parts2.length > 1) {
+                return parts1[1].compareTo(parts2[1]);
+            } else if (parts1.length > 1) {
+                return 1;
+            } else if (parts2.length > 1) {
+                return -1;
+            }
+
+            return 0;
+        });
 
         return classSlots;
     }
+
 
 
     /**
@@ -138,29 +163,33 @@ public class ModJSONParser {
                 // For each event in the timetable
                 JSONObject eventObj = timetableArray.getJSONObject(j);
 
+                // Extract the weeks array
+                JSONArray weeksArray = eventObj.getJSONArray("weeks");
+                List<Integer> weeks = new ArrayList<>();
+                for (int k = 0; k < weeksArray.length(); k++) {
+                    weeks.add(weeksArray.getInt(k));
+                }
+
+                HashMap<Integer, Boolean> occurrenceByWeek = new HashMap<>();
+
+                for (int week : weeks) {
+                    occurrenceByWeek.put(week, true); // Assuming true means it occurs in that week
+                }
+
+                Period period = new Period(
+                        DayOfWeek.valueOf(eventObj.getString("day").toUpperCase()), // Fix: Convert string to DayOfWeek
+                        LocalTime.parse(eventObj.getString("startTime"), DateTimeFormatter.ofPattern("HHmm")), // Fix: Parsing start time
+                        LocalTime.parse(eventObj.getString("endTime"), DateTimeFormatter.ofPattern("HHmm")), // Fix: Parsing end time
+                        occurrenceByWeek // Pass the occurrence map
+                );
+
                 // Create a new Event of the correct type for it
                 events.add(EventFactory.createEvent(
                         eventObj.getString("lessonType"),
-                        null,
+                        period,
                         eventObj.getString("venue"),
                         eventObj.getString("classNo") // Change from int to String
                 ));
-
-
-                // String classNo = eventObj.getString("classNo");
-                // String startTime = eventObj.getString("startTime");
-                // String endTime = eventObj.getString("endTime");
-                // String venue = eventObj.getString("venue");
-                // String day = eventObj.getString("day");
-                // String lessonType = eventObj.getString("lessonType");
-                // int size = eventObj.getInt("size");
-                // String covidZone = eventObj.getString("covidZone");
-                // JSONArray weeksArray = eventObj.getJSONArray("weeks");
-
-                // List<Integer> weeks = new ArrayList<>();
-                // for (int k = 0; k < weeksArray.length(); k++) {
-                //     weeks.add(weeksArray.getInt(k));
-                // }
             }
         }
         return events;
