@@ -86,15 +86,6 @@ public class ModAttributes {
     }
 
     /**
-     * Gets the list of class slots for the mod.
-     *
-     * @return A list of class slots.
-     */
-    public List<ClassSlot> getClassSlots() {
-        return classSlots;
-    }
-
-    /**
      * Gets a comma-separated string of the semesters in which the mod is available.
      *
      * @return A string listing the available semesters.

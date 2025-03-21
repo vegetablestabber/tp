@@ -1,9 +1,9 @@
 package modmate.download.json;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import modmate.event.Event;
+import modmate.event.EventFactory;
 import modmate.mod.attribute.classslot.ClassSlot;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,14 +94,76 @@ public class ModJSONParser {
     }
 
     /**
-     * Retrieves the class slots of the module from the JSON data.
+     * Retrieves the class slots of the module from the Events in the JSON data.
      *
      * @return a list of class slots
      */
     private List<ClassSlot> getClassSlots() {
-        JSONObject jsonObject = jsonUtil.getJSONObject();
+        List<Event> events = getAllModEvents();
+        Map<String, List<Event>> eventMap = new HashMap<>();
 
-        return List.of();
+        // Group events by class number
+        for (Event event : events) {
+            eventMap.computeIfAbsent(event.getClassNo(), k -> new ArrayList<>()).add(event);
+        }
+
+        // Create ClassSlot objects
+        List<ClassSlot> classSlots = new ArrayList<>();
+        for (Map.Entry<String, List<Event>> entry : eventMap.entrySet()) {
+            classSlots.add(new ClassSlot(entry.getValue(), entry.getKey()));
+        }
+
+        // Sort ClassSlots alphabetically by class number
+        classSlots.sort(Comparator.comparing(ClassSlot::getClassNo));
+
+        return classSlots;
+    }
+
+
+    /**
+     * Retrieves all module events from the JSON data.
+     *
+     * @return a list of events
+     */
+    private List<Event> getAllModEvents() {
+        JSONObject jsonObject = jsonUtil.getJSONObject();
+        List<Event> events = new ArrayList<>();
+
+        JSONArray semesterDataArray = jsonObject.getJSONArray("semesterData");
+        for (int i = 0; i < semesterDataArray.length(); i++) {
+            // For each semester
+            JSONArray timetableArray = semesterDataArray.getJSONObject(i).getJSONArray("timetable");
+
+            for (int j = 0; j < timetableArray.length(); j++) {
+                // For each event in the timetable
+                JSONObject eventObj = timetableArray.getJSONObject(j);
+
+                // Create a new Event of the correct type for it
+                events.add(EventFactory.createEvent(
+                        eventObj.getString("lessonType"),
+                        null,
+                        eventObj.getString("venue"),
+                        eventObj.getString("classNo") // Change from int to String
+                ));
+
+
+                // String classNo = eventObj.getString("classNo");
+                // String startTime = eventObj.getString("startTime");
+                // String endTime = eventObj.getString("endTime");
+                // String venue = eventObj.getString("venue");
+                // String day = eventObj.getString("day");
+                // String lessonType = eventObj.getString("lessonType");
+                // int size = eventObj.getInt("size");
+                // String covidZone = eventObj.getString("covidZone");
+                // JSONArray weeksArray = eventObj.getJSONArray("weeks");
+
+                // List<Integer> weeks = new ArrayList<>();
+                // for (int k = 0; k < weeksArray.length(); k++) {
+                //     weeks.add(weeksArray.getInt(k));
+                // }
+            }
+        }
+        return events;
     }
 
     /**

@@ -6,18 +6,20 @@ package modmate.event;
  * This class is abstract and can be extended to define specific types of events.
  */
 public abstract class Event {
+    private final String classNo;
     private final Period period;
-    private String location;
+    private String venue;
 
     /**
      * Constructs an Event object with the specified details.
      *
      * @param period the period when this event takes place
-     * @param location the location where the event takes place
+     * @param venue the location where the event takes place
      */
-    public Event(Period period, String location) {
+    public Event(Period period, String venue, String classNo) {
         this.period = period;
-        this.location = location;
+        this.venue = venue;
+        this.classNo = classNo;
     }
 
     /**
@@ -34,16 +36,25 @@ public abstract class Event {
      *
      * @return the location of the event
      */
-    public String getLocation() {
-        return location;
+    public String getVenue() {
+        return venue;
+    }
+
+    /**
+     * Gets the class number of the event.
+     *
+     * @return the class number of the event
+     */
+    public String getClassNo() {
+        return classNo;
     }
 
     /**
      * Sets the location of the event.
      *
-     * @param location the new location of the event
+     * @param venue the new location of the event
      */
-    public void setLocation(String location) {
-        this.location = location;
+    public void setVenue(String venue) {
+        this.venue = venue;
     }
 }
