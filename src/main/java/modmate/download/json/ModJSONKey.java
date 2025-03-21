@@ -35,7 +35,10 @@ public enum ModJSONKey {
      */
     UNITS("moduleCredit"),
 
-    // TODO: Need one for prerequisites
+    /**
+     * The prerequisites for the module.
+     */
+    PREREQUISITES("prereqTree"),
 
     /**
      * Indicates if the module is graded.
