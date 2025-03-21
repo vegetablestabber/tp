@@ -50,7 +50,7 @@ public class NUSModsAPI {
      */
     private static String createModListFilePath(int startYear) {
         int endYear = startYear + 1;
-        return String.format("src/main/java/modmate/modsjson/allmods%d-%d.json", startYear, endYear);
+        return String.format("src/main/java/modmate/mod/modsjson/allmods%d-%d.json", startYear, endYear);
     }
 
     /**
