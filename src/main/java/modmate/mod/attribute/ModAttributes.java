@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import modmate.mod.Mod;
+import modmate.mod.attribute.classslot.ClassSlot;
 
 /**
  * Represents various attributes of a mod, including faculty, semester availability,
@@ -16,6 +17,7 @@ public class ModAttributes {
     private final boolean isGraded;
     private final List<Mod> prerequisites;
     private final WeeklyWorkload workload;
+    private final List<ClassSlot> classSlots;
 
     /**
      * Constructs a ModAttributes object with the given attributes.
@@ -28,13 +30,14 @@ public class ModAttributes {
      * @param workload              The expected weekly workload for the mod.
      */
     public ModAttributes(Faculty faculty, List<Semester> semesters, int units,
-                         boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
+                         boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload, List<ClassSlot> classSlots) {
         this.faculty = faculty;
         this.availableSemesters = semesters;
         this.units = units;
         this.isGraded = isGraded;
         this.prerequisites = prerequisites;
         this.workload = workload;
+        this.classSlots = classSlots;
     }
 
     /**

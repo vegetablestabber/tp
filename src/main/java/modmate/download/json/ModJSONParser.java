@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import modmate.mod.attribute.classslot.ClassSlot;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,7 +89,12 @@ public class ModJSONParser {
                 getUnits(),
                 getIsGraded(),
                 getPrerequisites(),
-                getWorkload());
+                getWorkload(),
+                getClassSlots());
+    }
+
+    private List<ClassSlot> getClassSlots() {
+        return null;
     }
 
     /**
