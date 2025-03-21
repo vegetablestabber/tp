@@ -9,6 +9,7 @@ import modmate.mod.attribute.ModAttributes;
  */
 public class Mod {
 
+
     /**
      * The name of the mod.
      */
