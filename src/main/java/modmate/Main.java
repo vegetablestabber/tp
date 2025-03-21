@@ -6,8 +6,17 @@ import modmate.user.User;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.log.Log;
 
-import static modmate.CommandCenter.*;
-
+import static modmate.CommandCenter.printHelp;
+import static modmate.CommandCenter.viewMod;
+import static modmate.CommandCenter.stringFromBetweenPartsXY;
+import static modmate.CommandCenter.bookmark;
+import static modmate.CommandCenter.getBookmarks;
+import static modmate.CommandCenter.addModToTimetable;
+import static modmate.CommandCenter.removeModFromTimetable;
+import static modmate.CommandCenter.createTimetable;
+import static modmate.CommandCenter.viewTimetable;
+import static modmate.CommandCenter.viewAllMods;
+import static modmate.CommandCenter.searchMods;
 /**
  * Main entry point for the ModMate application. It handles user input
  * and executes commands such as viewing mods, adding/removing mods
