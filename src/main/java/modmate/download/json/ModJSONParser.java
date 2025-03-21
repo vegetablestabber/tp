@@ -93,8 +93,15 @@ public class ModJSONParser {
                 getClassSlots());
     }
 
+    /**
+     * Retrieves the class slots of the module from the JSON data.
+     *
+     * @return a list of class slots
+     */
     private List<ClassSlot> getClassSlots() {
-        return null;
+        JSONObject jsonObject = jsonUtil.getJSONObject();
+
+        return List.of();
     }
 
     /**

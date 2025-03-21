@@ -86,6 +86,15 @@ public class ModAttributes {
     }
 
     /**
+     * Gets the list of class slots for the mod.
+     *
+     * @return A list of class slots.
+     */
+    public List<ClassSlot> getClassSlots() {
+        return classSlots;
+    }
+
+    /**
      * Gets a comma-separated string of the semesters in which the mod is available.
      *
      * @return A string listing the available semesters.
@@ -95,6 +104,21 @@ public class ModAttributes {
 
         StringJoiner sj = new StringJoiner(", ");
         availableSemesters.forEach(semester -> sj.add(semester.toString()));
+
+        return sj.toString();
+    }
+
+
+    /**
+     * Gets a comma-separated string of the class slots for the mod.
+     *
+     * @return A string listing the class slots.
+     */
+    public String listClassSlots() {
+        assert (classSlots != null && !classSlots.isEmpty());
+
+        StringJoiner sj = new StringJoiner(", ");
+        classSlots.forEach(classSlot -> sj.add(classSlot.toString()));
 
         return sj.toString();
     }
