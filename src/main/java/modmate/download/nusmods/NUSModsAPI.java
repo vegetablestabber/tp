@@ -36,7 +36,8 @@ public class NUSModsAPI {
      */
     private static String createModListFilePath(int startYear) {
         int endYear = startYear + 1;
-        return String.format("src/main/java/modmate/mod/modsjson/allmods%d-%d.json", startYear, endYear);
+        return String.format("src/main/java/modmate/download/nusmods/nusmods_condensed_%d-%d.json",
+                startYear, endYear);
     }
 
     /**
@@ -58,7 +59,7 @@ public class NUSModsAPI {
      * semester availability, and workload information.
      *
      * @param moduleCode the module code (e.g., "CS1010")
-     * @param startYear the start year of the academic year (e.g., 2024)
+     * @param startYear  the start year of the academic year (e.g., 2024)
      * @return an {@link Optional} containing the {@link Mod} object if the data is
      *         successfully fetched, or empty if not
      */
@@ -85,8 +86,10 @@ public class NUSModsAPI {
     }
 
     /**
-     * Retrieves a list of all module codes for a given academic year from the NUSMods API.
-     * The data is saved to a local file, and then all the module codes are extracted from that file.
+     * Retrieves a list of all module codes for a given academic year from the
+     * NUSMods API.
+     * The data is saved to a local file, and then all the module codes are
+     * extracted from that file.
      *
      * @param startYear the start year of the academic year (e.g., 2024)
      * @return a map of module codes and titles
@@ -97,9 +100,11 @@ public class NUSModsAPI {
     }
 
     /**
-     * Retrieves a list of all module codes for the current academic year from the NUSMods API.
+     * Retrieves a list of all module codes for the current academic year from the
+     * NUSMods API.
      * The current year is determined by the adjusted year logic.
-     * The data is saved to a local file, and then all the module codes are extracted from that file.
+     * The data is saved to a local file, and then all the module codes are
+     * extracted from that file.
      *
      * @return a map of module codes and titles
      */
@@ -108,7 +113,8 @@ public class NUSModsAPI {
     }
 
     /**
-     * Fetches the module list JSON data from the NUSMods API and saves it to a local file.
+     * Fetches the module list JSON data from the NUSMods API and saves it to a
+     * local file.
      *
      * @param startYear the start year of the academic year
      */
