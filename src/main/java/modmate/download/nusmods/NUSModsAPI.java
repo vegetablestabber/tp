@@ -107,8 +107,6 @@ public class NUSModsAPI {
      * @param startYear the start year of the academic year
      */
     private static void downloadModListJSON(int startYear) {
-        System.out.println("Downloading has started.");
-
         try {
             URI uri = NUSModsUtil.getUriForModuleList(startYear);
             String jsonResponse = HttpUtil.retrieveDataFromURL(uri).join();
@@ -123,7 +121,6 @@ public class NUSModsAPI {
             fileOutputStream.write(jsonResponse.getBytes());
             fileOutputStream.close();
 
-            System.out.println("Data has been downloaded");
             Log.saveLog("\n[MODDATARETREIVER]   Data saved successfully to: " + filePath);
         } catch (IOException | URISyntaxException e) {
             // Log the error message and stack trace for better tracking
