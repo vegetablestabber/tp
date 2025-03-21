@@ -7,8 +7,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -31,20 +29,6 @@ import modmate.mod.Mod;
 public class NUSModsAPI {
 
     /**
-     * Returns the adjusted year based on the current month.
-     * If the current month is before August, it returns the previous year,
-     * otherwise, it returns the current year.
-     *
-     * @return the adjusted year
-     */
-    private static int getAdjustedYear() {
-        LocalDate today = LocalDate.now();
-        int currentYear = today.getYear();
-
-        return (today.getMonthValue() >= Month.AUGUST.getValue()) ? currentYear : currentYear - 1;
-    }
-
-    /**
      * Creates the file path for storing the module list JSON data.
      *
      * @param startYear the start year of the academic year
@@ -65,7 +49,7 @@ public class NUSModsAPI {
      *         successfully fetched, or empty if not
      */
     public static Optional<Mod> fetchModuleByCode(String moduleCode) {
-        return fetchModuleByCode(moduleCode, getAdjustedYear());
+        return fetchModuleByCode(moduleCode, NUSModsUtil.getAdjustedYear());
     }
 
     /**
@@ -120,7 +104,7 @@ public class NUSModsAPI {
      * @return a map of module codes and titles
      */
     public static Map<String, String> fetchAllModCodes() {
-        return fetchAllModCodes(getAdjustedYear());
+        return fetchAllModCodes(NUSModsUtil.getAdjustedYear());
     }
 
     /**

@@ -2,6 +2,8 @@ package modmate.download.nusmods;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.Month;
 
 public class NUSModsUtil {
 
@@ -24,6 +26,20 @@ public class NUSModsUtil {
         String uriString = String.format(MODULE_URI, startYear, endYear, moduleCode.toString());
 
         return new URI(uriString);
+    }
+
+    /**
+     * Returns the adjusted year based on the current month.
+     * If the current month is before August, it returns the previous year,
+     * otherwise, it returns the current year.
+     *
+     * @return the adjusted year
+     */
+    static int getAdjustedYear() {
+        LocalDate today = LocalDate.now();
+        int currentYear = today.getYear();
+
+        return (today.getMonthValue() >= Month.AUGUST.getValue()) ? currentYear : currentYear - 1;
     }
 
 }
