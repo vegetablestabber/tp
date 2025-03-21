@@ -7,6 +7,7 @@ import java.time.Month;
 
 public class NUSModsUtil {
 
+    private static final String CONDENSED_MODS_FILE_PATH = "src/main/java/modmate/download/nusmods/nusmods_condensed_%d-%d.json";
     private static final String MODULE_LIST_URI = "https://api.nusmods.com/v2/%d-%d/moduleList.json";
     private static final String MODULE_URI = "https://api.nusmods.com/v2/%d-%d/modules/%s.json";
 
@@ -40,6 +41,18 @@ public class NUSModsUtil {
         int currentYear = today.getYear();
 
         return (today.getMonthValue() >= Month.AUGUST.getValue()) ? currentYear : currentYear - 1;
+    }
+
+    /**
+     * Creates the file path for storing the module list JSON data.
+     *
+     * @param startYear the start year of the academic year
+     * @return the file path as a string
+     */
+    static String createModListFilePath(int startYear) {
+        int endYear = startYear + 1;
+        return String.format(CONDENSED_MODS_FILE_PATH,
+                startYear, endYear);
     }
 
 }

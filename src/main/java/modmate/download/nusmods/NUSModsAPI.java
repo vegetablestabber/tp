@@ -29,18 +29,6 @@ import modmate.mod.Mod;
 public class NUSModsAPI {
 
     /**
-     * Creates the file path for storing the module list JSON data.
-     *
-     * @param startYear the start year of the academic year
-     * @return the file path as a string
-     */
-    private static String createModListFilePath(int startYear) {
-        int endYear = startYear + 1;
-        return String.format("src/main/java/modmate/download/nusmods/nusmods_condensed_%d-%d.json",
-                startYear, endYear);
-    }
-
-    /**
      * Retrieves module information from the NUSMods API using a module code.
      * This fetches data for the module, such as the title, description, faculty,
      * semester availability, and workload information.
@@ -126,7 +114,7 @@ public class NUSModsAPI {
             String jsonResponse = HttpUtil.retrieveDataFromURL(uri).join();
 
             // Write the content of the API response to a file
-            String filePath = createModListFilePath(startYear);
+            String filePath = NUSModsUtil.createModListFilePath(startYear);
 
             Path dataDirectory = Paths.get(filePath);
             Files.createDirectories(dataDirectory.getParent());
@@ -155,7 +143,7 @@ public class NUSModsAPI {
      * @return a map of module codes and titles extracted from the file
      */
     private static Map<String, String> loadCondensedModData(int startYear) {
-        String filePath = createModListFilePath(startYear);
+        String filePath = NUSModsUtil.createModListFilePath(startYear);
         Map<String, String> modulesMap = new HashMap<>();
 
         try {
