@@ -1,9 +1,11 @@
-package modmate.download.json;
+package modmate.download.json.mod;
+
+import modmate.download.json.JSONKey;
 
 /**
  * Enum representing the keys used in JSON data for module information.
  */
-public enum ModJSONKey {
+public enum ModJSONKey implements JSONKey {
 
     /**
      * The name of the module.
@@ -21,31 +23,9 @@ public enum ModJSONKey {
     DESCRIPTION("description"),
 
     /**
-     * The faculty offering the module.
+     * The semester data of the module.
      */
-    FACULTY("faculty"),
-
-    /**
-     * The semesters in which the module is available.
-     */
-    AVAILABLE_SEMESTERS("semesterData"),
-
-    /**
-     * The number of units or credits for the module.
-     */
-    UNITS("moduleCredit"),
-
-    // TODO: Need one for prerequisites
-
-    /**
-     * Indicates if the module is graded.
-     */
-    IS_GRADED("gradingBasisDescription"),
-
-    /**
-     * The workload of the module.
-     */
-    WORKLOAD("workload");
+    TIMETABLES("semesterData");
 
     private final String text;
 

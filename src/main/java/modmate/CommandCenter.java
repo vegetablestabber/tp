@@ -2,6 +2,7 @@ package modmate;
 
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.log.Log;
+import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
 import modmate.user.User;
 
@@ -11,21 +12,21 @@ import java.util.Optional;
 
 public class CommandCenter {
 
-    static Map<String, String> allModCodesAndNames = NUSModsAPI.fetchAllModCodes();
+    static Map<String, CondensedMod> allModCodesAndNames = NUSModsAPI.fetchAllModCodes();
 
     static String helpMessage = """
-        Commands:
-        -h: Display this help message
-        exit: Exit the application
-        viewmod <mod code or name>: View details of a mod by its mod code or name
-        bookmark <mod code or name>: Bookmark a mod for later reference
-        bookmarks: View all bookmarked mods
-        addmod <timetable> <mod code or name>: Add a mod to your list
-        removemod <timetable> <mod code or name>: Remove a mod from your list
-        createtimetable <timetable>: Create a new timetable
-        timetable <timetable>: Display your mod timetable
-        viewallmods: View all available mods
-        """;
+            Commands:
+            -h: Display this help message
+            exit: Exit the application
+            viewmod <mod code or name>: View details of a mod by its mod code or name
+            bookmark <mod code or name>: Bookmark a mod for later reference
+            bookmarks: View all bookmarked mods
+            addmod <timetable> <mod code or name>: Add a mod to your list
+            removemod <timetable> <mod code or name>: Remove a mod from your list
+            createtimetable <timetable>: Create a new timetable
+            timetable <timetable>: Display your mod timetable
+            viewallmods: View all available mods
+            """;
     // searchmod <mod code or name>: Search for a mod by its code or name
     // Add back when implemented
 
@@ -41,35 +42,24 @@ public class CommandCenter {
      * Helper method that searches for an exact matching mod by its code or name.
      *
      * @param modCodeOrNameGiven The code or name of the mod to search for.
-     * @return The mod that matches the given code or name, or null if no match is found.
+     * @return The mod that matches the given code or name, or null if no match is
+     *         found.
      */
     private static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven) {
         // First, check for a match with the module code (key)
-        Optional<Map.Entry<String, String>> modCodeFound = allModCodesAndNames.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equalsIgnoreCase(modCodeOrNameGiven)) // match by code
-                .findFirst();
-
-        // If no match was found by code, try matching by title (value)
-        if (modCodeFound.isEmpty()) {
-            modCodeFound = allModCodesAndNames.entrySet()
-                    .stream()
-                    .filter(entry -> entry.getValue().equalsIgnoreCase(modCodeOrNameGiven)) // match by title
-                    .findFirst();
-        }
+        Optional<CondensedMod> condensedMod = allModCodesAndNames.containsKey(modCodeOrNameGiven)
+                ? Optional.of(allModCodesAndNames.get(modCodeOrNameGiven))
+                : Optional.empty();
 
         // If a match is found, retrieve mod details using the module code
-        return modCodeFound.flatMap(entry ->
-                NUSModsAPI.fetchModuleByCode(entry.getKey()));
+        return condensedMod.flatMap(mod -> NUSModsAPI.fetchModuleByCode(mod.getCode()));
     }
-
-
 
     /**
      * Helper method to extract a substring from the command input.
      *
      * @param inputParts The split command input.
-     * @param x The starting index of the substring.
+     * @param x          The starting index of the substring.
      * @return The concatenated string from index x to the end of the input.
      */
     static String stringFromBetweenPartsXY(String[] inputParts, int x) {
@@ -77,11 +67,12 @@ public class CommandCenter {
     }
 
     /**
-     * Helper method to extract a substring from the command input between two indices.
+     * Helper method to extract a substring from the command input between two
+     * indices.
      *
      * @param inputParts The split command input.
-     * @param x The starting index of the substring.
-     * @param y The ending index of the substring.
+     * @param x          The starting index of the substring.
+     * @param y          The ending index of the substring.
      * @return The concatenated string between indices x and y in the input.
      */
     private static String stringFromBetweenPartsXY(String[] inputParts, int x, int y) {
@@ -106,8 +97,7 @@ public class CommandCenter {
      */
     static void viewMod(String inputCodeOrName) {
         assert inputCodeOrName != null
-                && !inputCodeOrName.trim().isEmpty() :
-                "Mod code or name cannot be null or empty";
+                && !inputCodeOrName.trim().isEmpty() : "Mod code or name cannot be null or empty";
         Log.saveLog("[MAIN]   Viewing mod details for: " + inputCodeOrName);
 
         modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
@@ -119,12 +109,11 @@ public class CommandCenter {
         });
     }
 
-
     /**
      * Bookmarks a mod for later reference.
      *
      * @param inputCodeOrName The mod code or name to bookmark.
-     * @param currentUser The user object representing the current user.
+     * @param currentUser     The user object representing the current user.
      */
     static void bookmark(String inputCodeOrName, User currentUser) {
         Log.saveLog("[MAIN]   Bookmarking mod.");
@@ -160,9 +149,10 @@ public class CommandCenter {
     /**
      * Adds a mod to the user's timetable.
      *
-     * @param timetable The name of the timetable to which the mod should be added.
+     * @param timetable       The name of the timetable to which the mod should be
+     *                        added.
      * @param inputCodeOrName The mod code or name to add to the timetable.
-     * @param currentUser The user object representing the current user.
+     * @param currentUser     The user object representing the current user.
      */
     static void addModToTimetable(String timetable, String inputCodeOrName, User currentUser) {
         assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
@@ -177,13 +167,13 @@ public class CommandCenter {
         });
     }
 
-
     /**
      * Removes a mod from the user's timetable.
      *
-     * @param timetable The name of the timetable from which the mod should be removed.
+     * @param timetable       The name of the timetable from which the mod should be
+     *                        removed.
      * @param inputCodeOrName The mod code or name to remove from the timetable.
-     * @param currentUser The user object representing the current user.
+     * @param currentUser     The user object representing the current user.
      */
     static void removeModFromTimetable(String timetable, String inputCodeOrName, User currentUser) {
         assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
@@ -198,17 +188,15 @@ public class CommandCenter {
         });
     }
 
-
     /**
      * Creates a new timetable for the user.
      *
      * @param inputTimetableName The name of the new timetable to create.
-     * @param currentUser The user object representing the current user.
+     * @param currentUser        The user object representing the current user.
      */
     static void createTimetable(String inputTimetableName, User currentUser) {
         assert inputTimetableName != null
-                && !inputTimetableName.trim().isEmpty() :
-                "Timetable name cannot be null or empty";
+                && !inputTimetableName.trim().isEmpty() : "Timetable name cannot be null or empty";
         Log.saveLog("[MAIN]   Creating timetable: " + inputTimetableName);
 
         if (currentUser.hasTimetable(inputTimetableName)) {
@@ -220,12 +208,11 @@ public class CommandCenter {
         }
     }
 
-
     /**
      * Displays the user's timetable for a specific timetable name.
      *
      * @param inputTimetableName The name of the timetable to display.
-     * @param currentUser The user object representing the current user.
+     * @param currentUser        The user object representing the current user.
      */
     static void viewTimetable(String inputTimetableName, User currentUser) {
         Log.saveLog("[MAIN]   Displaying user's mod list.");
@@ -237,10 +224,8 @@ public class CommandCenter {
      */
     static void viewAllMods() {
         Log.saveLog("[MAIN]   Viewing all mods.");
-        allModCodesAndNames.forEach((modCode, title) ->
-                System.out.println(modCode + ": " + title));
+        allModCodesAndNames.forEach((modCode, mod) -> System.out.println(modCode + ": " + mod.getName()));
     }
-
 
     /**
      * Searches for mods by mod code or name.

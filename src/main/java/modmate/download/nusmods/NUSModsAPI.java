@@ -7,17 +7,20 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import modmate.download.HttpUtil;
-import modmate.download.json.ModJSONParser;
+import modmate.download.json.mod.CondensedModJSONParser;
+import modmate.download.json.mod.ModJSONParser;
 import modmate.log.Log;
+import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
 
 /**
@@ -82,9 +85,9 @@ public class NUSModsAPI {
             String jsonResponse = HttpUtil.retrieveDataFromURL(url);
 
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            ModJSONParser jsonReader = new ModJSONParser(jsonObject);
+            ModJSONParser jsonParser = new ModJSONParser(jsonObject);
 
-            return Optional.of(jsonReader.getModule());
+            return Optional.of(jsonParser.getModule());
         } catch (IOException e) {
             // Log the stack trace to the log file for better tracking
             Log.saveLog("\n[MODDATARETREIVER]   Error fetching module data: " + e.getMessage());
@@ -105,7 +108,7 @@ public class NUSModsAPI {
      * @param startYear the start year of the academic year (e.g., 2024)
      * @return a map of module codes and titles
      */
-    public static Map<String, String> fetchAllModCodes(int startYear) {
+    public static Map<String, CondensedMod> fetchAllModCodes(int startYear) {
         downloadModListJSON(startYear);
         return loadCondensedModData(startYear);
     }
@@ -117,7 +120,7 @@ public class NUSModsAPI {
      *
      * @return a map of module codes and titles
      */
-    public static Map<String, String> fetchAllModCodes() {
+    public static Map<String, CondensedMod> fetchAllModCodes() {
         return fetchAllModCodes(getAdjustedYear());
     }
 
@@ -156,24 +159,24 @@ public class NUSModsAPI {
      * @param startYear the start year of the academic year
      * @return a map of module codes and titles extracted from the file
      */
-    private static Map<String, String> loadCondensedModData(int startYear) {
+    private static Map<String, CondensedMod> loadCondensedModData(int startYear) {
         String filePath = createModListFilePath(startYear);
-        Map<String, String> modulesMap = new HashMap<>();
 
         try {
             // Read file content as a string
             String content = new String(Files.readAllBytes(Paths.get(filePath)));
 
             // Parse JSON
-            JSONArray modulesArray = new JSONArray(content);
+            JSONArray moduleJSONArray = new JSONArray(content);
 
             // Extract mod codes and titles
-            IntStream.range(0, modulesArray.length()).forEach(i -> {
-                JSONObject moduleJSON = modulesArray.getJSONObject(i);
-                ModJSONParser parser = new ModJSONParser(moduleJSON);
-
-                modulesMap.put(parser.getCode(), parser.getName());
-            });
+            return IntStream.range(0, moduleJSONArray.length())
+                .mapToObj(i -> moduleJSONArray.getJSONObject(i))
+                .map(jsonObject -> {
+                    CondensedModJSONParser jsonParser = new CondensedModJSONParser(jsonObject);
+                    return jsonParser.getModule();
+                })
+                .collect(Collectors.toMap(mod -> mod.getCode(), mod -> mod));
         } catch (IOException e) {
             // Log error details for file reading issue
             Log.saveLog("\n[MODDATARETREIVER]   Error reading file: " + filePath);
@@ -194,7 +197,7 @@ public class NUSModsAPI {
             }
         }
 
-        return modulesMap;
+        return Collections.emptyMap();
     }
 
 }

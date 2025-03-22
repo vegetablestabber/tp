@@ -50,7 +50,7 @@ public class Main {
 
         while (true) {
             System.out.println("\nEnter command ('exit' to quit, '-h' for help):");
-            String input = scanner.nextLine().trim().toLowerCase();
+            String input = scanner.nextLine().trim();
             Log.saveLog("\n[MAIN]   Received input: " + input);
 
             String[] inputParts = input.split(" ");

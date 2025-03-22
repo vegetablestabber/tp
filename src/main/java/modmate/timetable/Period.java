@@ -1,9 +1,8 @@
-package modmate.lesson;
+package modmate.timetable;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 
 /**
  * Represents a period of time within a week, including the day, start and end times, and
@@ -30,22 +29,26 @@ public class Period {
      * A map representing whether this period occurs in a particular week.
      * The key is the week number, and the value indicates whether the period occurs in that week.
      */
-    private HashMap<Integer, Boolean> occurrenceByWeek;
+    private WeekRange weekRange;
 
     /**
-     * Private constructor to initialize a period with a specified day, start time, end time,
-     * and a map of occurrences by week.
+     * Constructs a period with a specified day, start time, end time,
+     * and a week range indicating the occurrence of the period in specific weeks.
      *
      * @param day The day of the week the period occurs.
      * @param startTime The start time of the period.
      * @param endTime The end time of the period.
-     * @param occurrenceByWeek A map indicating the occurrence of the period in specific weeks.
+     * @param weekRange The week range indicating the occurrence of the period in specific weeks.
      */
-    public Period(DayOfWeek day, LocalTime startTime, LocalTime endTime, HashMap<Integer, Boolean> occurrenceByWeek) {
+    public Period(DayOfWeek day, LocalTime startTime, LocalTime endTime, WeekRange weekRange) {
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.occurrenceByWeek = occurrenceByWeek;
+        this.weekRange = weekRange;
+    }
+
+    public Period(DayOfWeek day, LocalTime startTime, LocalTime endTime) {
+        this(day, startTime, endTime, new WeekRange());
     }
 
     /**
@@ -90,7 +93,8 @@ public class Period {
      * @return A map where the key is the week number, and the value indicates whether the
      *         period occurs in that week.
      */
-    public HashMap<Integer, Boolean> getOccurrenceByWeek() {
-        return occurrenceByWeek;
+    public WeekRange getWeekRange() {
+        return weekRange;
     }
+
 }
