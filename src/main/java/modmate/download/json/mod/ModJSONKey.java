@@ -5,6 +5,7 @@ import modmate.download.json.JSONKey;
 /**
  * Enum representing the keys used in JSON data for module information.
  */
+
 public enum ModJSONKey implements JSONKey {
 
     /**
@@ -23,9 +24,29 @@ public enum ModJSONKey implements JSONKey {
     DESCRIPTION("description"),
 
     /**
+     * The number of modular credits (MCs) for the module.
+     */
+    UNITS("moduleCredit"),
+
+    /**
      * The semester data of the module.
      */
-    TIMETABLES("semesterData");
+    TIMETABLES("semesterData"),
+
+    /**
+     * The prerequisites for the module.
+     */
+    PREREQUISITES("prereqTree"),
+
+    /**
+     * Indicates if the module is graded.
+     */
+    IS_GRADED("gradingBasisDescription"),
+
+    /**
+     * The workload of the module.
+     */
+    WORKLOAD("workload");
 
     private final String text;
 
