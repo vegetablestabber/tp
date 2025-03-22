@@ -1,4 +1,4 @@
-package modmate.event;
+package modmate.lesson;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;

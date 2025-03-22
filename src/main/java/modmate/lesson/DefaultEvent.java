@@ -1,9 +1,11 @@
-package modmate.event;
+package modmate.lesson;
+
+import modmate.lesson.types.Lesson;
 
 /**
  * Represents a default event to be used in the case where the event type is not recognized.
  */
-public class DefaultEvent extends Event {
+public class DefaultEvent extends Lesson {
 
     /**
      * Constructs a Default Event object with the specified details.

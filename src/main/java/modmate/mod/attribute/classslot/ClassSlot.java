@@ -1,14 +1,14 @@
 package modmate.mod.attribute.classslot;
 
-import modmate.event.Event;
-
 import java.util.List;
+
+import modmate.lesson.types.Lesson;
 
 public class ClassSlot {
     private final String classNo;
-    private final List<Event> events;
+    private final List<Lesson> events;
 
-    public ClassSlot(List<Event> events, String classNo) {
+    public ClassSlot(List<Lesson> events, String classNo) {
         this.events = events;
         this.classNo = classNo;
     }

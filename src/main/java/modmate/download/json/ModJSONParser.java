@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Collections;
 
-import modmate.event.Event;
-import modmate.event.EventFactory;
-import modmate.event.Period;
 import modmate.mod.attribute.classslot.ClassSlot;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import modmate.lesson.EventFactory;
+import modmate.lesson.Period;
+import modmate.lesson.types.Lesson;
 import modmate.mod.Mod;
 import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.ModAttributes;
@@ -107,15 +107,15 @@ public class ModJSONParser {
      * @return a list of class slots
      */
     private List<ClassSlot> getClassSlots() {
-        List<Event> events = getAllModEvents();
-        Map<String, List<Event>> eventMap = new HashMap<>();
+        List<Lesson> events = getAllModEvents();
+        Map<String, List<Lesson>> eventMap = new HashMap<>();
 
-        for (Event event : events) {
-            eventMap.computeIfAbsent(event.getClassNo(), k -> new ArrayList<>()).add(event);
+        for (Lesson event : events) {
+            eventMap.computeIfAbsent(event.getId(), k -> new ArrayList<>()).add(event);
         }
 
         List<ClassSlot> classSlots = new ArrayList<>();
-        for (Map.Entry<String, List<Event>> entry : eventMap.entrySet()) {
+        for (Map.Entry<String, List<Lesson>> entry : eventMap.entrySet()) {
             classSlots.add(new ClassSlot(entry.getValue(), entry.getKey()));
         }
 
@@ -154,10 +154,10 @@ public class ModJSONParser {
      *
      * @return a list of events
      */
-    private List<Event> getAllModEvents() {
+    private List<Lesson> getAllModEvents() {
         JSONObject jsonObject = jsonUtil.getJSONObject();
         // I know, I'm sorry, I'm too tired to figure out how the abstract version works sorry
-        List<Event> events = new ArrayList<>();
+        List<Lesson> events = new ArrayList<>();
 
         JSONArray semesterDataArray = jsonObject.getJSONArray("semesterData");
         for (int i = 0; i < semesterDataArray.length(); i++) {
