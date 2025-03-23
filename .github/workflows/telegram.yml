@@ -1,6 +1,6 @@
 name: Notify Telegram group chat
 
-on: [push, pull_request]
+on: [push, pull_request_target]
 
 jobs:
   notify_telegram:
