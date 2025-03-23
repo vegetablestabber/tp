@@ -14,7 +14,7 @@ public class ModAttributes {
 
     private final Faculty faculty;
     private final List<Semester> availableSemesters;
-    private final int units;
+    private final double units;
     private final boolean isGraded;
     private final List<Mod> prerequisites;
     private final WeeklyWorkload workload;
@@ -30,7 +30,7 @@ public class ModAttributes {
      * @param prerequisites A list of prerequisite mods required for enrollment.
      * @param workload      The expected weekly workload for the mod.
      */
-    public ModAttributes(Faculty faculty, List<Semester> semesters, int units,
+    public ModAttributes(Faculty faculty, List<Semester> semesters, double units,
             boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
         this.faculty = faculty;
         this.availableSemesters = semesters;
@@ -68,7 +68,7 @@ public class ModAttributes {
      *
      * @return The number of units.
      */
-    public int getUnits() {
+    public double getUnits() {
         return units;
     }
 
