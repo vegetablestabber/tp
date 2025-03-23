@@ -1,4 +1,4 @@
-name: Notify Telegram group chat
+name: Notify Telegram
 
 on: [push, pull_request_target]
 
