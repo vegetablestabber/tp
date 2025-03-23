@@ -4,10 +4,10 @@ on: [push, pull_request_target]
 
 jobs:
   notify_telegram:
+    if: github.repository == 'AY2425S2-CS2113-W12-1/tp'
     runs-on: ubuntu-latest
-
     steps:
-      - name: Notify the commit on Telegram
+      - name: Notify the Telegram group chat
         uses: EverythingSuckz/github-telegram-notify@main
         with:
           bot_token: '${{ secrets.BOT_TOKEN }}'
