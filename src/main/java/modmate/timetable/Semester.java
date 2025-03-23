@@ -1,4 +1,4 @@
-package modmate.mod.attribute;
+package modmate.timetable;
 
 
 /**

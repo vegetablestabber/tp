@@ -5,7 +5,7 @@ import modmate.mod.Mod;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Timetable {
+public class Schedule {
     private String name; // Name of the timetable
     private List<Mod> mods; // List of mods in this timetable
 
@@ -14,7 +14,7 @@ public class Timetable {
      *
      * @param name The name of the timetable.
      */
-    public Timetable(String name) {
+    public Schedule(String name) {
         this.name = name;
         this.mods = new ArrayList<>();
     }

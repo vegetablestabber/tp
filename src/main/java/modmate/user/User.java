@@ -9,7 +9,7 @@ public class User {
     private List<Mod> bookmarks;
 
     // List to store the user's timetables
-    private List<Timetable> timetables;
+    private List<Schedule> timetables;
 
     // Constructor to initialize the user's mods and timetables
     public User() {
@@ -19,20 +19,20 @@ public class User {
 
     // Method to add a new timetable for the user
     public void addTimetable(String timetableName) {
-        for (Timetable timetable : timetables) {
+        for (Schedule timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
                 System.out.println("A timetable with the '" + timetable + "' already exists");
                 return;
             }
         }
-        Timetable newtimetable = new Timetable(timetableName);
+        Schedule newtimetable = new Schedule(timetableName);
         timetables.add(newtimetable);
         System.out.println("Timetable '" + timetableName + "' created successfully");
     }
 
     // Method to display the user's mods and timetables
     public String getTimetable(String timetableName) {
-        for (Timetable timetable : timetables) {
+        for (Schedule timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
                 return timetable.toString();
             }
@@ -41,7 +41,7 @@ public class User {
     }
 
     public void addModToTimetable(String timetableName, Mod mod) {
-        for (Timetable timetable : timetables) {
+        for (Schedule timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
                 timetable.addMod(mod);
                 return;
@@ -51,7 +51,7 @@ public class User {
     }
 
     public boolean hasTimetable(String inputTimetableName) {
-        for (Timetable timetable : timetables) {
+        for (Schedule timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(inputTimetableName)) {
                 return true;
             }
@@ -60,7 +60,7 @@ public class User {
     }
 
     public void removeModFromTimetable(String timetableName, Mod mod) {
-        for (Timetable timetable : timetables) {
+        for (Schedule timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
                 timetable.removeMod(mod);
                 return;
