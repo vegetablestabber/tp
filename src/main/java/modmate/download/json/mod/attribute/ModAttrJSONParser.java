@@ -25,7 +25,7 @@ public class ModAttrJSONParser extends JSONParser<ModAttrJSONKey> {
 
     public ModAttributes getAttributes() {
         Faculty faculty = new Faculty(this.getString(ModAttrJSONKey.FACULTY));
-        int units = this.getInt(ModAttrJSONKey.UNITS);
+        double units = this.getDouble(ModAttrJSONKey.UNITS);
         boolean isGraded = this.getString(ModAttrJSONKey.IS_GRADED).equals("Graded");
         List<Mod> prerequisites = Collections.emptyList();
 

@@ -26,6 +26,10 @@ public class JSONParser<K extends JSONKey> {
         return this.jsonObject.getInt(key.toString());
     }
 
+    public double getDouble(K key) throws JSONException {
+        return this.jsonObject.getDouble(key.toString());
+    }
+
     public JSONObject getJSONObject(K key) {
         return this.jsonObject.getJSONObject(key.toString());
     }
