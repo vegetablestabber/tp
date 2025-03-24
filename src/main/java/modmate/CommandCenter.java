@@ -225,13 +225,15 @@ public class CommandCenter {
     static void viewAllMods() {
         Log.saveLog("[MAIN]   Viewing all mods.");
         allModCodesAndNames
-                .entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .forEach((modCode) ->
-                        System.out.println(modCode.getKey()
-                                + ": "
-                                + modCode.getValue().getName()));
+            .entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByKey())
+            .forEach((modCode) ->
+                    System.out.println(modCode.getKey()
+                            + ": "
+                            + modCode.getValue().getName()
+                    )
+            );
     }
 
     /**
