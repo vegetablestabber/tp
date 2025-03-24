@@ -34,4 +34,4 @@ jobs:
           to: ${{ secrets.CHAT_ID }}
           token: ${{ secrets.BOT_TOKEN }}
           message: |
-            $ACTOR's recent edits did not pass the Java CI checks
+            '$ACTOR's recent edits did not pass the Java CI checks'
