@@ -6,13 +6,14 @@ on:
         types: [completed]
 
 env:
-    REPO_MATCH: ${{ github.repository == 'AY2425S2-CS2113-W12-1/tp' }}
+    # REPO_MATCH: ${{ github.repository == 'AY2425S2-CS2113-W12-1/tp' }}
     ACTOR: ${{ github.actor }}
     JAVA_CI_SUCCESS: ${{ github.event.workflow_run.conclusion == 'success' }}
 
 jobs:
   on-success:
-    if: ${{ github.env.REPO_MATCH && github.env.JAVA_CI_SUCCESS }}
+    if: ${{ github.env.JAVA_CI_SUCCESS }}
+    # if: ${{ github.env.REPO_MATCH && github.env.JAVA_CI_SUCCESS }}
     runs-on: ubuntu-latest
     steps:
       - name: Send message to Telegram
