@@ -25,7 +25,7 @@ jobs:
             $ACTOR's recent edits have passed all Java CI checks
 
   on-failure:
-    if: ${{ github.env.REPO_MATCH && !github.env.JAVA_CI_SUCCESS }}
+    if: ${{ !github.env.JAVA_CI_SUCCESS }}
     runs-on: ubuntu-latest
     steps:
       - name: Send message to Telegram
