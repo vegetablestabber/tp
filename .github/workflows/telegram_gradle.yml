@@ -23,7 +23,7 @@ jobs:
           to: ${{ secrets.CHAT_ID }}
           token: ${{ secrets.BOT_TOKEN }}
           message: |
-            $ACTOR's recent edits have passed all Java CI checks
+            "$ACTOR's recent edits have passed all Java CI checks"
 
   on-failure:
     if: ${{ github.env.JAVA_CI_FAILURE }}
@@ -35,4 +35,4 @@ jobs:
           to: ${{ secrets.CHAT_ID }}
           token: ${{ secrets.BOT_TOKEN }}
           message: |
-            '$ACTOR's recent edits did not pass the Java CI checks'
+            "$ACTOR's recent edits did not pass the Java CI checks"
