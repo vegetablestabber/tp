@@ -22,4 +22,4 @@ jobs:
           to: ${{ secrets.CHAT_ID }}
           token: ${{ secrets.BOT_TOKEN }}
           message: |
-            '$ACTOR left a [comment]($URL) on issue #$ID ($TITLE)'
+            "$ACTOR left a [comment]($URL) on issue #$ID ($TITLE)"

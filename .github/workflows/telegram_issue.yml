@@ -22,4 +22,4 @@ jobs:
           to: ${{ secrets.CHAT_ID }}
           token: ${{ secrets.BOT_TOKEN }}
           message: |
-            '$ACTOR $ACTION [issue #$ID ($TITLE)]($URL)'
+            "$ACTOR $ACTION [issue #$ID ($TITLE)]($URL)"
