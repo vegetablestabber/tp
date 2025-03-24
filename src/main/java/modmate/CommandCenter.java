@@ -220,7 +220,7 @@ public class CommandCenter {
     }
 
     /**
-     * Displays all available mods.
+     * Displays all available mods sorted alphabetically (by code).
      */
     static void viewAllMods() {
         Log.saveLog("[MAIN]   Viewing all mods.");
