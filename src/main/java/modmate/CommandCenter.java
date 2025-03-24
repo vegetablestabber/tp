@@ -235,7 +235,7 @@ public class CommandCenter {
     static void searchMods(String inputSearchQuery) {
         Log.saveLog("[MAIN]   User is searching for a mod.");
         List<Mod> searchResults = getSearchResults(inputSearchQuery);
-        if (searchResults != null) {
+        if (!searchResults.isEmpty()) {
             for (Mod mod : searchResults) {
                 System.out.println(mod);
             }
@@ -255,8 +255,14 @@ public class CommandCenter {
         // Search inside Map allModCodesAndNames for matches
         // Will have to search through both halves of the map, code and name
         // If found, return list of getModFromAPIUsingCode(Code of Map pair found)
-        // TODO Search for mods that contain the search term in their mod code or name
         // TODO Return a list of matching mods ordered by relevance
-        return null;
+        return allModCodesAndNames.values().stream().filter(
+                        condensedMod -> condensedMod.getName().toLowerCase().contains(searchTerm.toLowerCase())
+                                || condensedMod.getCode().toLowerCase().contains(searchTerm.toLowerCase())
+                        // map to full mods
+                ).map(condensedMod -> NUSModsAPI.fetchModuleByCode(condensedMod.getCode()))
+                // remove optionals
+                .flatMap(Optional::stream)
+                .toList();
     }
 }
