@@ -220,11 +220,20 @@ public class CommandCenter {
     }
 
     /**
-     * Displays all available mods.
+     * Displays all available mods sorted alphabetically (by code).
      */
     static void viewAllMods() {
         Log.saveLog("[MAIN]   Viewing all mods.");
-        allModCodesAndNames.forEach((modCode, mod) -> System.out.println(modCode + ": " + mod.getName()));
+        allModCodesAndNames
+            .entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByKey())
+            .forEach((modCode) ->
+                    System.out.println(modCode.getKey()
+                            + ": "
+                            + modCode.getValue().getName()
+                    )
+            );
     }
 
     /**
