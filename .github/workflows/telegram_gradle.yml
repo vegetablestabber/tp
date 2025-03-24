@@ -9,6 +9,7 @@ env:
     # REPO_MATCH: ${{ github.repository == 'AY2425S2-CS2113-W12-1/tp' }}
     ACTOR: ${{ github.actor }}
     JAVA_CI_SUCCESS: ${{ github.event.workflow_run.conclusion == 'success' }}
+    JAVA_CI_FAILURE: ${{ github.event.workflow_run.conclusion == 'failure' }}
 
 jobs:
   on-success:
@@ -25,7 +26,7 @@ jobs:
             $ACTOR's recent edits have passed all Java CI checks
 
   on-failure:
-    if: ${{ !github.env.JAVA_CI_SUCCESS }}
+    if: ${{ github.env.JAVA_CI_FAILURE }}
     runs-on: ubuntu-latest
     steps:
       - name: Send message to Telegram
