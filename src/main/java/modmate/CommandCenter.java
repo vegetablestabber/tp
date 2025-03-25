@@ -47,8 +47,8 @@ public class CommandCenter {
      */
     private static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven) {
         // First, check for a match with the module code (key)
-        Optional<CondensedMod> condensedMod = allModCodesAndNames.containsKey(modCodeOrNameGiven)
-                ? Optional.of(allModCodesAndNames.get(modCodeOrNameGiven))
+        Optional<CondensedMod> condensedMod = allModCodesAndNames.containsKey(modCodeOrNameGiven.toUpperCase())
+                ? Optional.of(allModCodesAndNames.get(modCodeOrNameGiven.toUpperCase()))
                 : Optional.empty();
 
         // If a match is found, retrieve mod details using the module code
