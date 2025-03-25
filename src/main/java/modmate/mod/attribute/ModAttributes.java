@@ -1,6 +1,7 @@
 package modmate.mod.attribute;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.StringJoiner;
 
 import modmate.mod.Mod;
@@ -17,7 +18,7 @@ public class ModAttributes {
     private final double units;
     private final boolean isGraded;
     private final List<Mod> prerequisites;
-    private final WeeklyWorkload workload;
+    private final Optional<WeeklyWorkload> workload;
 
     /**
      * Constructs a ModAttributes object with the given attributes.
@@ -31,7 +32,7 @@ public class ModAttributes {
      * @param workload      The expected weekly workload for the mod.
      */
     public ModAttributes(Faculty faculty, List<Semester> semesters, double units,
-            boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
+            boolean isGraded, List<Mod> prerequisites, Optional<WeeklyWorkload> workload) {
         this.faculty = faculty;
         this.availableSemesters = semesters;
         this.units = units;
@@ -95,7 +96,7 @@ public class ModAttributes {
      *
      * @return The WeeklyWorkload object representing the workload.
      */
-    public WeeklyWorkload getWorkload() {
+    public Optional<WeeklyWorkload> getWorkload() {
         return workload;
     }
 

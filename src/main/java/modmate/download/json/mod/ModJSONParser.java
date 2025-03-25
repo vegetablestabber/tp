@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import modmate.download.json.JSONParser;
 import modmate.download.json.mod.attribute.ModAttrJSONParser;
 import modmate.download.json.timetable.TimetableJSONParser;
+import modmate.log.Log;
 import modmate.mod.Mod;
 import modmate.mod.attribute.ModAttributes;
 import modmate.timetable.Semester;
@@ -49,7 +50,14 @@ public class ModJSONParser extends JSONParser<ModJSONKey> {
         String name = this.getString(ModJSONKey.NAME);
         String code = this.getString(ModJSONKey.CODE);
         String description = this.getString(ModJSONKey.DESCRIPTION);
-        ModAttributes attributes = modAttrJSONParser.getAttributes(code);
+        ModAttributes attributes = modAttrJSONParser.getAttributes();
+
+        attributes.getWorkload()
+                .ifPresentOrElse(
+                    w -> {},
+                    () -> Log.saveLog("[MODATTRJSONPARSER]   Mod "
+                            + code + "doesn't have workload.")
+                );
 
         return new Mod(name, code, description, attributes, timetables);
     }
