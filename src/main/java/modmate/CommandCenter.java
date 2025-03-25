@@ -155,7 +155,15 @@ public class CommandCenter {
      * @param currentUser     The user object representing the current user.
      */
     static void addModToTimetable(String timetable, String inputCodeOrName, User currentUser) {
-        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
+        if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
+            System.out.println("Timetable \"" + timetable + "\" not found.");
+            Log.saveLog("[MAIN]   Timetable '"
+                    + timetable
+                    + "' not found while attempting to add mod "
+                    + inputCodeOrName
+                    + " to timetable.");
+            return;
+        }
         Log.saveLog("[MAIN]   Adding mod to timetable: " + timetable);
 
         modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
@@ -176,7 +184,15 @@ public class CommandCenter {
      * @param currentUser     The user object representing the current user.
      */
     static void removeModFromTimetable(String timetable, String inputCodeOrName, User currentUser) {
-        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
+        if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
+            System.out.println("Timetable \"" + timetable + "\" not found.");
+            Log.saveLog("[MAIN]   Timetable '"
+                    + timetable
+                    + "' not found while attempting to add mod "
+                    + inputCodeOrName
+                    + " to timetable.");
+            return;
+        }
         Log.saveLog("[MAIN]   Removing mod from timetable: " + timetable);
 
         modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
