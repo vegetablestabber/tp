@@ -75,7 +75,7 @@ public class CommandCenter {
      * @param y          The ending index of the substring.
      * @return The concatenated string between indices x and y in the input.
      */
-    private static String stringFromBetweenPartsXY(String[] inputParts, int x, int y) {
+    static String stringFromBetweenPartsXY(String[] inputParts, int x, int y) {
         if (inputParts == null || inputParts.length == 0 || x < 0 || y > inputParts.length || x >= y) {
             return "";
         }
