@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ScheduleTest {
     private Schedule timetable;
@@ -74,7 +73,20 @@ public class ScheduleTest {
 
     @Test
     void testToString() {
-        
+        timetable.addMod(mod1);
+        timetable.addMod(mod2);
+
+        String expected = "Timetable: Semester 1\n"
+                + "  CS1010: Programming Methodology\n"
+                + "      null\n"
+                + "      No Faculty Information\n"
+                + "  CS2113: Software Engineering & Object-Oriented Programming\n"
+                + "      null\n"
+                + "      No Faculty Information\n";
+
+        System.out.println("Actual Output:\n" + timetable.toString()); // Debugging
+
+        assertEquals(expected, timetable.toString(), "Timetable toString() output does not match.");
     }
 
 }

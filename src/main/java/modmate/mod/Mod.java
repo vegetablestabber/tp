@@ -53,7 +53,7 @@ public class Mod extends CondensedMod {
      */
     @Override
     public String toString() {
-        return code + ": " + name + "\n    " + description + "\n    " + attributes.getFaculty();
+        return code + ": " + name + "\n    " + description + "\n    " + (attributes != null ? attributes.getFaculty() : "No Faculty Information");
     }
 
     /**
