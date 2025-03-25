@@ -49,7 +49,7 @@ public class ModJSONParser extends JSONParser<ModJSONKey> {
         String name = this.getString(ModJSONKey.NAME);
         String code = this.getString(ModJSONKey.CODE);
         String description = this.getString(ModJSONKey.DESCRIPTION);
-        ModAttributes attributes = modAttrJSONParser.getAttributes();
+        ModAttributes attributes = modAttrJSONParser.getAttributes(code);
 
         return new Mod(name, code, description, attributes, timetables);
     }

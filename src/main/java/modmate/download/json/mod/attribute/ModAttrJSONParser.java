@@ -3,6 +3,7 @@ package modmate.download.json.mod.attribute;
 import java.util.Collections;
 import java.util.List;
 
+import modmate.log.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,14 +24,21 @@ public class ModAttrJSONParser extends JSONParser<ModAttrJSONKey> {
         this.availableSemesters = semesters;
     }
 
-    public ModAttributes getAttributes() {
+    public ModAttributes getAttributes(String code) {
         Faculty faculty = new Faculty(this.getString(ModAttrJSONKey.FACULTY));
         double units = this.getDouble(ModAttrJSONKey.UNITS);
         boolean isGraded = this.getString(ModAttrJSONKey.IS_GRADED).equals("Graded");
         List<Mod> prerequisites = Collections.emptyList();
 
+        WeeklyWorkload workload = null;
+        try {
+            workload = getWorkload();
+        } catch (JSONException e) {
+            Log.saveLog("[MODATTRJSONPARSER]   Mod " + code + "doesn't have workload.");
+        }
+
         return new ModAttributes(faculty, this.availableSemesters, units,
-                isGraded, prerequisites, getWorkload());
+                isGraded, prerequisites, workload);
     }
 
     /**
