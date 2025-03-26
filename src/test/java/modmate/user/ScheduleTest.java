@@ -22,37 +22,44 @@ public class ScheduleTest {
 
     @Test
     void testAddMod() {
-        timetable.addMod(mod1);
+        String output1 = getConsoleOutput(() -> timetable.addMod(mod1));
         assertEquals(1, timetable.getMods().size()); //timetable should contain 1 mod
-        timetable.addMod(mod2);
+        assertEquals("Mod CS1010 added successfully to Semester 1.", output1);
+
+        String output2 = getConsoleOutput(() -> timetable.addMod(mod2));
         assertEquals(2, timetable.getMods().size()); //timetable should contain 2 mods
+        assertEquals("Mod CS2113 added successfully to Semester 1.", output2);
     }
 
     @Test
     void testAddDuplicateMod() {
         timetable.addMod(mod1);
-        timetable.addMod(mod1); //adding the same mod again
+        String output = getConsoleOutput(() -> timetable.addMod(mod1)); //adding the same mod again
         assertEquals(1, timetable.getMods().size()); //timetable should still contain only 1 mod
+        assertEquals("Mod CS1010 is already in the timetable.", output);
     }
 
     @Test
     void testRemoveExistingMod() {
         timetable.addMod(mod1);
-        timetable.removeMod(mod1);
+        String output = getConsoleOutput(() -> timetable.removeMod(mod1));
         assertEquals(0, timetable.getMods().size()); //timetable should contain 0 mods
+        assertEquals("Mod CS1010 removed successfully from Semester 1.", output);
     }
 
     @Test
     void testRemoveNonExistentMod() {
         timetable.addMod(mod1);
-        timetable.removeMod(mod2);
+        String output = getConsoleOutput(() -> timetable.removeMod(mod2));
         assertEquals(1, timetable.getMods().size()); //timetable should still contain 1 mod
+        assertEquals("Mod CS2113 is not in the timetable.", output);
     }
 
     @Test
     void testRemoveModFromEmptyList() {
-        timetable.removeMod(mod1);
+        String output = getConsoleOutput(() -> timetable.removeMod(mod1));
         assertEquals(0, timetable.getMods().size());
+        assertEquals("Mod CS1010 is not in the timetable.", output);
     }
 
     @Test
@@ -61,7 +68,13 @@ public class ScheduleTest {
     }
 
     @Test
-    void testGetMods() {
+    void testGetModsEmptyList() {
+        List<Mod> mods = timetable.getMods();
+        assertEquals(0, mods.size());
+    }
+
+    @Test
+    void testGetModsWithMods() {
         timetable.addMod(mod1);
         timetable.addMod(mod2);
 
@@ -86,7 +99,14 @@ public class ScheduleTest {
 
         System.out.println("Actual Output:\n" + timetable.toString()); // Debugging
 
-        assertEquals(expected, timetable.toString(), "Timetable toString() output does not match.");
+        assertEquals(expected, timetable.toString());
     }
 
+    private String getConsoleOutput(Runnable code) {
+        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+        System.setOut(new java.io.PrintStream(out));
+        code.run();
+        System.setOut(System.out);
+        return out.toString().trim();
+    }
 }

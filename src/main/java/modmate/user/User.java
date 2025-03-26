@@ -21,13 +21,13 @@ public class User {
     public void addTimetable(String timetableName) {
         for (Schedule timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
-                System.out.println("A timetable with the '" + timetable + "' already exists");
+                System.out.println("Timetable '" + timetableName + "' already exists.");
                 return;
             }
         }
         Schedule newtimetable = new Schedule(timetableName);
         timetables.add(newtimetable);
-        System.out.println("Timetable '" + timetableName + "' created successfully");
+        System.out.println("Timetable '" + timetableName + "' created successfully.");
     }
 
     // Method to display the user's mods and timetables
@@ -37,7 +37,7 @@ public class User {
                 return timetable.toString();
             }
         }
-        return "Timetable '" + timetableName + "' not found";
+        return "Timetable '" + timetableName + "' not found.";
     }
 
     public void addModToTimetable(String timetableName, Mod mod) {

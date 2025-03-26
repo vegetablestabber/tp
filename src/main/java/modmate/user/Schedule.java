@@ -25,7 +25,7 @@ public class Schedule {
             return;
         }
         mods.add(mod);
-        System.out.println("Mod " + mod.getCode() + " added successfully to " + name);
+        System.out.println("Mod " + mod.getCode() + " added successfully to " + name + ".");
     }
 
     public void removeMod(Mod mod) {
@@ -34,7 +34,7 @@ public class Schedule {
             return;
         }
         mods.remove(mod);
-        System.out.println("Mod " + mod.getCode() + " removed successfully from " + name);
+        System.out.println("Mod " + mod.getCode() + " removed successfully from " + name + ".");
     }
 
     /**
