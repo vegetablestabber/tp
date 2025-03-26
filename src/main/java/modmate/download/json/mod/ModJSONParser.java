@@ -53,11 +53,11 @@ public class ModJSONParser extends JSONParser<ModJSONKey> {
         ModAttributes attributes = modAttrJSONParser.getAttributes();
 
         attributes.getWorkload()
-                .ifPresentOrElse(
-                    w -> {},
-                    () -> Log.saveLog("[MODATTRJSONPARSER]   Mod "
-                            + code + "doesn't have workload.")
-                );
+            .ifPresentOrElse(
+                w -> {},
+                () -> Log.saveLog("[MODATTRJSONPARSER]   Mod "
+                        + code + "doesn't have workload.")
+            );
 
         return new Mod(name, code, description, attributes, timetables);
     }
