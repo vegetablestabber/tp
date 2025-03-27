@@ -22,6 +22,13 @@ public class CondensedMod {
      * @param code the code of the module
      */
     public CondensedMod(String name, String code) {
+        if (name == null) {
+            throw new NullPointerException("Name is null");
+        }
+        if (code == null) {
+            throw new NullPointerException("Code is null");
+        }
+
         this.name = name;
         this.code = code;
     }
