@@ -16,13 +16,15 @@ public class CondensedModTest {
 
     @Test
     void testNullName() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> new CondensedMod(null, "CS1010"));
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> new CondensedMod(null, "CS1010"));
         assertEquals("Name is null", exception.getMessage());
     }
 
     @Test
     void testNullCode() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> new CondensedMod("Programming Methodology", null));
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> new CondensedMod("Programming Methodology", null));
         assertEquals("Code is null", exception.getMessage());
     }
 }

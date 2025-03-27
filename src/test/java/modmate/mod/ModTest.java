@@ -24,7 +24,8 @@ public class ModTest {
 
         WeeklyWorkload workload = new WeeklyWorkload(2, 1, 3, 4);
 
-        attributes = new ModAttributes(faculty, List.of(Semester.SEMESTER_1, Semester.SEMESTER_2), 4, true, List.of(), workload);
+        attributes = new ModAttributes(faculty, List.of(Semester.SEMESTER_1, Semester.SEMESTER_2), 4,
+                true, List.of(), workload);
 
         timetables = List.of();
         mod = new Mod("Software Engineering & Object-Oriented Programming", "CS2113", null, attributes, timetables);
@@ -48,7 +49,8 @@ public class ModTest {
         assertTrue(result.contains("Units: 4"));
         assertTrue(result.contains("Graded: true"));
         assertTrue(result.contains("Prerequisites: []"));
-        assertTrue(result.contains("Workload: Lectures: 2.0 hours, Tutorials: 1.0 hours, Projects: 3.0 hours, Preparation: 4.0 hours"));
+        assertTrue(result.contains("Workload: Lectures: 2.0 hours, Tutorials: 1.0 hours, " +
+                "Projects: 3.0 hours, Preparation: 4.0 hours"));
     }
 
     @Test
