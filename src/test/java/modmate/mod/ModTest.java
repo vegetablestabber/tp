@@ -1,5 +1,6 @@
 package modmate.mod;
 
+import java.util.Optional;
 import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.ModAttributes;
 import modmate.mod.attribute.WeeklyWorkload;
@@ -25,7 +26,7 @@ public class ModTest {
         WeeklyWorkload workload = new WeeklyWorkload(2, 1, 3, 4);
 
         attributes = new ModAttributes(faculty, List.of(Semester.SEMESTER_1, Semester.SEMESTER_2), 4,
-                true, List.of(), workload);
+                true, List.of(), Optional.of(workload));
 
         timetables = List.of();
         mod = new Mod("Software Engineering & Object-Oriented Programming", "CS2113", null, attributes, timetables);
