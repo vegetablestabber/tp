@@ -43,6 +43,10 @@ public class ModTest {
     @Test
     void testGetDetailedString() {
         String result = mod.getDetailedString();
+        System.out.println("=== getDetailedString() OUTPUT ===");
+        System.out.println(result);
+        System.out.println("===================================");
+
         assertTrue(result.contains("Code: CS2113"));
         assertTrue(result.contains("Name: Software Engineering & Object-Oriented Programming"));
         assertTrue(result.contains("Faculty: Computing"));
