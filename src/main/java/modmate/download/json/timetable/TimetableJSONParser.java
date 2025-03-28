@@ -14,7 +14,6 @@ import modmate.download.json.timetable.lesson.LessonJSONParser;
 import modmate.timetable.Lesson;
 import modmate.timetable.Semester;
 import modmate.timetable.Timetable;
-import modmate.timetable.BreakPeriod;
 
 public class TimetableJSONParser extends JSONParser<TimetableJSONKey> {
 
