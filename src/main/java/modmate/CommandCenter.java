@@ -47,9 +47,9 @@ public class CommandCenter {
      */
     private static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven) {
         // First, check for a match with the module code (key)
-        Optional<CondensedMod> condensedMod = allModCodesAndNames.containsKey(modCodeOrNameGiven)
-                ? Optional.of(allModCodesAndNames.get(modCodeOrNameGiven))
-                : Optional.empty();
+        Optional<CondensedMod> condensedMod = Optional.ofNullable(
+            allModCodesAndNames.get(modCodeOrNameGiven.toUpperCase())
+        );
 
         // If a match is found, retrieve mod details using the module code
         return condensedMod.flatMap(mod -> NUSModsAPI.fetchModuleByCode(mod.getCode()));
