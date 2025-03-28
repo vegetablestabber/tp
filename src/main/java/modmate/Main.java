@@ -17,6 +17,9 @@ import static modmate.CommandCenter.createTimetable;
 import static modmate.CommandCenter.viewTimetable;
 import static modmate.CommandCenter.viewAllMods;
 import static modmate.CommandCenter.searchMods;
+import static modmate.CommandCenter.addBreakToTimetable;
+
+
 /**
  * Main entry point for the ModMate application. It handles user input
  * and executes commands such as viewing mods, adding/removing mods
@@ -80,6 +83,7 @@ public class Main {
             case "timetable" -> viewTimetable(stringFromBetweenPartsXY(inputParts, 1), currentUser);
             case "viewallmods" -> viewAllMods();
             case "searchmod" -> searchMods(stringFromBetweenPartsXY(inputParts, 1));
+            case "addbreak" -> addBreakToTimetable(inputParts, currentUser);
 
             case "exit" -> {
                 Log.saveLog("[MAIN]   Exiting application.");

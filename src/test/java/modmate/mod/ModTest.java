@@ -1,5 +1,6 @@
 package modmate.mod;
 
+import java.util.Optional;
 import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.ModAttributes;
 import modmate.mod.attribute.WeeklyWorkload;
@@ -25,7 +26,7 @@ public class ModTest {
         WeeklyWorkload workload = new WeeklyWorkload(2, 1, 3, 4);
 
         attributes = new ModAttributes(faculty, List.of(Semester.SEMESTER_1, Semester.SEMESTER_2), 4,
-                true, List.of(), workload);
+                true, List.of(), Optional.of(workload));
 
         timetables = List.of();
         mod = new Mod("Software Engineering & Object-Oriented Programming", "CS2113", null, attributes, timetables);
@@ -42,6 +43,10 @@ public class ModTest {
     @Test
     void testGetDetailedString() {
         String result = mod.getDetailedString();
+        System.out.println("=== getDetailedString() OUTPUT ===");
+        System.out.println(result);
+        System.out.println("===================================");
+
         assertTrue(result.contains("Code: CS2113"));
         assertTrue(result.contains("Name: Software Engineering & Object-Oriented Programming"));
         assertTrue(result.contains("Faculty: Computing"));

@@ -71,7 +71,9 @@ public class Mod extends CondensedMod {
                 "\nUnits: " + attributes.getUnits() +
                 "\nGraded: " + attributes.isGraded() +
                 "\nPrerequisites: " + attributes.getPrerequisites() +
-                "\nWorkload: " + attributes.getWorkload();
+                (attributes.getWorkload().isPresent()
+                        ? "\nWorkload: " + attributes.getWorkload().get()
+                        : "\nWorkload: N/A");
     }
 
     /**

@@ -5,10 +5,14 @@ import modmate.log.Log;
 import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
 import modmate.user.User;
+import modmate.timetable.BreakPeriod;
+import modmate.timetable.Period;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 public class CommandCenter {
 
@@ -24,6 +28,7 @@ public class CommandCenter {
             addmod <timetable> <mod code or name>: Add a mod to your list
             removemod <timetable> <mod code or name>: Remove a mod from your list
             createtimetable <timetable>: Create a new timetable
+            addbreak <timetable> <label> <day> <startTime> <endTime>: Add a break
             timetable <timetable>: Display your mod timetable
             viewallmods: View all available mods
             """;
@@ -289,5 +294,36 @@ public class CommandCenter {
                 // remove optionals
                 .flatMap(Optional::stream)
                 .toList();
+    }
+
+    static void addBreakToTimetable(String[] inputParts, User currentUser) {
+        if (inputParts.length < 6) {
+            System.out.println("Usage: addbreak <timetable> <label> <day> <startTime> <endTime>");
+            return;
+        }
+
+        String timetableName = inputParts[1];
+        String label = inputParts[2];
+        DayOfWeek day;
+        LocalTime start;
+        LocalTime end;
+
+        try {
+            day = DayOfWeek.valueOf(inputParts[3].toUpperCase());
+            start = LocalTime.parse(inputParts[4]);
+            end = LocalTime.parse(inputParts[5]);
+        } catch (Exception e) {
+            System.out.println("Invalid input format. Use format: MONDAY 12:00 13:00");
+            return;
+        }
+
+        BreakPeriod breakPeriod = new BreakPeriod(label, new Period(day, start, end));
+        boolean success = currentUser.addBreakToTimetable(timetableName, breakPeriod);
+
+        if (success) {
+            System.out.println("Break [" + label + "] added to timetable '" + timetableName + "'.");
+        } else {
+            System.out.println("Timetable '" + timetableName + "' not found.");
+        }
     }
 }

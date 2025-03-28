@@ -1,6 +1,8 @@
 package modmate.user;
 
 import modmate.mod.Mod;
+import modmate.timetable.BreakPeriod;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
 public class Schedule {
     private String name; // Name of the timetable
     private List<Mod> mods; // List of mods in this timetable
+    private List<BreakPeriod> breaks = new ArrayList<>();
 
     /**
      * Constructs a new Timetable with the given name.
@@ -37,6 +40,15 @@ public class Schedule {
         System.out.println("Mod " + mod.getCode() + " removed successfully from " + name + ".");
     }
 
+    public void addBreak(BreakPeriod breakPeriod) {
+        breaks.add(breakPeriod);
+    }
+
+    public List<BreakPeriod> getBreaks() {
+        return breaks;
+    }
+
+
     /**
      * Returns the name of the timetable.
      *
@@ -65,6 +77,13 @@ public class Schedule {
                 result += "  " + mod.toString().replace("\n", "\n  ") + "\n";
             }
         }
+        if (!breaks.isEmpty()) {
+            result += "  Breaks:\n";
+            for (BreakPeriod b : breaks) {
+                result += "    " + b + "\n";
+            }
+        }
+
         return result;
     }
 }
