@@ -42,9 +42,9 @@ public class ModAttributes {
     }
 
     public ModAttributes(Faculty faculty, List<Semester> semesters, double units,
-        boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
-            this(faculty, semesters, units, isGraded, prerequisites, Optional.of(workload));
-        }
+            boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
+        this(faculty, semesters, units, isGraded, prerequisites, Optional.of(workload));
+    }
 
     /**
      * Gets the faculty offering the mod.
