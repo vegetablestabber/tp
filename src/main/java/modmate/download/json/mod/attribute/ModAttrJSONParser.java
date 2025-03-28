@@ -2,6 +2,7 @@ package modmate.download.json.mod.attribute;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,10 +28,12 @@ public class ModAttrJSONParser extends JSONParser<ModAttrJSONKey> {
         Faculty faculty = new Faculty(this.getString(ModAttrJSONKey.FACULTY));
         double units = this.getDouble(ModAttrJSONKey.UNITS);
         boolean isGraded = this.getString(ModAttrJSONKey.IS_GRADED).equals("Graded");
+        Optional<WeeklyWorkload> workload = getWorkload();
+
         List<Mod> prerequisites = Collections.emptyList();
 
         return new ModAttributes(faculty, this.availableSemesters, units,
-                isGraded, prerequisites, getWorkload());
+                isGraded, prerequisites, workload);
     }
 
     /**
@@ -39,13 +42,18 @@ public class ModAttrJSONParser extends JSONParser<ModAttrJSONKey> {
      * @return the weekly workload
      * @throws JSONException if there is an error parsing the JSON data
      */
-    private WeeklyWorkload getWorkload() throws JSONException {
-        JSONArray workloadJSONArray = this.getJSONArray(ModAttrJSONKey.WORKLOAD);
-        return new WeeklyWorkload(
-                workloadJSONArray.getDouble(0),
-                workloadJSONArray.getDouble(1),
-                workloadJSONArray.getDouble(3),
-                workloadJSONArray.getDouble(4));
+    private Optional<WeeklyWorkload> getWorkload() throws JSONException {
+        if (this.has(ModAttrJSONKey.WORKLOAD)) {
+            JSONArray workloadJSONArray = this.getJSONArray(ModAttrJSONKey.WORKLOAD);
+
+            return Optional.of(new WeeklyWorkload(
+                    workloadJSONArray.getDouble(0),
+                    workloadJSONArray.getDouble(1),
+                    workloadJSONArray.getDouble(3),
+                    workloadJSONArray.getDouble(4)));
+        }
+
+        return Optional.empty();
     }
 
 }
