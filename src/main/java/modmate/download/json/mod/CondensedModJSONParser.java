@@ -29,7 +29,7 @@ public class CondensedModJSONParser extends JSONParser<CondensedModJSONKey> {
      */
     public CondensedMod getModule() throws JSONException {
         String name = this.getString(CondensedModJSONKey.NAME);
-        String code = this.getString(CondensedModJSONKey.CODE);
+        String code = this.getString(CondensedModJSONKey.CODE).toUpperCase();
 
         return new CondensedMod(name, code);
     }

@@ -52,9 +52,9 @@ public class CommandCenter {
      */
     private static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven) {
         // First, check for a match with the module code (key)
-        Optional<CondensedMod> condensedMod = allModCodesAndNames.containsKey(modCodeOrNameGiven)
-                ? Optional.of(allModCodesAndNames.get(modCodeOrNameGiven))
-                : Optional.empty();
+        Optional<CondensedMod> condensedMod = Optional.ofNullable(
+            allModCodesAndNames.get(modCodeOrNameGiven.toUpperCase())
+        );
 
         // If a match is found, retrieve mod details using the module code
         return condensedMod.flatMap(mod -> NUSModsAPI.fetchModuleByCode(mod.getCode()));
@@ -80,7 +80,7 @@ public class CommandCenter {
      * @param y          The ending index of the substring.
      * @return The concatenated string between indices x and y in the input.
      */
-    private static String stringFromBetweenPartsXY(String[] inputParts, int x, int y) {
+    static String stringFromBetweenPartsXY(String[] inputParts, int x, int y) {
         if (inputParts == null || inputParts.length == 0 || x < 0 || y > inputParts.length || x >= y) {
             return "";
         }
@@ -160,7 +160,15 @@ public class CommandCenter {
      * @param currentUser     The user object representing the current user.
      */
     static void addModToTimetable(String timetable, String inputCodeOrName, User currentUser) {
-        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
+        if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
+            System.out.println("Timetable \"" + timetable + "\" not found.");
+            Log.saveLog("[MAIN]   Timetable '"
+                    + timetable
+                    + "' not found while attempting to add mod "
+                    + inputCodeOrName
+                    + " to timetable.");
+            return;
+        }
         Log.saveLog("[MAIN]   Adding mod to timetable: " + timetable);
 
         modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
@@ -181,7 +189,15 @@ public class CommandCenter {
      * @param currentUser     The user object representing the current user.
      */
     static void removeModFromTimetable(String timetable, String inputCodeOrName, User currentUser) {
-        assert timetable != null && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
+        if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
+            System.out.println("Timetable \"" + timetable + "\" not found.");
+            Log.saveLog("[MAIN]   Timetable '"
+                    + timetable
+                    + "' not found while attempting to add mod "
+                    + inputCodeOrName
+                    + " to timetable.");
+            return;
+        }
         Log.saveLog("[MAIN]   Removing mod from timetable: " + timetable);
 
         modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {

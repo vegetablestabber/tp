@@ -51,8 +51,14 @@ public class Main {
 
         System.out.println("Welcome to ModMate!");
 
+        boolean invalidCommand = false;
+
         while (true) {
-            System.out.println("\nEnter command ('exit' to quit, '-h' for help):");
+            if (invalidCommand) {
+                invalidCommand = false;
+            } else {
+                System.out.println("\nEnter command ('exit' to quit, '-h' for help):");
+            }
             String input = scanner.nextLine().trim();
             Log.saveLog("\n[MAIN]   Received input: " + input);
 
@@ -64,12 +70,12 @@ public class Main {
             case "bookmark" -> bookmark(stringFromBetweenPartsXY(inputParts, 1), currentUser);
             case "bookmarks" -> getBookmarks(currentUser);
             case "addmod" -> addModToTimetable(
-                    inputParts[1],
+                    stringFromBetweenPartsXY(inputParts, 1, 2),
                     stringFromBetweenPartsXY(inputParts, 2),
                     currentUser
             );
             case "removemod" -> removeModFromTimetable(
-                    inputParts[1],
+                    stringFromBetweenPartsXY(inputParts, 0, 1),
                     stringFromBetweenPartsXY(inputParts, 2),
                     currentUser
             );
@@ -85,7 +91,13 @@ public class Main {
                 scanner.close();
                 return;
             }
-            default -> Log.saveLog("[MAIN]   Command: " + input + " is invalid");
+            default -> {
+                System.out.println("Invalid command \""
+                        + inputParts[0]
+                        + "\"! Please check your command again, or run -h for help.");
+                invalidCommand = true;
+                Log.saveLog("[MAIN]   Command: " + input + " is invalid");
+            }
             }
         }
     }
