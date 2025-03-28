@@ -1,6 +1,7 @@
 package modmate.user;
 
 import modmate.mod.Mod;
+import modmate.timetable.BreakPeriod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,17 @@ public class User {
         }
         System.out.println("Timetable '" + timetableName + "' not found.");
     }
+
+    public boolean addBreakToTimetable(String timetableName, BreakPeriod breakPeriod) {
+        for (Schedule timetable : timetables) {
+            if (timetable.getName().equalsIgnoreCase(timetableName)) {
+                timetable.addBreak(breakPeriod);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public List<Mod> getBookmarks() {
         return bookmarks;

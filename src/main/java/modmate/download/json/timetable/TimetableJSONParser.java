@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.Collections;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,6 +14,7 @@ import modmate.download.json.timetable.lesson.LessonJSONParser;
 import modmate.timetable.Lesson;
 import modmate.timetable.Semester;
 import modmate.timetable.Timetable;
+import modmate.timetable.BreakPeriod;
 
 public class TimetableJSONParser extends JSONParser<TimetableJSONKey> {
 
@@ -27,10 +29,10 @@ public class TimetableJSONParser extends JSONParser<TimetableJSONKey> {
             Instant examInstant = Instant.parse(getString(TimetableJSONKey.EXAM_INSTANT));
             Duration examDuration = Duration.ofMinutes(getInt(TimetableJSONKey.EXAM_DURATION));
 
-            return new Timetable(semester, examInstant, examDuration, getLessons());
+            return new Timetable(semester, examInstant, examDuration, getLessons(), Collections.emptyList());
         }
 
-        return new Timetable(semester, getLessons());
+        return new Timetable(semester, getLessons(),Collections.emptyList());
     }
 
     private List<Lesson> getLessons() {
