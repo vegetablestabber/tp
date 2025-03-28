@@ -11,22 +11,25 @@ public class Timetable {
     private final Optional<Instant> examInstant;
     private final Optional<Duration> examDuration;
     private final List<Lesson> lessons;
+    private final List<BreakPeriod> breakPeriods;
+
 
     private Timetable(Semester semester, Optional<Instant> examInstant,
-            Optional<Duration> examDuration, List<Lesson> lessons) {
+            Optional<Duration> examDuration, List<Lesson> lessons, List<BreakPeriod> breakPeriods) {
         this.semester = semester;
         this.examInstant = examInstant;
         this.examDuration = examDuration;
         this.lessons = lessons;
+        this.breakPeriods = breakPeriods;
     }
 
     public Timetable(Semester semester, Instant examInstant,
-            Duration examDuration, List<Lesson> lessons) {
-        this(semester, Optional.of(examInstant), Optional.of(examDuration), lessons);
+            Duration examDuration, List<Lesson> lessons, List<BreakPeriod> breakPeriods) {
+        this(semester, Optional.of(examInstant), Optional.of(examDuration), lessons, breakPeriods);
     }
 
-    public Timetable(Semester semester, List<Lesson> lessons) {
-        this(semester, Optional.empty(), Optional.empty(), lessons);
+    public Timetable(Semester semester, List<Lesson> lessons, List<BreakPeriod> breakPeriods) {
+        this(semester, Optional.empty(), Optional.empty(), lessons, breakPeriods);
     }
 
     public Semester getSemester() {
