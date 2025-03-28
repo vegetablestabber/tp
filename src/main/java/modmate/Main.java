@@ -67,12 +67,12 @@ public class Main {
             case "bookmark" -> bookmark(stringFromBetweenPartsXY(inputParts, 1), currentUser);
             case "bookmarks" -> getBookmarks(currentUser);
             case "addmod" -> addModToTimetable(
-                    inputParts[1],
+                    stringFromBetweenPartsXY(inputParts, 1, 2),
                     stringFromBetweenPartsXY(inputParts, 2),
                     currentUser
             );
             case "removemod" -> removeModFromTimetable(
-                    inputParts[1],
+                    stringFromBetweenPartsXY(inputParts, 0, 1),
                     stringFromBetweenPartsXY(inputParts, 2),
                     currentUser
             );
