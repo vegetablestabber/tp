@@ -31,8 +31,11 @@ public class AddBreakToTimetableCommand implements Command {
 
             assert day != null : "Day cannot be null";
 
-            start = LocalTime.parse(args[4]);
-            end = LocalTime.parse(args[5]);
+            String startTime = formatTime(args[4]);
+            String endTime = formatTime(args[5]);
+
+            start = LocalTime.parse(startTime);
+            end = LocalTime.parse(endTime);
 
             assert start != null && end != null : "Start or end time cannot be null";
             assert !end.isBefore(start) : "End time must be after start time";
@@ -50,5 +53,14 @@ public class AddBreakToTimetableCommand implements Command {
         } else {
             System.out.println("Timetable '" + timetableName + "' not found.");
         }
+    }
+
+    private String formatTime(String timeInput) {
+        assert timeInput != null && !timeInput.trim().isEmpty() : "Time input cannot be null or empty";
+
+        if (timeInput.length() == 4 && timeInput.matches("\\d{4}")) {  // e.g., "1200"
+            return timeInput.substring(0, 2) + ":" + timeInput.substring(2);
+        }
+        return timeInput;  // Already in "HH:mm" format
     }
 }
