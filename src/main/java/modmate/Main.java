@@ -2,22 +2,11 @@ package modmate;
 
 import java.util.Scanner;
 
-import modmate.user.User;
+import modmate.command.Command;
+import modmate.command.CommandLine;
 import modmate.download.nusmods.NUSModsAPI;
+import modmate.user.User;
 import modmate.log.Log;
-
-import static modmate.CommandCenter.printHelp;
-import static modmate.CommandCenter.viewMod;
-import static modmate.CommandCenter.stringFromBetweenPartsXY;
-import static modmate.CommandCenter.bookmark;
-import static modmate.CommandCenter.getBookmarks;
-import static modmate.CommandCenter.addModToTimetable;
-import static modmate.CommandCenter.removeModFromTimetable;
-import static modmate.CommandCenter.createTimetable;
-import static modmate.CommandCenter.viewTimetable;
-import static modmate.CommandCenter.viewAllMods;
-import static modmate.CommandCenter.searchMods;
-import static modmate.CommandCenter.addBreakToTimetable;
 
 
 /**
@@ -63,41 +52,29 @@ public class Main {
             Log.saveLog("\n[MAIN]   Received input: " + input);
 
             String[] inputParts = input.split(" ");
+            String commandName = inputParts[0];
 
-            switch (inputParts[0]) {
-            case "-h" -> printHelp();
-            case "viewmod" -> viewMod(stringFromBetweenPartsXY(inputParts, 1));
-            case "bookmark" -> bookmark(stringFromBetweenPartsXY(inputParts, 1), currentUser);
-            case "bookmarks" -> getBookmarks(currentUser);
-            case "addmod" -> addModToTimetable(
-                    stringFromBetweenPartsXY(inputParts, 1, 2),
-                    stringFromBetweenPartsXY(inputParts, 2),
-                    currentUser
-            );
-            case "removemod" -> removeModFromTimetable(
-                    stringFromBetweenPartsXY(inputParts, 0, 1),
-                    stringFromBetweenPartsXY(inputParts, 2),
-                    currentUser
-            );
-            case "createtimetable" -> createTimetable(stringFromBetweenPartsXY(inputParts, 1), currentUser);
-            case "timetable" -> viewTimetable(stringFromBetweenPartsXY(inputParts, 1), currentUser);
-            case "viewallmods" -> viewAllMods();
-            case "searchmod" -> searchMods(stringFromBetweenPartsXY(inputParts, 1));
-            case "addbreak" -> addBreakToTimetable(inputParts, currentUser);
+            Command command = CommandLine.getCommand(commandName);
 
-            case "exit" -> {
-                Log.saveLog("[MAIN]   Exiting application.");
-                System.out.println("Exiting...");
-                scanner.close();
-                return;
-            }
-            default -> {
-                System.out.println("Invalid command \""
-                        + inputParts[0]
-                        + "\"! Please check your command again, or run -h for help.");
-                invalidCommand = true;
-                Log.saveLog("[MAIN]   Command: " + input + " is invalid");
-            }
+            if (command != null) {
+                command.execute(inputParts, currentUser);
+            } else {
+                switch (commandName) {
+                    case "-h" -> CommandCenter.printHelp();
+                    case "exit" -> {
+                        Log.saveLog("[MAIN]   Exiting application.");
+                        System.out.println("Exiting...");
+                        scanner.close();
+                        return;
+                    }
+                    default -> {
+                        System.out.println("Invalid command \""
+                                + inputParts[0]
+                                + "\"! Please check your command again, or run -h for help.");
+                        invalidCommand = true;
+                        Log.saveLog("[MAIN]   Command: " + input + " is invalid");
+                    }
+                }
             }
         }
     }
