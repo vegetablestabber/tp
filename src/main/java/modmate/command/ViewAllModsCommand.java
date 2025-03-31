@@ -12,14 +12,14 @@ public class ViewAllModsCommand implements Command {
     public void execute(String[] args, User currentUser) {
         Log.saveLog("[MAIN]   Viewing all mods.");
         CommandCenter.allModCodesAndNames
-                .entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .forEach((modCode) ->
-                        System.out.println(modCode.getKey()
-                                + ": "
-                                + modCode.getValue().getName()
-                        )
-                );
+            .entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByKey())
+            .forEach((modCode) ->
+                System.out.println(modCode.getKey()
+                        + ": "
+                        + modCode.getValue().getName()
+                )
+            );
     }
 }

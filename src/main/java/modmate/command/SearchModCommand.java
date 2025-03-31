@@ -43,7 +43,7 @@ public class SearchModCommand implements Command {
         return CommandCenter.allModCodesAndNames.values().stream().filter(
                         condensedMod -> condensedMod.getName().toLowerCase().contains(searchTerm.toLowerCase())
                                 || condensedMod.getCode().toLowerCase().contains(searchTerm.toLowerCase())
-                        // map to full mods
+                // map to full mods
                 ).map(condensedMod -> NUSModsAPI.fetchModuleByCode(condensedMod.getCode()))
                 // remove optionals
                 .flatMap(Optional::stream)

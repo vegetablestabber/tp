@@ -8,7 +8,6 @@ import modmate.download.nusmods.NUSModsAPI;
 import modmate.user.User;
 import modmate.log.Log;
 
-
 /**
  * Main entry point for the ModMate application. It handles user input
  * and executes commands such as viewing mods, adding/removing mods
@@ -60,20 +59,20 @@ public class Main {
                 command.execute(inputParts, currentUser);
             } else {
                 switch (commandName) {
-                    case "-h" -> CommandCenter.printHelp();
-                    case "exit" -> {
-                        Log.saveLog("[MAIN]   Exiting application.");
-                        System.out.println("Exiting...");
-                        scanner.close();
-                        return;
-                    }
-                    default -> {
-                        System.out.println("Invalid command \""
-                                + inputParts[0]
-                                + "\"! Please check your command again, or run -h for help.");
-                        invalidCommand = true;
-                        Log.saveLog("[MAIN]   Command: " + input + " is invalid");
-                    }
+                case "-h" -> CommandCenter.printHelp();
+                case "exit" -> {
+                    Log.saveLog("[MAIN]   Exiting application.");
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                }
+                default -> {
+                    System.out.println("Invalid command \""
+                            + inputParts[0]
+                            + "\"! Please check your command again, or run -h for help.");
+                    invalidCommand = true;
+                    Log.saveLog("[MAIN]   Command: " + input + " is invalid");
+                }
                 }
             }
         }
