@@ -1,10 +1,14 @@
 package modmate.command;
 
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.CommandCenter;
 import modmate.user.User;
 
 public class AddModToTimetableCommand implements Command {
+
+    public static final String CLI_REPRESENTATION = "addmod";
+
+    private static final LogUtil logUtil = new LogUtil(AddBreakToTimetableCommand.class);
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -23,21 +27,22 @@ public class AddModToTimetableCommand implements Command {
 
         if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
             System.out.println("Timetable \"" + timetable + "\" not found.");
-            Log.saveLog("[MAIN]   Timetable '"
+            logUtil.warning("Timetable '"
                     + timetable
                     + "' not found while attempting to add mod "
                     + inputCodeOrName
                     + " to timetable.");
             return;
         }
-        Log.saveLog("[MAIN]   Adding mod to timetable: " + timetable);
+
+        logUtil.info("Adding mod to timetable: " + timetable);
 
         CommandCenter.modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
             currentUser.addModToTimetable(timetable, mod);
-            Log.saveLog("[MAIN]   Mod " + mod.getCode() + " added to timetable " + timetable);
+            logUtil.info("Mod " + mod.getCode() + " added to timetable " + timetable);
         }, () -> {
             System.out.println("Mod '" + inputCodeOrName + "' not found.");
-            Log.saveLog("[MAIN]   Mod '" + inputCodeOrName + "' not found.");
+            logUtil.info("Mod '" + inputCodeOrName + "' not found.");
         });
     }
 }

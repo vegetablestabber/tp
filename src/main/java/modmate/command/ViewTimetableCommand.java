@@ -5,6 +5,7 @@ import modmate.log.Log;
 import modmate.mod.Mod;
 import modmate.timetable.Lesson;
 import modmate.user.Schedule;
+import modmate.log.LogUtil;
 import modmate.user.User;
 
 import java.time.DayOfWeek;
@@ -15,6 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ViewTimetableCommand implements Command {
+
+    public static final String CLI_REPRESENTATION = "timetable";
+
+    private static final LogUtil logUtil = new LogUtil(ViewTimetableCommand.class);
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -36,7 +41,7 @@ public class ViewTimetableCommand implements Command {
         Schedule timetable = currentUser.getTimetable(inputTimetableName);
         if (!currentUser.hasTimetable(inputTimetableName) || timetable == null) {
             System.out.println("Timetable \"" + inputTimetableName + "\" not found.");
-            Log.saveLog("[MAIN]   Timetable '" + inputTimetableName + "' not found.");
+            logUtil.warning("Timetable '" + inputTimetableName + "' not found.");
             return;
         }
 
@@ -78,5 +83,7 @@ public class ViewTimetableCommand implements Command {
         } else {
             System.out.println(timetable.toString());
         }
+        logUtil.info("Displaying user's mod list.");
     }
+
 }

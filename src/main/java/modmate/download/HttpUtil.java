@@ -6,12 +6,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 
-import modmate.log.Log;
+import modmate.log.LogUtil;
 
 /**
  * Utility class for handling HTTP requests and responses.
  */
 public class HttpUtil {
+
+    private static final LogUtil logUtil = new LogUtil(HttpUtil.class);
 
     /**
      * Retrieves data from the specified URL using HttpClient.
@@ -35,12 +37,12 @@ public class HttpUtil {
                         }
                         return responseData;
                     } else {
-                        Log.saveLog("\n[HttpUtil]   Request failed. Response Code: " + response.statusCode());
+                        logUtil.severe("Request failed. Response Code: " + response.statusCode());
                         throw new RuntimeException("Request failed. Response Code: " + response.statusCode());
                     }
                 })
                 .exceptionally(ex -> {
-                    Log.saveLog("\n[HttpUtil]   Exception occurred: " + ex.getMessage());
+                    logUtil.severe("Exception occurred: " + ex.getMessage());
                     throw new RuntimeException(ex);
                 });
     }
