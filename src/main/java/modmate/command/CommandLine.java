@@ -8,6 +8,8 @@ public class CommandLine {
 
     static {
         commands.put("viewmod", new ViewModCommand());
+        commands.put("viewlessons", new ViewModLessonsCommand());
+        commands.put("setlesson", new SetModLessonCommand());
         commands.put("bookmark", new BookmarkCommand());
         commands.put("bookmarks", new GetBookmarksCommand());
         commands.put("searchmod", new SearchModCommand());

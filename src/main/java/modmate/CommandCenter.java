@@ -19,6 +19,8 @@ public class CommandCenter {
             -h: Display this help message
             exit: Exit the application
             viewmod <mod code or name>: View details of a mod by its mod code or name
+            viewlessons <mod code or name>: View available lessons for each mod, sorted by type
+            setlessons <mod code or name> <
             searchmod <mod code or name>: Search for a mod by its code or name
             bookmark <mod code or name>: Bookmark a mod for later reference
             bookmarks: View all bookmarked mods
