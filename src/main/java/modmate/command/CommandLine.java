@@ -1,25 +1,30 @@
 package modmate.command;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 public class CommandLine {
-    private static final Map<String, Command> commands = new HashMap<>();
 
-    static {
-        commands.put("viewmod", new ViewModCommand());
-        commands.put("bookmark", new BookmarkCommand());
-        commands.put("bookmarks", new GetBookmarksCommand());
-        commands.put("searchmod", new SearchModCommand());
-        commands.put("addmod", new AddModToTimetableCommand());
-        commands.put("removemod", new RemoveModFromTimetableCommand());
-        commands.put("createtimetable", new CreateTimetableCommand());
-        commands.put("timetable", new ViewTimetableCommand());
-        commands.put("addbreak", new AddBreakToTimetableCommand());
-        commands.put("viewallmods", new ViewAllModsCommand());
+    public static Optional<Command> getCommand(String commandName) {
+        Command command;
+
+        switch (commandName) {
+        case AddBreakToTimetableCommand.CLI_REPRESENTATION -> command = new AddBreakToTimetableCommand();
+        case AddModToTimetableCommand.CLI_REPRESENTATION -> command = new AddModToTimetableCommand();
+        case BookmarkCommand.CLI_REPRESENTATION -> command = new BookmarkCommand();
+        case GetBookmarksCommand.CLI_REPRESENTATION -> command = new GetBookmarksCommand();
+        case SearchModCommand.CLI_REPRESENTATION -> command = new SearchModCommand();
+        case ViewModCommand.CLI_REPRESENTATION -> command = new ViewModCommand();
+        case RemoveModFromTimetableCommand.CLI_REPRESENTATION -> command = new RemoveModFromTimetableCommand();
+        case CreateTimetableCommand.CLI_REPRESENTATION -> command = new CreateTimetableCommand();
+        case ViewTimetableCommand.CLI_REPRESENTATION -> command = new ViewTimetableCommand();
+        case ViewAllModsCommand.CLI_REPRESENTATION -> command = new ViewAllModsCommand();
+        default -> command = null;
+        }
+
+        return Optional.ofNullable(command);
     }
 
-    public static Command getCommand(String commandName) {
-        return commands.getOrDefault(commandName, null);
+    public static boolean isValidCommand(String commandName) {
+        return getCommand(commandName).isPresent();
     }
 }

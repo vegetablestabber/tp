@@ -1,10 +1,14 @@
 package modmate.command;
 
 import modmate.CommandCenter;
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.user.User;
 
 public class ViewTimetableCommand implements Command {
+
+    public static final String CLI_REPRESENTATION = "timetable";
+
+    private static final LogUtil logUtil = new LogUtil(ViewTimetableCommand.class);
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -20,11 +24,12 @@ public class ViewTimetableCommand implements Command {
 
         if (!currentUser.hasTimetable(inputTimetableName)) {
             System.out.println("Timetable \"" + inputTimetableName + "\" not found.");
-            Log.saveLog("[MAIN]   Timetable '" + inputTimetableName + "' not found.");
+            logUtil.warning("Timetable '" + inputTimetableName + "' not found.");
             return;
         }
 
-        Log.saveLog("[MAIN]   Displaying user's mod list.");
+        logUtil.info("Displaying user's mod list.");
         System.out.println(currentUser.getTimetable(inputTimetableName));
     }
+
 }
