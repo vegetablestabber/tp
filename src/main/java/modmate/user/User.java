@@ -32,13 +32,23 @@ public class User {
     }
 
     // Method to display the user's mods and timetables
-    public String getTimetable(String timetableName) {
+    public Schedule getTimetable(String timetableName) {
         for (Schedule timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
-                return timetable.toString();
+                return timetable;
             }
         }
-        return "Timetable '" + timetableName + "' not found.";
+        System.out.println("Timetable '" + timetableName + "' not found.");
+        return null;
+    }
+
+    public void setLessonOnTimetable(String timetableName, Mod mod, String type, String id) {
+        for (Schedule timetable : timetables) {
+            if (timetable.getName().equalsIgnoreCase(timetableName)) {
+                timetable.setModLesson(mod, type, id);
+            }
+        }
+        // TODO: throw appropriate error
     }
 
     public void addModToTimetable(String timetableName, Mod mod) {

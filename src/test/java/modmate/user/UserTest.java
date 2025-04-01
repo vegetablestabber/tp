@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -38,14 +39,13 @@ public class UserTest {
     @Test
     void testGetTimetable() {
         user.addTimetable("Semester 1");
-        String timetable = user.getTimetable("Semester 1");
+        String timetable = user.getTimetable("Semester 1").toString();
         assertEquals("Timetable: Semester 1\n  No mods added yet.\n", timetable);
     }
 
     @Test
     void testGetNonExistentTimetable() {
-        String timetable = user.getTimetable("Semester 1");
-        assertEquals("Timetable 'Semester 1' not found.", timetable);
+        assertNull(user.getTimetable("Semester 1"));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class UserTest {
         user.addTimetable("Semester 1");
         String output = getConsoleOutput(() -> user.addModToTimetable("Semester 1", mod1));
         assertEquals("Mod CS1010 added successfully to Semester 1.", output);
-        assertTrue(user.getTimetable("Semester 1").contains("CS1010"));
+        assertTrue(user.getTimetable("Semester 1").toString().contains("CS1010"));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class UserTest {
         user.addModToTimetable("Semester 1", mod1);
         String output = getConsoleOutput(() -> user.removeModFromTimetable("Semester 1", mod1));
         assertEquals("Mod CS1010 removed successfully from Semester 1.", output);
-        assertFalse(user.getTimetable("Semester 1").contains("CS1010"));
+        assertFalse(user.getTimetable("Semester 1").toString().contains("CS1010"));
     }
 
     @Test
@@ -101,11 +101,11 @@ public class UserTest {
         user.addModToTimetable("Semester 1", mod1);
         user.addModToTimetable("Semester 2", mod2);
 
-        assertTrue(user.getTimetable("Semester 1").contains("CS1010"));
-        assertFalse(user.getTimetable("Semester 1").contains("CS2113"));
+        assertTrue(user.getTimetable("Semester 1").toString().contains("CS1010"));
+        assertFalse(user.getTimetable("Semester 1").toString().contains("CS2113"));
 
-        assertTrue(user.getTimetable("Semester 2").contains("CS2113"));
-        assertFalse(user.getTimetable("Semester 2").contains("CS1010"));
+        assertTrue(user.getTimetable("Semester 2").toString().contains("CS2113"));
+        assertFalse(user.getTimetable("Semester 2").toString().contains("CS1010"));
     }
 
     private String getConsoleOutput(Runnable code) {

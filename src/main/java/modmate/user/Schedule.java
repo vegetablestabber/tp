@@ -3,14 +3,13 @@ package modmate.user;
 import modmate.mod.Mod;
 import modmate.timetable.BreakPeriod;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Schedule {
-    private String name; // Name of the timetable
-    private List<Mod> mods; // List of mods in this timetable
-    private List<BreakPeriod> breaks = new ArrayList<>();
+    private final String name; // Name of the timetable
+    private final List<ScheduleMod> mods; // List of mods in this timetable
+    private final List<BreakPeriod> breaks = new ArrayList<>();
 
     /**
      * Constructs a new Timetable with the given name.
@@ -20,28 +19,46 @@ public class Schedule {
     public Schedule(String name) {
         this.name = name;
         this.mods = new ArrayList<>();
+
+
     }
 
-    public void addMod(Mod mod) {
-        for (Mod existingMod : mods) {
-            if (existingMod.getName().equals(mod.getName())) {
-                System.out.println("Mod " + mod.getCode() + " is already in the timetable.");
+    public void addMod(Mod modToAdd) {
+        for (ScheduleMod existingMod : mods) {
+            if (existingMod.getMod().getName().equals(modToAdd.getName())) {
+                System.out.println("Mod " + modToAdd.getCode() + " is already in the timetable.");
                 return;
             }
         }
-        mods.add(mod);
-        System.out.println("Mod " + mod.getCode() + " added successfully to " + name + ".");
+
+        mods.add(new ScheduleMod(modToAdd));
+        System.out.println("Mod " + modToAdd.getCode() + " added successfully to " + name + ".");
     }
 
-    public void removeMod(Mod mod) {
-        for (Mod existingMod : mods) {
-            if (existingMod.getCode().equalsIgnoreCase(mod.getCode())) {
+    public void setModLesson(Mod modToSet, String type, String id) {
+        ScheduleMod scheduleMod = mods
+                .stream()
+                .filter(
+                        mod -> mod.getMod().getCode().equalsIgnoreCase(modToSet.getCode()))
+                .findFirst()
+                .orElse(null);
+
+        if (scheduleMod == null) {
+            System.out.println("Mod " + modToSet.getCode() + " is not in the timetable.");
+        }
+
+        scheduleMod.setLesson(type, id);
+    }
+
+    public void removeMod(Mod modToRemove) {
+        for (ScheduleMod existingMod : mods) {
+            if (existingMod.getMod().getCode().equalsIgnoreCase(modToRemove.getCode())) {
                 mods.remove(existingMod);
-                System.out.println("Mod " + mod.getCode() + " removed successfully from " + name + ".");
+                System.out.println("Mod " + modToRemove.getCode() + " removed successfully from " + name + ".");
                 return;
             }
         }
-        System.out.println("Mod " + mod.getCode() + " is not in the timetable.");
+        System.out.println("Mod " + modToRemove.getCode() + " is not in the timetable.");
     }
 
     public void addBreak(BreakPeriod breakPeriod) {
@@ -68,7 +85,11 @@ public class Schedule {
      * @return The list of mods.
      */
     public List<Mod> getMods() {
-        return mods;
+        return mods.stream().map(ScheduleMod::getMod).toList();
+    }
+
+    public ScheduleMod getModSchedule(Mod modToGet) {
+        return mods.stream().filter(mod -> mod.getMod().getCode().equals(modToGet.getCode())).findAny().orElse(null);
     }
 
     @Override
@@ -77,8 +98,8 @@ public class Schedule {
         if (mods.isEmpty()) {
             result += "  No mods added yet.\n";
         } else {
-            for (Mod mod : mods) {
-                result += "  " + mod.toString().replace("\n", "\n  ") + "\n";
+            for (ScheduleMod mod : mods) {
+                result += "  " + mod.toString().replace("\n", "\n  ") + "\n\n";
             }
         }
         if (!breaks.isEmpty()) {

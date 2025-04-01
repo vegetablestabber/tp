@@ -1,5 +1,9 @@
 package modmate.timetable;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Represents an lesson with a unique identifier, period, and venue.
  */
@@ -78,26 +82,86 @@ public class Lesson implements Comparable<Lesson> {
 
     @Override
     public int compareTo(Lesson other) {
-        // This is just to compare class numbers in the format of "1A", "1B", "1C", etc.
+        return compareParts(this.id, other.id);
+    }
 
-        String[] parts1 = this.id.split("(?<=\\d)(?=\\D)");
-        String[] parts2 = other.id.split("(?<=\\d)(?=\\D)");
+    private static int compareParts(String s1, String s2) {
+        if (s1 == null || s2 == null) {
+            return 0;
+        }
+        if (s1.isEmpty()) {
+            return 1;
+        }
+        if (s2.isEmpty()) {
+            return -1;
+        }
+        ArrayList<String> part1 = extractInitial(s1);
+        ArrayList<String> part2 = extractInitial(s2);
 
-        int numComparison = Integer.compare(Integer.parseInt(parts1[0]), Integer.parseInt(parts2[0]));
-
-        if (numComparison != 0) {
-            return numComparison;
+        int result = part1.get(0).compareTo(part2.get(0));
+        if (result != 0) {
+            return result;
         }
 
-        if (parts1.length > 1 && parts2.length > 1) {
-            return parts1[1].compareTo(parts2[1]);
-        } else if (parts1.length > 1) {
-            return 1;
-        } else if (parts2.length > 1) {
+        return compareRemainingParts(part1.get(1), part2.get(1));
+    }
+
+    private static ArrayList<String> extractInitial(String s) {
+        ArrayList<String> parts = new ArrayList<>();
+        Pattern pattern = Pattern.compile("^([A-Za-z]+|\\d+)(.*)$");
+        Matcher matcher = pattern.matcher(s);
+
+        if (matcher.find()) {
+            parts.add(matcher.group(1)); // The initial part (either letters or digits)
+            parts.add(matcher.group(2)); // The remaining part
+        } else {
+            parts.add(""); // Default if no match
+            parts.add(s);  // Whole string as the remaining part
+        }
+
+        return parts;
+    }
+
+    private static int compareRemainingParts(String s1, String s2) {
+        if (s1.isEmpty()) {
             return -1;
+        }
+        if (s2.isEmpty()) {
+            return 1;
+        }
+
+        if (isNumeric(s1) && isNumeric(s2)) {
+            return Integer.compare(Integer.parseInt(s1), Integer.parseInt(s2));
+        }
+        if (isAlphabetic(s1) && isAlphabetic(s2)) {
+            return s1.compareTo(s2);
+        }
+
+        if (isNumeric(s1) && isAlphabetic(s2)) {
+            return -1;
+        }
+        if (isAlphabetic(s1) && isNumeric(s2)) {
+            return 1;
         }
 
         return 0;
     }
 
+    private static boolean isNumeric(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static boolean isAlphabetic(String s) {
+        return s.matches("[A-Za-z]+");
+    }
+
+
+    public String toString() {
+        return "[" + id + "] " + period + " @ " + venue;
+    }
 }

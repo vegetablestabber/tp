@@ -97,4 +97,8 @@ public class Period {
         return weekRange;
     }
 
+    @Override
+    public String toString() {
+        return "Weeks " + weekRange.toString() + ", " + day + ", " + startTime + "-" + endTime;
+    }
 }
