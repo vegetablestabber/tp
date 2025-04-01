@@ -54,9 +54,28 @@ This design ensures a clear separation of concerns, making the application modul
 - **Rationale**: This design allows for easy addition of new commands without modifying existing code.
 
 #### **Timetable Management**
-- **Purpose**: Allows users to create, update, and view academic schedules.
-- **Implementation**: The `Timetable` class provides methods to add, remove, and view modules. The `TimetableManager` handles higher-level operations such as exporting timetables.
-- **Rationale**: Encapsulating timetable logic in a dedicated class improves maintainability and testability.
+- **Purpose**: Allows users to create, update, and view multiple academic schedules.
+- **Implementation**:
+      Two core methods in the `User` class:
+      1. `addTimetable(String timetableName)` - Method to add a new timetable for the user
+      2. `getTimetable(String timetableName)` - Method to display the user's timetables (mods included in the timetable)
+     These methods are supported by `Schedule` class for storage structure
+      
+      `addTimetable(String timetableName)` first checks whether there are any duplicate timetables with the same name. It checks through a list called `List<Schedule> timetables`
+      and if duplicate timetable found, an error message, "Timetable 'X' already exists", will be displayed. If no duplicate timetable found, a new Schedule object is instantiated  
+      and a new timetable of `timetableName` will be created. It is added to `timetables` list, afterwhich a success message, "Timetable 'X' created successfully", is displayed.
+
+      `getTimetable(String timetableName)` searches through a list called `timetables`, as mentioned earlier. If timetable with corresponding `timetableName` is found,  
+      a formatted String is returned which shows, the timetable name, all added modules and module details. If timetable is not found, 
+      an error message, "Timetable 'X' not found", will be displayed.
+
+- **Design Rationale**: Usage of List<Schedule> allowed for maintainable insertion order of timetables and straightforward iteration. 
+Moreover, with the timetable duplication checking it allows for unnecessary object creation and potential naming conflicts.
+- **Possible Extensions**: Merging of multiple timetables
+
+The following UML Sequence diagram effectively shows how these two methods are implemented with the inclusion of user inputs of `createtimetable` and `timetable` 
+for `addTimetable(String timetableName)` and `getTimetable(String timetableName)` respectively.
+![image.png](image/image.png)
 
 #### **API Integration**
 - **Purpose**: Fetches module data from the NUSMods API.
