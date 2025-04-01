@@ -9,6 +9,8 @@ import java.time.LocalTime;
 
 public class AddBreakToTimetableCommand implements Command {
 
+    public static final String CLI_REPRESENTATION = "addbreak";
+
     @Override
     public void execute(String[] args, User currentUser) {
         if (args.length < 6) {

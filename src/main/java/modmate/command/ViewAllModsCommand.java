@@ -1,6 +1,6 @@
 package modmate.command;
 
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.user.User;
 import modmate.CommandCenter;
 
@@ -8,9 +8,14 @@ import java.util.Map;
 
 public class ViewAllModsCommand implements Command {
 
+    public static final String CLI_REPRESENTATION = "viewallmods";
+
+    private static final LogUtil logUtil = new LogUtil(ViewAllModsCommand.class);
+
     @Override
     public void execute(String[] args, User currentUser) {
-        Log.saveLog("[MAIN]   Viewing all mods.");
+        logUtil.info("Viewing all mods.");
+
         CommandCenter.allModCodesAndNames
             .entrySet()
             .stream()

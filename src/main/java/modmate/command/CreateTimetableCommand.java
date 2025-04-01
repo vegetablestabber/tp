@@ -1,10 +1,14 @@
 package modmate.command;
 
 import modmate.CommandCenter;
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.user.User;
 
 public class CreateTimetableCommand implements Command {
+
+    public static final String CLI_REPRESENTATION = "createtimetable";
+
+    private static final LogUtil logUtil = new LogUtil(CreateTimetableCommand.class);
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -17,14 +21,14 @@ public class CreateTimetableCommand implements Command {
 
         assert inputTimetableName != null
                 && !inputTimetableName.trim().isEmpty() : "Timetable name cannot be null or empty";
-        Log.saveLog("[MAIN]   Creating timetable: " + inputTimetableName);
+        logUtil.info("Creating timetable: " + inputTimetableName);
 
         if (currentUser.hasTimetable(inputTimetableName)) {
             System.out.println("Timetable with this name already exists.");
-            Log.saveLog("[MAIN]   Timetable " + inputTimetableName + " already exists.");
+            logUtil.warning("Timetable " + inputTimetableName + " already exists.");
         } else {
             currentUser.addTimetable(inputTimetableName.replaceAll("\\s+", ""));
-            Log.saveLog("[MAIN]   Timetable " + inputTimetableName + " created successfully.");
+            logUtil.info("Timetable " + inputTimetableName + " created successfully.");
         }
     }
 }

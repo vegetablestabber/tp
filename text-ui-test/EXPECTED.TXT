@@ -2,4 +2,6 @@ Welcome to ModMate!
 
 Enter command ('exit' to quit, '-h' for help):
 Invalid command "Hello"! Please check your command again, or run -h for help.
+
+Enter command ('exit' to quit, '-h' for help):
 Exiting...

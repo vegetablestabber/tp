@@ -1,10 +1,14 @@
 package modmate.command;
 
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.CommandCenter;
 import modmate.user.User;
 
 public class BookmarkCommand implements Command {
+
+    public static final String CLI_REPRESENTATION = "bookmark";
+
+    private static final LogUtil logUtil = new LogUtil(BookmarkCommand.class);
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -17,15 +21,15 @@ public class BookmarkCommand implements Command {
 
         assert inputCodeOrName != null
                 && !inputCodeOrName.trim().isEmpty() : "Mod code or name cannot be null or empty";
-        Log.saveLog("[MAIN]   Bookmarking mod.");
+        logUtil.info("Bookmarking mod.");
         // Bookmark a mod for later reference
 
         CommandCenter.modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
             currentUser.addBookmark(mod);
-            Log.saveLog("[MAIN]   Mod '" + inputCodeOrName + "' bookmarked.");
+            logUtil.info("Mod '" + inputCodeOrName + "' bookmarked.");
             System.out.println("Bookmark " + inputCodeOrName + " successfully added to your list.");
         }, () -> {
-            Log.saveLog("[MAIN]   Course to bookmark not found.");
+            logUtil.info("Course to bookmark not found.");
             System.out.println("Course with code '" + inputCodeOrName + "' not found.");
         });
     }

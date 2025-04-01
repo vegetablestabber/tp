@@ -1,18 +1,19 @@
 package modmate;
 
-import modmate.command.Command;
+import java.util.Map;
+import java.util.Optional;
+
 import modmate.command.CommandLine;
 import modmate.download.nusmods.NUSModsAPI;
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
 import modmate.user.User;
 
-import java.util.Map;
-import java.util.Optional;
-
 public class CommandCenter {
     public static Map<String, CondensedMod> allModCodesAndNames = NUSModsAPI.fetchAllModCodes();
+
+    private static final LogUtil logUtil = new LogUtil(CommandCenter.class);
 
     static String helpMessage = """
             Commands:
@@ -31,19 +32,16 @@ public class CommandCenter {
             """;
 
     static void printHelp() {
-        Log.saveLog("[MAIN]   Printing help message.");
+        logUtil.info("Printing help message.");
         System.out.println(helpMessage);
     }
 
     public static void handleCommand(String commandName, String[] args, User currentUser) {
-        Command command = CommandLine.getCommand(commandName);
-
-        if (command != null) {
-            command.execute(args, currentUser);
-        } else {
-            // If the command does not exist, inform the user.
-            System.out.println("Invalid command: " + commandName);
-        }
+        CommandLine.getCommand(commandName)
+            .ifPresentOrElse(
+                command -> command.execute(args, currentUser),
+                () -> System.out.println("Invalid command: " + commandName)
+            );
     }
 
     /**
