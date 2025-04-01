@@ -23,21 +23,25 @@ public class Schedule {
     }
 
     public void addMod(Mod mod) {
-        if (mods.contains(mod)) {
-            System.out.println("Mod " + mod.getCode() + " is already in the timetable.");
-            return;
+        for (Mod existingMod : mods) {
+            if (existingMod.getName().equals(mod.getName())) {
+                System.out.println("Mod " + mod.getCode() + " is already in the timetable.");
+                return;
+            }
         }
         mods.add(mod);
         System.out.println("Mod " + mod.getCode() + " added successfully to " + name + ".");
     }
 
     public void removeMod(Mod mod) {
-        if (!mods.contains(mod)) {
-            System.out.println("Mod " + mod.getCode() + " is not in the timetable.");
-            return;
+        for (Mod existingMod : mods) {
+            if (existingMod.getCode().equalsIgnoreCase(mod.getCode())) {
+                mods.remove(existingMod);
+                System.out.println("Mod " + mod.getCode() + " removed successfully from " + name + ".");
+                return;
+            }
         }
-        mods.remove(mod);
-        System.out.println("Mod " + mod.getCode() + " removed successfully from " + name + ".");
+        System.out.println("Mod " + mod.getCode() + " is not in the timetable.");
     }
 
     public void addBreak(BreakPeriod breakPeriod) {
