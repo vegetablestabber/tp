@@ -1,10 +1,14 @@
 package modmate.command;
 
 import modmate.CommandCenter;
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.user.User;
 
 public class SetModLessonCommand implements Command {
+
+    public static final String CLI_REPRESENTATION = "setlesson";
+
+    private static final LogUtil logUtil = new LogUtil(ViewAllModsCommand.class);
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -20,14 +24,14 @@ public class SetModLessonCommand implements Command {
 
         assert inputCodeOrName != null
                 && !inputCodeOrName.trim().isEmpty() : "Mod code or name cannot be null or empty";
-        Log.saveLog("[MAIN]   Setting mod lessons for: " + inputCodeOrName + "(" + timetable + ")");
+        logUtil.info("Setting mod lessons for: " + inputCodeOrName + "(" + timetable + ")");
 
         assert timetable != null
                 && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
 
         if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
             System.out.println("Timetable \"" + timetable + "\" not found.");
-            Log.saveLog("[MAIN]   Timetable '"
+            logUtil.info("Timetable '"
                     + timetable
                     + "' not found while attempting to setting lesson for mod "
                     + inputCodeOrName
@@ -39,7 +43,7 @@ public class SetModLessonCommand implements Command {
             currentUser.setLessonOnTimetable(timetable, mod, lessonType, lessonId);
         }, () -> {
             System.out.println("Mod '" + inputCodeOrName + "' not found.");
-            Log.saveLog("[MAIN]   Mod '" + inputCodeOrName + "' not found.");
+            logUtil.severe("Mod '" + inputCodeOrName + "' not found.");
         });
     }
 }

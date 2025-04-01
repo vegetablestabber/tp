@@ -19,7 +19,7 @@ public class CommandCenter {
             exit: Exit the application
             viewmod <mod code or name>: View details of a mod by its mod code or name
             viewlessons <mod code or name>: View available lessons for each mod, sorted by type
-            setlessons <timetable> <mod code or name> <lesson type> <lesson id>: Set lesson for each mod, by type
+            setlesson <timetable> <mod code or name> <lesson type> <lesson id>: Set lesson for each mod, by type
             searchmod <mod code or name>: Search for a mod by its code or name
             bookmark <mod code or name>: Bookmark a mod for later reference
             bookmarks: View all bookmarked mods

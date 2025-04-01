@@ -14,6 +14,7 @@ public class CommandLine {
         case GetBookmarksCommand.CLI_REPRESENTATION -> command = new GetBookmarksCommand();
         case SearchModCommand.CLI_REPRESENTATION -> command = new SearchModCommand();
         case ViewModCommand.CLI_REPRESENTATION -> command = new ViewModCommand();
+
         case RemoveModFromTimetableCommand.CLI_REPRESENTATION -> command = new RemoveModFromTimetableCommand();
         case CreateTimetableCommand.CLI_REPRESENTATION -> command = new CreateTimetableCommand();
         case ViewTimetableCommand.CLI_REPRESENTATION -> command = new ViewTimetableCommand();

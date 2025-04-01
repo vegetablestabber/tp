@@ -1,7 +1,6 @@
 package modmate.command;
 
 import modmate.CommandCenter;
-import modmate.log.Log;
 import modmate.mod.Mod;
 import modmate.timetable.Lesson;
 import modmate.user.Schedule;
@@ -45,7 +44,7 @@ public class ViewTimetableCommand implements Command {
             return;
         }
 
-        Log.saveLog("[MAIN]   Displaying user's mod list.");
+        logUtil.info("Displaying user's mod list.");
         if (viewtype.equals("timeline")) {
             HashMap<DayOfWeek, List<AbstractMap.SimpleEntry<Mod, Lesson>>> timeline = new HashMap<>();
             timetable.getMods().forEach(
