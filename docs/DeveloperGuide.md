@@ -28,20 +28,18 @@ This feature involves the following key operations:
 Step 1: User Requests Module Details
 - The user enters a module code or name. The viewMod function is triggered, and the system logs the request.
 
-- `Diagram Placeholder: "User enters module code or name and triggers viewMod."`
 #### Step 2: System Attempts to Retrieve Module Data
 - The system checks for a module matching the provided input using modFromCodeOrName. If found, it retrieves full details from fetchModuleByCode.
 
-`Diagram Placeholder: "Flowchart showing how modFromCodeOrName checks for a module match and calls fetchModuleByCode if found."`
+![img.png](img/img.png)
 #### Step 3a: Module Found
 - If a module is found, its details are displayed, and a log entry is saved.
 
-`Diagram Placeholder: "Sequence diagram showing viewMod calling modFromCodeOrName, then fetchModuleByCode, and finally displaying the module details."`
 #### Step 3b: Module Not Found
 
 - If no module is found, an error message is displayed, and the failure is logged.
 
-`Diagram Placeholder: "Sequence diagram showing viewMod failing to find a module and displaying an error message."`
+![img2.png](img2/img.png)
 ### Design Considerations
 #### Aspect: Data Retrieval Method
 
