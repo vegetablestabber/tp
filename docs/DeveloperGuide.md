@@ -219,7 +219,7 @@ This feature involves the following key operations:
 #### Summary
 {: .no_toc }
 
-- The `searchmod` feature provides a straightforward way for users to search for modules by code or name. It ensures usability by handling errors gracefully and displaying relevant results. Future enhancements could include advanced search algorithms and suggestions for improving user queries.
+The `searchmod` feature provides a straightforward way for users to search for modules by code or name. It ensures usability by handling errors gracefully and displaying relevant results. Future enhancements could include advanced search algorithms and suggestions for improving user queries.
 
 ## Product Scope
 
