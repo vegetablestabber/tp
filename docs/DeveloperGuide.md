@@ -8,11 +8,6 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Setting up, getting started**
-
-Refer to the guide [_Setting up and getting started_](SettingUp.md).
-
---------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
 
@@ -26,9 +21,6 @@ The ***Architecture Diagram*** above provides a high-level overview of the syste
 1. **`Main`**: Handles application startup and shutdown. It initializes and connects the other components.
 2. **`Command`**: Encapsulates user actions such as adding modules, searching for modules, or viewing timetables.
 3. **`CommandLine`**: Parses user input and maps it to specific commands.
-4. **`Model`**: Manages the application's data, including timetables and modules.
-5. **`Storage`**: Handles reading and writing data to the local file system.
-6. **`Download`**: Manages interactions with external APIs, such as fetching module data from NUSMods.
 7. **`LogUtil`**: Provides centralized logging functionality for debugging and tracking application behavior.
 
 ### **How Components Interact**
@@ -47,6 +39,62 @@ This design ensures a clear separation of concerns, making the application modul
 ## **Implementation**
 
 ### **Key Features**
+
+### View Module Details Feature
+
+#### Proposed Implementation
+
+The viewMod feature allows users to retrieve and display details about a module by providing its code or name. This functionality relies on fetching module data from an external API and handling cases where the requested module is not found.
+The feature is implemented in the viewMod function, which operates as follows:
+- It asserts that the input is neither null nor empty.
+- It attempts to retrieve the module using modFromCodeOrName.
+- If a match is found, it displays the detailed module information and logs the action.
+- If no match is found, it informs the user and logs the failure.
+
+This feature involves the following key operations:
+- `viewMod(inputCodeOrName)`: Main entry point for viewing module details.
+- `modFromCodeOrName(modCodeOrNameGiven)`: Attempts to find a module based on the provided code or name.
+- `fetchModuleByCode(moduleCode)`: Fetches module details from the NUSMods API.
+
+#### Example Usage Scenario
+Step 1: User Requests Module Details
+- The user enters a module code or name. The viewMod function is triggered, and the system logs the request.
+
+#### Step 2: System Attempts to Retrieve Module Data
+- The system checks for a module matching the provided input using modFromCodeOrName. If found, it retrieves full details from fetchModuleByCode.
+
+![img.png](img/img.png)
+#### Step 3a: Module Found
+- If a module is found, its details are displayed, and a log entry is saved.
+
+#### Step 3b: Module Not Found
+
+- If no module is found, an error message is displayed, and the failure is logged.
+
+![img2.png](img2/img.png)
+### Design Considerations
+#### Aspect: Data Retrieval Method
+
+Alternative 1 (Current Choice): Fetch from External API Each Time
+- Pros: Ensures the latest module details are always retrieved.
+- Cons: API calls may introduce latency.
+
+Alternative 2: Cache Module Data Locally
+- Pros: Reduces API calls, improving performance.
+- Cons: Data may become outdated without a refresh mechanism.
+
+#### Aspect: Error Handling
+
+Alternative 1 (Current Choice): Log Errors and Return Empty Result
+- Pros: Ensures errors are recorded for debugging.
+- Cons: Users do not receive detailed error messages.
+
+Alternative 2: Provide User-Friendly Error Messages
+- Pros: Helps users understand failures.
+- Cons: Adds complexity in differentiating error types.
+### Summary
+The viewMod feature provides a simple way to retrieve and display module details based on user input. It ensures robustness by handling errors and logging events while maintaining a straightforward implementation that prioritizes real-time data retrieval. Future improvements may include caching for performance optimization and enhanced error messaging.
+
 
 #### **Command Parsing**
 - **Purpose**: Maps user input to specific commands.
