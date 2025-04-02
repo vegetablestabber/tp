@@ -4,6 +4,8 @@
 
 ✨ Whether you're a student looking to streamline your academic life, an instructor reviewing this project, or a curious reader, ModMate offers a simple and intuitive command-line interface to create personalized timetables, manage modules, and much more.
 
+👥 **Contributors**: Check out the [About Us](AboutUs.md) page to see the list of students who contributed to the development of ModMate.
+
 📖 Useful links:
 
 * [📘 User Guide](UserGuide.md) - Learn how to get started and explore ModMate's features.
