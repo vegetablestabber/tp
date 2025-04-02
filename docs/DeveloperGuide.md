@@ -13,7 +13,7 @@
 
 ### **Architecture**
 
-<img src="images/ArchitectureDiagram.png" width="280" />
+![Architecture Diagram](img/architecture.svg)
 
 The ***Architecture Diagram*** above provides a high-level overview of the system. It shows the main components of the application and how they interact with each other.
 
