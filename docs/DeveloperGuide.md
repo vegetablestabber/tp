@@ -164,7 +164,7 @@ This feature involves the following key operations:
 ##### Step 3b: No Matches Found
 - If no matches are found, a message is displayed to inform the user, and the failure is logged.
 
-![UML Diagram Placeholder](img/searchmod/uml_placeholder.png)
+![Search Mod UML Diagram](https://plantuml.atug.com/svg/bLJBRi8m4BpdAtniAy47L5Kb2hIYWa1vd2jZBy7KiIC_H57BltSDmIIXggWlYNTcxPtTIGhAFcW69DSyfmxQJESvLPny9GGNazHQCWDgs7gaURS6XjKT3jwd_ScqF-kdyyvyC4uZ95JXtJ7rpOFPHK3gRE64Z7kyEhxR0tyArajdOnG-WNa7DxSnaa5vT4ajeNsoJvAaQ6ZYUgkafhojlCMOhObB5pDKPZkJGKKMqyg1Sd7FgQCzOO0vNH424l8gQoKaZBqBifq1cjU02NNh6DXOhSRB3PvN2qseiM1g8THNQ6NXh-vv2Q-pSTenXfwByqQSooyRW4A7mhf0hlHo1OwjEr8U1ip1_WCQ7Iv_sWNmIYpKqTMA0ueA1VMmjTNfdJpsyDswC5vouSIxLkkH38yj8VUnEPMXNia8FJbE14cLyJHvk0dKuwHAQZcs9hMgyjgSvuQ5a7tXgcOEXeNAa7boxM_Q3kP0JjCk31Emg9NMuV422Wn-CfmiT-H5kCLeIBRRRJiJpkSo_1oI7m00)
 
 #### **Design Considerations**
 
