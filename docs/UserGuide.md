@@ -6,13 +6,13 @@
 
 ✨ With ModMate, you can create personalized timetables, add or remove modules, set lessons, and much more—all through a simple and intuitive command-line interface. 🚀 Start using ModMate today and take control of your academic schedule!
 
-💡 This project is part of the CS2113 course at NUS and was taken in AY2024-2025 Semester 2. For more details about the team behind ModMate, refer to [our About Us page](docs/AboutUs.md). 😊
+💡 This project is part of the CS2113 course at NUS and was taken in AY2024-2025 Semester 2. For more details about the team behind ModMate, refer to [our About Us page](AboutUs.md). 😊
 
 ## Quick Start
 
 > ⚠️ **Note for CS2113 instructors and peers**
 >
-> For detailed instructions on manual testing, understanding the codebase, and other essential development practices, please refer to the [Developer Guide](docs/DeveloperGuide.md).
+> For detailed instructions on manual testing, understanding the codebase, and other essential development practices, please refer to the [Developer Guide](DeveloperGuide.md).
 >
 > 📘 The Developer Guide includes insights into design decisions, coding standards, and troubleshooting tips to help you gain a comprehensive understanding of the project.
 
