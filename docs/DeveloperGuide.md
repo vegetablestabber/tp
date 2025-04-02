@@ -138,6 +138,8 @@ The following UML Sequence diagram effectively shows how these two methods are i
 
 #### **Proposed Implementation**
 
+![Search Mod Class Diagram](img/harii/searchmod_class.svg)
+
 The `searchmod` feature allows users to search for modules by providing a query string. This functionality is implemented in the `SearchModCommand` class and relies on matching the query against module codes and names. The feature ensures that relevant modules are retrieved and displayed in a user-friendly format.
 
 The feature operates as follows:
@@ -149,6 +151,8 @@ The feature operates as follows:
 This feature involves the following key operations:
 - `execute(String[] args, User currentUser)`: Main entry point for executing the search command.
 - `getSearchResults(String searchTerm)`: Searches for modules matching the query and retrieves their details.
+
+![Search Mod Sequence Diagram](img/harii/searchmod_seq.svg)
 
 #### **Example Usage Scenario**
 
@@ -164,7 +168,7 @@ This feature involves the following key operations:
 ##### Step 3b: No Matches Found
 - If no matches are found, a message is displayed to inform the user, and the failure is logged.
 
-![Search Mod UML Diagram](https://plantuml.atug.com/svg/bLJBRi8m4BpdAtniAy47L5Kb2hIYWa1vd2jZBy7KiIC_H57BltSDmIIXggWlYNTcxPtTIGhAFcW69DSyfmxQJESvLPny9GGNazHQCWDgs7gaURS6XjKT3jwd_ScqF-kdyyvyC4uZ95JXtJ7rpOFPHK3gRE64Z7kyEhxR0tyArajdOnG-WNa7DxSnaa5vT4ajeNsoJvAaQ6ZYUgkafhojlCMOhObB5pDKPZkJGKKMqyg1Sd7FgQCzOO0vNH424l8gQoKaZBqBifq1cjU02NNh6DXOhSRB3PvN2qseiM1g8THNQ6NXh-vv2Q-pSTenXfwByqQSooyRW4A7mhf0hlHo1OwjEr8U1ip1_WCQ7Iv_sWNmIYpKqTMA0ueA1VMmjTNfdJpsyDswC5vouSIxLkkH38yj8VUnEPMXNia8FJbE14cLyJHvk0dKuwHAQZcs9hMgyjgSvuQ5a7tXgcOEXeNAa7boxM_Q3kP0JjCk31Emg9NMuV422Wn-CfmiT-H5kCLeIBRRRJiJpkSo_1oI7m00)
+![Search Mod Class Diagram](img/harii/searchmod_class.svg)
 
 #### **Design Considerations**
 

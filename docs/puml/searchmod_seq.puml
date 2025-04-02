@@ -1,0 +1,40 @@
+@startuml
+
+actor User
+participant "CommandLine" as CL
+participant "SearchModCommand" as SMC
+participant "CommandCenter" as CC
+participant "NUSModsAPI" as API
+
+User -> CL: getCommand("searchmod")
+CL -> SMC: new SearchModCommand()
+activate SMC
+
+User -> SMC: execute(args, currentUser)
+activate SMC
+
+SMC -> SMC: validate args
+alt Invalid args
+    SMC -> User: "Usage: searchmod <search query>"
+    deactivate SMC
+else Valid args
+    SMC -> SMC: getSearchResults(searchTerm)
+    activate SMC
+
+    SMC -> CC: allModCodesAndNames.values()
+    CC -> SMC: List<CondensedMod>
+
+    SMC -> API: fetchModuleByCode(condensedMod.getCode())
+    API -> SMC: Optional<Mod>
+    SMC -> SMC: filter and map results
+    deactivate SMC
+
+    alt Results found
+        SMC -> User: Display mods
+    else No results
+        SMC -> User: "No mods found matching the search query."
+    end
+end
+
+deactivate SMC
+@enduml

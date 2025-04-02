@@ -1,0 +1,83 @@
+@startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+skinparam classHeaderBackgroundColor LightBlue
+
+class SearchModCommand {
+    +static final String CLI_REPRESENTATION = "searchmod"
+    -static final LogUtil logUtil
+    +void execute(String[] args, User currentUser)
+    -static List<Mod> getSearchResults(String searchTerm)
+    +SearchModCommand()
+}
+
+interface "<<interface>> \n Command" {
+    +void execute(String[] args, User currentUser)
+}
+
+class LogUtil {
+    +LogUtil(Class<?> clazz)
+    +void info(String message)
+    +void warning(String message)
+    +void severe(String message)
+}
+
+class CommandCenter {
+    +static Map<String, CondensedMod> allModCodesAndNames
+    +static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven)
+    +static String stringFromBetweenPartsXY(String[] args, int index)
+}
+
+class NUSModsAPI {
+    +static Optional<Mod> fetchModuleByCode(String code)
+    +static Map<String, CondensedMod> fetchAllModCodes(int startYear)
+}
+
+class CondensedMod {
+    -String code
+    -String name
+    +String getCode()
+    +String getName()
+    +CondensedMod(String code, String name)
+}
+
+class Mod {
+    +String getDetailedString()
+    +String getDescription()
+    +List<Timetable> getTimetables()
+    +ModAttributes getAttributes()
+}
+
+class ModAttributes {
+    +Faculty getFaculty()
+    +String listAvailableSemesters()
+    +double getUnits()
+    +boolean isGraded()
+    +List<Mod> getPrerequisites()
+    +Optional<WeeklyWorkload> getWorkload()
+}
+
+class Faculty {
+    +String getName()
+}
+
+class WeeklyWorkload {
+    +double lectureHours
+    +double tutorialHours
+    +double projectHours
+    +double preparationHours
+    +String toString()
+}
+
+SearchModCommand ..|> "<<interface>> \n Command"
+SearchModCommand --> LogUtil
+SearchModCommand --> CommandCenter
+CommandCenter --> NUSModsAPI
+CommandCenter --> CondensedMod
+NUSModsAPI --> Mod
+Mod --> ModAttributes
+ModAttributes --> Faculty
+ModAttributes --> WeeklyWorkload
+
+@enduml
