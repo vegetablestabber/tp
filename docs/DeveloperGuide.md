@@ -119,7 +119,7 @@ Two core methods in the `User` class:
 
 These methods are supported by `Schedule` class for storage structure:
 
-- `addTimetable(String timetableName)` first checks whether there are any duplicate timetables with the same name. It checks through a list called `List<Schedule> timetables` and if duplicate timetable found, an error message, "Timetable 'X' already exists", will be displayed. If no duplicate timetable found, a new Schedule object is instantiated and a new timetable of `timetableName` will be created. It is added to `timetables` list, afterwhich a success message, "Timetable 'X' created successfully", is displayed.
+- `addTimetable(String timetableName)` first checks whether there are any duplicate timetables with the same name. It checks through a list called `List<Schedule> timetables` and if duplicate timetable found, an error message, "Timetable 'X' already exists", will be displayed. If no duplicate timetable found, a new Schedule object is instantiated and a new timetable of `timetableName` will be created. It is added to `timetables` list, after which a success message, "Timetable 'X' created successfully", is displayed.
 - `getTimetable(String timetableName)` searches through a list called `timetables`, as mentioned earlier. If timetable with corresponding `timetableName` is found, a formatted String is returned which shows, the timetable name, all added modules and module details. If timetable is not found, an error message, "Timetable 'X' not found", will be displayed.
 
 #### **Design Rationale**
