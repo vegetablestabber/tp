@@ -2,7 +2,8 @@ title: ModMate
 description: A companion tool to help NUS students manage their modules effectively.
 theme: just-the-docs
 
-url: https://ay2425s2-cs2113-w12-1.github.io/tp/
+url: https://AY2425S2-CS2113-W12-1.github.io
+baseurl: /tp
 
 aux_links:
   ModMate on GitHub:
