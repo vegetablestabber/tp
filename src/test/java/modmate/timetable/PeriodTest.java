@@ -1,10 +1,12 @@
 package modmate.timetable;
 
 import org.junit.jupiter.api.Test;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PeriodTest {
 
