@@ -4,6 +4,8 @@
 
 ✨ Whether you're a student looking to streamline your academic life, an instructor reviewing this project, or a curious reader, ModMate offers a simple and intuitive command-line interface to create personalized timetables, manage modules, and much more.
 
+💡 This project is part of the CS2113 course at NUS and was taken in AY2024-2025 Semester 2.
+
 ## Setting up in IntelliJ
 
 Prerequisites: JDK 17 (use the exact version), update IntelliJ to the most recent version.
