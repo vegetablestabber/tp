@@ -8,9 +8,6 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Setting up, getting started**
-
---------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
 
@@ -24,9 +21,6 @@ The ***Architecture Diagram*** above provides a high-level overview of the syste
 1. **`Main`**: Handles application startup and shutdown. It initializes and connects the other components.
 2. **`Command`**: Encapsulates user actions such as adding modules, searching for modules, or viewing timetables.
 3. **`CommandLine`**: Parses user input and maps it to specific commands.
-4. **`Model`**: Manages the application's data, including timetables and modules.
-5. **`Storage`**: Handles reading and writing data to the local file system.
-6. **`Download`**: Manages interactions with external APIs, such as fetching module data from NUSMods.
 7. **`LogUtil`**: Provides centralized logging functionality for debugging and tracking application behavior.
 
 ### **How Components Interact**
