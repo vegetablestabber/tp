@@ -2,7 +2,8 @@ title: ModMate
 description: A companion tool to help NUS students manage their modules effectively.
 theme: just-the-docs
 
-url: https://vegetablestabber.github.io/tp
+url: https://vegetablestabber.github.io
+baseurl: /tp
 
 aux_links:
   ModMate on GitHub:
