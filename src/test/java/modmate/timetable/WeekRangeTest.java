@@ -30,7 +30,10 @@ public class WeekRangeTest {
 
     @Test
     void testToStringWithGaps() {
-        WeekRange custom = new WeekRange(LocalDate.now(), LocalDate.now().plusWeeks(13), Arrays.asList(1, 2, 3, 5, 7, 8, 10));
+        WeekRange custom = new WeekRange(
+                LocalDate.now(),
+                LocalDate.now().plusWeeks(13),
+                Arrays.asList(1, 2, 3, 5, 7, 8, 10));
         assertEquals("1–3, 5, 7–8, 10", custom.toString());
     }
 
