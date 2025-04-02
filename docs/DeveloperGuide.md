@@ -57,23 +57,26 @@ This feature involves the following key operations:
 - `fetchModuleByCode(moduleCode)`: Fetches module details from the NUSMods API.
 
 #### Example Usage Scenario
-Step 1: User Requests Module Details
+
+##### Step 1: User Requests Module Details
 - The user enters a module code or name. The viewMod function is triggered, and the system logs the request.
 
-#### Step 2: System Attempts to Retrieve Module Data
+##### Step 2: System Attempts to Retrieve Module Data
 - The system checks for a module matching the provided input using modFromCodeOrName. If found, it retrieves full details from fetchModuleByCode.
 
-![img.png](img/img.png)
-#### Step 3a: Module Found
+![img.png](img/luke/img.png)
+##### Step 3a: Module Found
 - If a module is found, its details are displayed, and a log entry is saved.
 
-#### Step 3b: Module Not Found
+##### Step 3b: Module Not Found
 
 - If no module is found, an error message is displayed, and the failure is logged.
 
-![img2.png](img2/img.png)
-### Design Considerations
-#### Aspect: Data Retrieval Method
+![img2.png](img/luke/img2.png)
+
+#### Design Considerations
+
+##### Aspect: Data Retrieval Method
 
 Alternative 1 (Current Choice): Fetch from External API Each Time
 - Pros: Ensures the latest module details are always retrieved.
@@ -83,7 +86,7 @@ Alternative 2: Cache Module Data Locally
 - Pros: Reduces API calls, improving performance.
 - Cons: Data may become outdated without a refresh mechanism.
 
-#### Aspect: Error Handling
+##### Aspect: Error Handling
 
 Alternative 1 (Current Choice): Log Errors and Return Empty Result
 - Pros: Ensures errors are recorded for debugging.
@@ -92,7 +95,8 @@ Alternative 1 (Current Choice): Log Errors and Return Empty Result
 Alternative 2: Provide User-Friendly Error Messages
 - Pros: Helps users understand failures.
 - Cons: Adds complexity in differentiating error types.
-### Summary
+
+#### Summary
 The viewMod feature provides a simple way to retrieve and display module details based on user input. It ensures robustness by handling errors and logging events while maintaining a straightforward implementation that prioritizes real-time data retrieval. Future improvements may include caching for performance optimization and enhanced error messaging.
 
 
@@ -101,39 +105,34 @@ The viewMod feature provides a simple way to retrieve and display module details
 - **Implementation**: The `CommandLine` class uses a factory-like approach to instantiate the appropriate `Command` object based on the input.
 - **Rationale**: This design allows for easy addition of new commands without modifying existing code.
 
-#### **Timetable Management**
-- **Purpose**: Allows users to create, update, and view multiple academic schedules.
-- **Implementation**:
-      Two core methods in the `User` class:
-      1. `addTimetable(String timetableName)` - Method to add a new timetable for the user
-      2. `getTimetable(String timetableName)` - Method to display the user's timetables (mods included in the timetable)
-     These methods are supported by `Schedule` class for storage structure
-      
-      `addTimetable(String timetableName)` first checks whether there are any duplicate timetables with the same name. It checks through a list called `List<Schedule> timetables`
-      and if duplicate timetable found, an error message, "Timetable 'X' already exists", will be displayed. If no duplicate timetable found, a new Schedule object is instantiated  
-      and a new timetable of `timetableName` will be created. It is added to `timetables` list, afterwhich a success message, "Timetable 'X' created successfully", is displayed.
+### **Timetable Management Feature**
 
-      `getTimetable(String timetableName)` searches through a list called `timetables`, as mentioned earlier. If timetable with corresponding `timetableName` is found,  
-      a formatted String is returned which shows, the timetable name, all added modules and module details. If timetable is not found, 
-      an error message, "Timetable 'X' not found", will be displayed.
+#### **Purpose**
 
-- **Design Rationale**: Usage of List<Schedule> allowed for maintainable insertion order of timetables and straightforward iteration. 
+Allows users to create, update, and view multiple academic schedules.
+
+#### **Implementation**
+
+Two core methods in the `User` class:
+1. `addTimetable(String timetableName)` - Method to add a new timetable for the user
+2. `getTimetable(String timetableName)` - Method to display the user's timetables (mods included in the timetable)
+
+These methods are supported by `Schedule` class for storage structure:
+
+- `addTimetable(String timetableName)` first checks whether there are any duplicate timetables with the same name. It checks through a list called `List<Schedule> timetables` and if duplicate timetable found, an error message, "Timetable 'X' already exists", will be displayed. If no duplicate timetable found, a new Schedule object is instantiated and a new timetable of `timetableName` will be created. It is added to `timetables` list, after which a success message, "Timetable 'X' created successfully", is displayed.
+- `getTimetable(String timetableName)` searches through a list called `timetables`, as mentioned earlier. If timetable with corresponding `timetableName` is found, a formatted String is returned which shows, the timetable name, all added modules and module details. If timetable is not found, an error message, "Timetable 'X' not found", will be displayed.
+
+#### **Design Rationale**
+
+Usage of `List<Schedule>` allowed for maintainable insertion order of timetables and straightforward iteration.
+
 Moreover, with the timetable duplication checking it allows for unnecessary object creation and potential naming conflicts.
-- **Possible Extensions**: Merging of multiple timetables
 
-The following UML Sequence diagram effectively shows how these two methods are implemented with the inclusion of user inputs of `createtimetable` and `timetable` 
-for `addTimetable(String timetableName)` and `getTimetable(String timetableName)` respectively.
-![image.png](image/image.png)
+#### **Possible Extensions**: Merging of multiple timetables
 
-#### **API Integration**
-- **Purpose**: Fetches module data from the NUSMods API.
-- **Implementation**: The `NUSModsAPI` class interacts with the API using `HttpUtil` for network requests and `JsonParser` for processing responses.
-- **Rationale**: Separating API logic into a dedicated class ensures that external dependencies are isolated from core application logic.
+The following UML Sequence diagram effectively shows how these two methods are implemented with the inclusion of user inputs of `createtimetable` and `timetable` for `addTimetable(String timetableName)` and `getTimetable(String timetableName)` respectively.
 
-#### **Logging**
-- **Purpose**: Tracks application behavior for debugging and auditing.
-- **Implementation**: The `LogUtil` class provides methods for logging messages at various levels (e.g., info, warning, severe).
-- **Rationale**: Centralized logging ensures consistency and simplifies debugging.
+![image.png](img/jahnavi/image.png)
 
 --------------------------------------------------------------------------------------------------------------------
 
