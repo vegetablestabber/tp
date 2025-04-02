@@ -59,7 +59,9 @@ jobs:
         with:
           path: docs/_site/
       - name: Debugging
-        run: cd ./_site & ls
+        run: |
+          cd ./_site
+          ls
 
   # Deployment job
   deploy:
