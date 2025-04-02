@@ -55,6 +55,6 @@ The project uses [GitHub Actions](https://github.com/features/actions) for CI. W
 
 📖 Useful links:
 
-* [📘 User Guide](docs/UserGuide.md) - Learn how to get started and explore ModMate's features.
-* [💻 Developer Guide](docs/DeveloperGuide.md) - Dive into the technical details, including design decisions and coding standards.
-* [👥 About Us](docs/AboutUs.md) - Meet the team behind ModMate.
+* [📘 User Guide](UserGuide.md) - Learn how to get started and explore ModMate's features.
+* [💻 Developer Guide](DeveloperGuide.md) - Dive into the technical details, including design decisions and coding standards.
+* [👥 About Us](AboutUs.md) - Meet the team behind ModMate.
