@@ -168,8 +168,6 @@ This feature involves the following key operations:
 ##### Step 3b: No Matches Found
 - If no matches are found, a message is displayed to inform the user, and the failure is logged.
 
-![Search Mod Class Diagram](img/harii/searchmod_class.svg)
-
 #### **Design Considerations**
 
 ##### Aspect: Search Algorithm
