@@ -74,6 +74,7 @@ This feature involves the following key operations:
 
 ![img2.png](img/luke/img2.png)
 
+![img.png](img/luke/img3.png)
 #### Design Considerations
 
 ##### Aspect: Data Retrieval Method
