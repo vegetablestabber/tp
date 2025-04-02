@@ -1,0 +1,14 @@
+@startuml ArchitectureDiagram
+
+package "Architecture" {
+    [Main] --> [CommandLine] : Initializes
+    [CommandLine] --> [Command] : Parses input to
+    [Command] --> [NUSModsAPI] : Fetches data via
+    [Command] --> [LogUtil] : Logs actions
+    [Command] --> [User] : Updates state
+    [User] --> [Schedule] : Manages timetables
+    [NUSModsAPI] --> [HttpUtil] : Sends requests
+    [NUSModsAPI] --> [JsonParser] : Processes responses
+}
+
+@enduml

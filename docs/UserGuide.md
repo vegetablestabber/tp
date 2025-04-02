@@ -1,12 +1,21 @@
+---
+title: User Guide
+nav_order: 2
+nav_enabled: true
+---
+
 # User Guide
+
+1. TOC
+{:toc}
 
 ## Introduction
 
 🎉 Welcome to **ModMate**, your ultimate companion for managing your modules and timetables at the National University of Singapore (NUS)! 📚 ModMate is designed to help students efficiently organize their academic schedules, bookmark favorite modules, and explore detailed module information.
 
-✨ With ModMate, you can create personalized timetables, add or remove modules, set lessons, and much more—all through a simple and intuitive command-line interface. 🚀 Start using ModMate today and take control of your academic schedule!
+✨ With ModMate, you can create personalized timetables, add or remove modules, set lessons, and much more—all through a simple and intuitive command-line interface.
 
-💡 This project is part of the CS2113 course at NUS and was taken in AY2024-2025 Semester 2. For more details about the team behind ModMate, refer to [our About Us page](AboutUs.md). 😊
+🚀 Start using ModMate today and take control of your academic schedule!
 
 ## Quick Start
 

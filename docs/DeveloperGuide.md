@@ -1,6 +1,19 @@
+---
+title: Developer Guide
+nav_order: 3
+nav_enabled: true
+---
+
 # Developer Guide
 
-## **Acknowledgements**
+1. TOC
+{:toc}
+
+## Introduction
+
+This developer guide provides an in-depth look into the architecture, design, and implementation of **ModMate**, a command-line application designed to help NUS students manage their modules and timetables efficiently. Whether you're a developer looking to contribute or simply curious about how ModMate works under the hood, this guide has everything you need to get started.
+
+## Acknowledgements
 
 * The application integrates with the [NUSMods API](https://nusmods.com/) to fetch module data. Special thanks to the NUSMods team for providing their publicly available API.
 * Command parsing logic is inspired by [AddressBook-Level3](https://github.com/se-edu/addressbook-level3).
@@ -8,12 +21,11 @@
 
 ---
 
+## Design
 
-## **Design**
+### Architecture
 
-### **Architecture**
-
-<img src="images/ArchitectureDiagram.png" width="280" />
+![Architecture Diagram](img/architecture.svg)
 
 The ***Architecture Diagram*** above provides a high-level overview of the system. It shows the main components of the application and how they interact with each other.
 
@@ -23,7 +35,7 @@ The ***Architecture Diagram*** above provides a high-level overview of the syste
 3. **`CommandLine`**: Parses user input and maps it to specific commands.
 7. **`LogUtil`**: Provides centralized logging functionality for debugging and tracking application behavior.
 
-### **How Components Interact**
+### How Components Interact
 
 1. **User Input**: The user enters a command via the CLI.
 2. **Command Parsing**: The `CommandLine` component parses the input and creates the appropriate `Command` object.
@@ -36,9 +48,7 @@ This design ensures a clear separation of concerns, making the application modul
 
 ---
 
-## **Implementation**
-
-### **Key Features**
+## Implementation
 
 ### View Module Details Feature
 
@@ -99,19 +109,18 @@ Alternative 2: Provide User-Friendly Error Messages
 #### Summary
 The viewMod feature provides a simple way to retrieve and display module details based on user input. It ensures robustness by handling errors and logging events while maintaining a straightforward implementation that prioritizes real-time data retrieval. Future improvements may include caching for performance optimization and enhanced error messaging.
 
-
-#### **Command Parsing**
+#### Command Parsing
 - **Purpose**: Maps user input to specific commands.
 - **Implementation**: The `CommandLine` class uses a factory-like approach to instantiate the appropriate `Command` object based on the input.
 - **Rationale**: This design allows for easy addition of new commands without modifying existing code.
 
-### **Timetable Management Feature**
+### Timetable Management Feature
 
-#### **Purpose**
+#### Purpose
 
 Allows users to create, update, and view multiple academic schedules.
 
-#### **Implementation**
+#### Implementation
 
 Two core methods in the `User` class:
 1. `addTimetable(String timetableName)` - Method to add a new timetable for the user
@@ -122,21 +131,21 @@ These methods are supported by `Schedule` class for storage structure:
 - `addTimetable(String timetableName)` first checks whether there are any duplicate timetables with the same name. It checks through a list called `List<Schedule> timetables` and if duplicate timetable found, an error message, "Timetable 'X' already exists", will be displayed. If no duplicate timetable found, a new Schedule object is instantiated and a new timetable of `timetableName` will be created. It is added to `timetables` list, after which a success message, "Timetable 'X' created successfully", is displayed.
 - `getTimetable(String timetableName)` searches through a list called `timetables`, as mentioned earlier. If timetable with corresponding `timetableName` is found, a formatted String is returned which shows, the timetable name, all added modules and module details. If timetable is not found, an error message, "Timetable 'X' not found", will be displayed.
 
-#### **Design Rationale**
+#### Design Rationale
 
 Usage of `List<Schedule>` allowed for maintainable insertion order of timetables and straightforward iteration.
 
 Moreover, with the timetable duplication checking it allows for unnecessary object creation and potential naming conflicts.
 
-#### **Possible Extensions**: Merging of multiple timetables
+#### Possible Extensions: Merging of multiple timetables
 
 The following UML Sequence diagram effectively shows how these two methods are implemented with the inclusion of user inputs of `createtimetable` and `timetable` for `addTimetable(String timetableName)` and `getTimetable(String timetableName)` respectively.
 
 ![image.png](img/jahnavi/image.png)
 
-### **Search Module Feature**
+### Search Module Feature
 
-#### **Proposed Implementation**
+#### Proposed Implementation
 
 ![Search Mod Class Diagram](img/harii/searchmod_class.svg)
 
@@ -154,7 +163,7 @@ This feature involves the following key operations:
 
 ![Search Mod Sequence Diagram](img/harii/searchmod_seq.svg)
 
-#### **Example Usage Scenario**
+#### Example Usage Scenario
 
 ##### Step 1: User Initiates a Search
 - The user enters a search query (e.g., `searchmod CS2113`). The `SearchModCommand` is triggered, and the system logs the search request.
@@ -168,9 +177,7 @@ This feature involves the following key operations:
 ##### Step 3b: No Matches Found
 - If no matches are found, a message is displayed to inform the user, and the failure is logged.
 
-![Search Mod Class Diagram](img/harii/searchmod_class.svg)
-
-#### **Design Considerations**
+#### Design Considerations
 
 ##### Aspect: Search Algorithm
 
@@ -192,31 +199,31 @@ Alternative 2: Suggest Closest Matches
 - Pros: Helps users refine their search queries.
 - Cons: Adds complexity to the implementation.
 
-#### **Summary**
+#### Summary
 
 The `searchmod` feature provides a straightforward way for users to search for modules by code or name. It ensures usability by handling errors gracefully and displaying relevant results. Future enhancements could include advanced search algorithms and suggestions for improving user queries.
 
-#### **Command Parsing**
+#### Command Parsing
 - **Purpose**: Maps user input to the `SearchModCommand` class.
 - **Implementation**: The `CommandLine` class identifies the `searchmod` keyword and instantiates the corresponding command object.
 - **Rationale**: This design ensures modularity and simplifies the addition of new commands.
 
 ---
 
-## **Product Scope**
+## Product Scope
 
-### **Target User Profile**
+### Target User Profile
 
 * NUS students who need a tool to manage their academic modules and timetables.
 * Users comfortable with Command Line Interfaces (CLI).
 
-### **Value Proposition**
+### Value Proposition
 
 * Provides a lightweight and efficient way for NUS students to plan and manage their academic schedules and module information, tailored to the unique requirements of the NUS modular system.
 
 ---
 
-## **User Stories**
+## User Stories
 
 | Priority | As a …​          | I want to …​                     | So that I can …​                          |
 | -------- | ---------------- | -------------------------------- | ----------------------------------------- |
@@ -228,7 +235,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 
 ---
 
-## **Non-Functional Requirements**
+## Non-Functional Requirements
 
 1. The application should work on any mainstream OS with Java 11 installed.
 2. The response time for any command should not exceed 1 second.
@@ -237,7 +244,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 
 ---
 
-## **Glossary**
+## Glossary
 
 * **Module** - A course or subject offered by the university.
 * **Timetable** - A schedule of modules organized by semester.
@@ -245,9 +252,9 @@ The `searchmod` feature provides a straightforward way for users to search for m
 
 ---
 
-## **Appendix: Instructions for Manual Testing**
+## Appendix: Instructions for Manual Testing
 
-### **Testing Commands**
+### Testing Commands
 1. **Launching the Application**:
     - Run the `Main` class located in `src/main/java/modmate/Main.java`.
     - Verify that the application starts without errors and displays the welcome message.
@@ -278,35 +285,37 @@ The `searchmod` feature provides a straightforward way for users to search for m
     - Test the `createtimetable` command to generate a new timetable.
     - Verify that the timetable is initialized correctly and does not overwrite existing data unless explicitly confirmed.
 
-### **Error Handling**
+### Error Handling
 1. Enter invalid commands (e.g., `add123`) and confirm that the application displays appropriate error messages.
 2. Test edge cases:
     - Empty input: Press Enter without typing any command.
     - Invalid module codes: Use non-existent or malformed module codes (e.g., `add XYZ123`).
     - Excessively long inputs: Enter commands with overly long descriptions and verify the application handles them gracefully.
 
-### **API Integration**
+### API Integration
 1. Ensure the application can fetch module data from the NUSMods API:
     - Disconnect from the internet and attempt to fetch data to verify error handling.
     - Reconnect and confirm that valid data is retrieved and displayed correctly.
     - Test commands that rely on API data (e.g., `search` or `add`) to ensure they function as expected.
 
-### **Performance Testing**
+### Performance Testing
 1. Populate the in-memory timetable with a large number of modules (e.g., 1000 entries) and verify that the application remains responsive.
 2. Measure the response time for commands such as `add`, `view`, and `search` to ensure they do not exceed 1 second.
 
-### **Logging**
+### Logging
 1. Check the log file generated by the application:
     - Confirm that all user actions and errors are logged.
     - Verify that log entries are clear and provide sufficient detail for debugging.
     - Test scenarios that generate warnings or errors (e.g., invalid commands, API failures) and ensure they are logged appropriately.
 
-### **Advanced Scenarios**
+### Advanced Scenarios
 1. **Concurrent Modifications**:
     - Simulate concurrent user actions (e.g., adding and removing modules in quick succession) and verify that the application handles them correctly.
 2. **Stress Testing**:
     - Continuously add and remove modules in rapid succession to test the application's stability.
 3. **Cross-Component Interactions**:
     - Test commands that involve multiple components (e.g., adding a module and immediately bookmarking it) to ensure seamless integration.
+3. **Cross-Component Interactions**:
+tiple components (e.g., adding a module and immediately bookmarking it) to ensure seamless integration.
 
 These instructions are tailored to the application's structure and functionality, ensuring comprehensive manual testing.
