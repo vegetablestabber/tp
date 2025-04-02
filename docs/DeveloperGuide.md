@@ -6,7 +6,7 @@
 * Command parsing logic is inspired by [AddressBook-Level3](https://github.com/se-edu/addressbook-level3).
 * UML diagrams were created using [PlantUML](https://plantuml.com/).
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 
 ## **Design**
@@ -34,7 +34,7 @@ The ***Architecture Diagram*** above provides a high-level overview of the syste
 
 This design ensures a clear separation of concerns, making the application modular and easier to maintain.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Implementation**
 
@@ -138,6 +138,8 @@ The following UML Sequence diagram effectively shows how these two methods are i
 
 #### **Proposed Implementation**
 
+![Search Mod Class Diagram](img/harii/searchmod_class.svg)
+
 The `searchmod` feature allows users to search for modules by providing a query string. This functionality is implemented in the `SearchModCommand` class and relies on matching the query against module codes and names. The feature ensures that relevant modules are retrieved and displayed in a user-friendly format.
 
 The feature operates as follows:
@@ -149,6 +151,8 @@ The feature operates as follows:
 This feature involves the following key operations:
 - `execute(String[] args, User currentUser)`: Main entry point for executing the search command.
 - `getSearchResults(String searchTerm)`: Searches for modules matching the query and retrieves their details.
+
+![Search Mod Sequence Diagram](img/harii/searchmod_seq.svg)
 
 #### **Example Usage Scenario**
 
@@ -164,7 +168,7 @@ This feature involves the following key operations:
 ##### Step 3b: No Matches Found
 - If no matches are found, a message is displayed to inform the user, and the failure is logged.
 
-![Search Mod UML Diagram](https://plantuml.atug.com/svg/bLJBRi8m4BpdAtniAy47L5Kb2hIYWa1vd2jZBy7KiIC_H57BltSDmIIXggWlYNTcxPtTIGhAFcW69DSyfmxQJESvLPny9GGNazHQCWDgs7gaURS6XjKT3jwd_ScqF-kdyyvyC4uZ95JXtJ7rpOFPHK3gRE64Z7kyEhxR0tyArajdOnG-WNa7DxSnaa5vT4ajeNsoJvAaQ6ZYUgkafhojlCMOhObB5pDKPZkJGKKMqyg1Sd7FgQCzOO0vNH424l8gQoKaZBqBifq1cjU02NNh6DXOhSRB3PvN2qseiM1g8THNQ6NXh-vv2Q-pSTenXfwByqQSooyRW4A7mhf0hlHo1OwjEr8U1ip1_WCQ7Iv_sWNmIYpKqTMA0ueA1VMmjTNfdJpsyDswC5vouSIxLkkH38yj8VUnEPMXNia8FJbE14cLyJHvk0dKuwHAQZcs9hMgyjgSvuQ5a7tXgcOEXeNAa7boxM_Q3kP0JjCk31Emg9NMuV422Wn-CfmiT-H5kCLeIBRRRJiJpkSo_1oI7m00)
+![Search Mod Class Diagram](img/harii/searchmod_class.svg)
 
 #### **Design Considerations**
 
@@ -197,7 +201,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 - **Implementation**: The `CommandLine` class identifies the `searchmod` keyword and instantiates the corresponding command object.
 - **Rationale**: This design ensures modularity and simplifies the addition of new commands.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Product Scope**
 
@@ -210,7 +214,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 
 * Provides a lightweight and efficient way for NUS students to plan and manage their academic schedules and module information, tailored to the unique requirements of the NUS modular system.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **User Stories**
 
@@ -222,7 +226,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 | `* *`    | student          | view all modules in my timetable | get an overview of my academic workload   |
 | `*`      | advanced user    | export my timetable to a file    | share it with others or back it up        |
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Non-Functional Requirements**
 
@@ -231,7 +235,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 3. The application should be able to handle up to 1000 modules without significant performance degradation.
 4. The application should log all user actions and errors to a file for debugging purposes.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Glossary**
 
@@ -239,7 +243,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 * **Timetable** - A schedule of modules organized by semester.
 * **CLI** - Command Line Interface, a text-based user interface.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Appendix: Instructions for Manual Testing**
 
