@@ -1,10 +1,14 @@
 package modmate.command;
 
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.CommandCenter;
 import modmate.user.User;
 
 public class RemoveModFromTimetableCommand implements Command {
+
+    public static final String CLI_REPRESENTATION = "removemod";
+
+    private static final LogUtil logUtil = new LogUtil(RemoveModFromTimetableCommand.class);
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -23,21 +27,23 @@ public class RemoveModFromTimetableCommand implements Command {
 
         if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
             System.out.println("Timetable \"" + timetable + "\" not found.");
-            Log.saveLog("[MAIN]   Timetable '"
+            logUtil.severe("Timetable '"
                     + timetable
                     + "' not found while attempting to add mod "
                     + inputCodeOrName
                     + " to timetable.");
             return;
         }
-        Log.saveLog("[MAIN]   Removing mod from timetable: " + timetable);
 
-        CommandCenter.modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
-            currentUser.removeModFromTimetable(timetable, mod);
-            Log.saveLog("[MAIN]   Mod " + mod.getCode() + " removed from timetable " + timetable);
-        }, () -> {
-            System.out.println("Mod '" + inputCodeOrName + "' not found.");
-            Log.saveLog("[MAIN]   Mod '" + inputCodeOrName + "' not found.");
-        });
+        logUtil.info("Removing mod from timetable: " + timetable);
+
+        CommandCenter.modFromCodeOrName(inputCodeOrName)
+            .ifPresentOrElse(mod -> {
+                currentUser.removeModFromTimetable(timetable, mod);
+                logUtil.info("Mod " + mod.getCode() + " removed from timetable " + timetable);
+            }, () -> {
+                System.out.println("Mod '" + inputCodeOrName + "' not found.");
+                logUtil.severe("Mod '" + inputCodeOrName + "' not found.");
+            });
     }
 }

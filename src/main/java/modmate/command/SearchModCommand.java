@@ -2,7 +2,7 @@ package modmate.command;
 
 import modmate.CommandCenter;
 import modmate.download.nusmods.NUSModsAPI;
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.mod.Mod;
 import modmate.user.User;
 
@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class SearchModCommand implements Command {
+
+    public static final String CLI_REPRESENTATION = "searchmod";
+
+    private static final LogUtil logUtil = new LogUtil(SearchModCommand.class);
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -22,8 +26,9 @@ public class SearchModCommand implements Command {
 
         assert inputSearchQuery != null && !inputSearchQuery.isEmpty() : "Search query cannot be null or empty";
 
-        Log.saveLog("[MAIN]   User is searching for a mod.");
+        logUtil.info("User is searching for a mod.");
         List<Mod> searchResults = getSearchResults(inputSearchQuery);
+
         if (!searchResults.isEmpty()) {
             for (Mod mod : searchResults) {
                 System.out.println(mod);
@@ -35,10 +40,11 @@ public class SearchModCommand implements Command {
     }
 
     private static List<Mod> getSearchResults(String searchTerm) {
-        Log.saveLog("[MAIN]   Internally invoking search for " + searchTerm + ".");
+        logUtil.info("Internally invoking search for " + searchTerm + ".");
         // Search inside Map allModCodesAndNames for matches
         // Will have to search through both halves of the map, code and name
         // If found, return list of getModFromAPIUsingCode(Code of Map pair found)
+
         // TODO Return a list of matching mods ordered by relevance
         return CommandCenter.allModCodesAndNames.values().stream().filter(
                         condensedMod -> condensedMod.getName().toLowerCase().contains(searchTerm.toLowerCase())

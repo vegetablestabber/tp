@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import modmate.download.HttpUtil;
 import modmate.download.json.mod.CondensedModJSONParser;
 import modmate.download.json.mod.ModJSONParser;
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
 
@@ -30,6 +30,8 @@ import modmate.mod.Mod;
  * and fetch module codes for a given academic year.
  */
 public class NUSModsAPI {
+
+    private static final LogUtil logUtil = new LogUtil(NUSModsAPI.class);
 
     /**
      * Retrieves module information from the NUSMods API using a module code.
@@ -64,12 +66,10 @@ public class NUSModsAPI {
 
             return Optional.of(jsonParser.getModule());
         } catch (URISyntaxException e) {
-            // Log the stack trace to the log file for better tracking
-            Log.saveLog("\n[MODDATARETREIVER]   Error fetching module data: " + e.getMessage());
-            Log.saveLog("\n[MODDATARETREIVER]   Stack Trace: ");
-
+            logUtil.severe("Error fetching module data: " + e.getMessage());
+            logUtil.severe("Stack Trace:");
             for (StackTraceElement element : e.getStackTrace()) {
-                Log.saveLog("\t" + element.toString());
+                logUtil.severe("\t" + element.toString());
             }
         }
 
@@ -124,14 +124,12 @@ public class NUSModsAPI {
             fileOutputStream.write(jsonResponse.getBytes());
             fileOutputStream.close();
 
-            Log.saveLog("\n[MODDATARETREIVER]   Data saved successfully to: " + filePath);
+            logUtil.info("Data saved successfully to: " + filePath);
         } catch (IOException | URISyntaxException e) {
-            // Log the error message and stack trace for better tracking
-            Log.saveLog("\n[MODDATARETREIVER]   Error retrieving data from API: " + e.getMessage());
-            Log.saveLog("\n[MODDATARETREIVER]   Stack Trace: ");
-
+            logUtil.severe("Error retrieving data from API: " + e.getMessage());
+            logUtil.severe("Stack Trace:");
             for (StackTraceElement element : e.getStackTrace()) {
-                Log.saveLog("\t" + element.toString());
+                logUtil.severe("\t" + element.toString());
             }
         }
     }
@@ -161,22 +159,18 @@ public class NUSModsAPI {
                 })
                 .collect(Collectors.toMap(mod -> mod.getCode(), mod -> mod));
         } catch (IOException e) {
-            // Log error details for file reading issue
-            Log.saveLog("\n[MODDATARETREIVER]   Error reading file: " + filePath);
-            Log.saveLog("\n[MODDATARETREIVER]   Error Message: " + e.getMessage());
-            Log.saveLog("\n[MODDATARETREIVER]   Stack Trace: ");
-
+            logUtil.warning("Error reading file: " + filePath);
+            logUtil.warning("Error Message: " + e.getMessage());
+            logUtil.warning("Stack Trace:");
             for (StackTraceElement element : e.getStackTrace()) {
-                Log.saveLog("\t" + element.toString());
+                logUtil.warning("\t" + element.toString());
             }
         } catch (Exception e) {
-            // Log error details for JSON parsing issue
-            Log.saveLog("\n[MODDATARETREIVER]   Error parsing JSON from: " + filePath);
-            Log.saveLog("\n[MODDATARETREIVER]   Error Message: " + e.getMessage());
-            Log.saveLog("\n[MODDATARETREIVER]   Stack Trace: ");
-
+            logUtil.warning("Error parsing JSON from: " + filePath);
+            logUtil.warning("Error Message: " + e.getMessage());
+            logUtil.warning("Stack Trace:");
             for (StackTraceElement element : e.getStackTrace()) {
-                Log.saveLog("\t" + element.toString());
+                logUtil.warning("\t" + element.toString());
             }
         }
 

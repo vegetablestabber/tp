@@ -1,6 +1,7 @@
 package modmate.timetable;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -55,6 +56,45 @@ public class WeekRange {
 
     public List<Integer> getWeeks() {
         return weeks;
+    }
+
+    /**
+     * get string representation of course schedule naturally
+     * @return string of weeks, using ranges wherever possible
+     */
+    public String toString() {
+        if (weeks == null || weeks.size() == 0) {
+            return "";
+        }
+
+        List<String> result = new ArrayList<>();
+        int start = weeks.get(0);
+        int end = weeks.get(0);
+
+        for (int i = 1; i < weeks.size(); i++) {
+            if (weeks.get(i) == end + 1) {
+                end = weeks.get(i);
+            } else {
+                // Add the current range to result
+                if (start == end) {
+                    result.add(String.valueOf(start)) ;
+                } else {
+                    result.add(start + "–" + end);
+                }
+                // Reset the range
+                start = weeks.get(i);
+                end = weeks.get(i);
+            }
+        }
+
+        // Add the last range to result
+        if (start == end) {
+            result.add(String.valueOf(start));
+        } else {
+            result.add(start + "–" + end);
+        }
+
+        return String.join(", ", result);
     }
 
 }

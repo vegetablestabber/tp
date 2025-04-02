@@ -7,10 +7,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import modmate.download.HttpUtil;
 import modmate.download.json.JSONParser;
 import modmate.download.json.mod.attribute.ModAttrJSONParser;
 import modmate.download.json.timetable.TimetableJSONParser;
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.mod.Mod;
 import modmate.mod.attribute.ModAttributes;
 import modmate.timetable.Semester;
@@ -21,6 +22,8 @@ import modmate.timetable.Timetable;
  * objects.
  */
 public class ModJSONParser extends JSONParser<ModJSONKey> {
+
+    private static final LogUtil logUtil = new LogUtil(HttpUtil.class);
 
     private final List<Timetable> timetables;
     private final ModAttrJSONParser modAttrJSONParser;
@@ -50,14 +53,11 @@ public class ModJSONParser extends JSONParser<ModJSONKey> {
         String name = this.getString(ModJSONKey.NAME);
         String code = this.getString(ModJSONKey.CODE);
         String description = this.getString(ModJSONKey.DESCRIPTION);
-        ModAttributes attributes = modAttrJSONParser.getAttributes();
 
-        attributes.getWorkload()
-            .ifPresentOrElse(
-                w -> {},
-                () -> Log.saveLog("[MODATTRJSONPARSER]   Mod "
-                        + code + "doesn't have workload.")
-            );
+        ModAttributes attributes = modAttrJSONParser.getAttributes();
+        if (!attributes.getWorkload().isPresent()) {
+            logUtil.warning("Mod " + code + "doesn't have workload.");
+        }
 
         return new Mod(name, code, description, attributes, timetables);
     }

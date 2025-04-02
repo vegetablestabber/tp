@@ -92,10 +92,10 @@ public class ScheduleTest {
         String expected = "Timetable: Semester 1\n"
                 + "  CS1010: Programming Methodology\n"
                 + "      null\n"
-                + "      No Faculty Information\n"
+                + "      No Faculty Information\n\n"
                 + "  CS2113: Software Engineering & Object-Oriented Programming\n"
                 + "      null\n"
-                + "      No Faculty Information\n";
+                + "      No Faculty Information\n\n";
 
         System.out.println("Actual Output:\n" + timetable.toString()); // Debugging
 

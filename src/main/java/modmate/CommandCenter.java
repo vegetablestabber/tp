@@ -1,15 +1,14 @@
 package modmate;
 
-import modmate.command.Command;
+import java.util.Map;
+import java.util.Optional;
+
 import modmate.command.CommandLine;
 import modmate.download.nusmods.NUSModsAPI;
-import modmate.log.Log;
+import modmate.log.LogUtil;
 import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
 import modmate.user.User;
-
-import java.util.Map;
-import java.util.Optional;
 
 public class CommandCenter {
     public static Map<String, CondensedMod> allModCodesAndNames = NUSModsAPI.fetchAllModCodes();
@@ -19,6 +18,8 @@ public class CommandCenter {
             -h: Display this help message
             exit: Exit the application
             viewmod <mod code or name>: View details of a mod by its mod code or name
+            viewlessons <mod code or name>: View available lessons for each mod, sorted by type
+            setlesson <timetable> <mod code or name> <lesson type> <lesson id>: Set lesson for each mod, by type
             searchmod <mod code or name>: Search for a mod by its code or name
             bookmark <mod code or name>: Bookmark a mod for later reference
             bookmarks: View all bookmarked mods
@@ -29,21 +30,19 @@ public class CommandCenter {
             timetable <timetable>: Display your mod timetable
             viewallmods: View all available mods
             """;
+    private static final LogUtil logUtil = new LogUtil(CommandCenter.class);
 
     static void printHelp() {
-        Log.saveLog("[MAIN]   Printing help message.");
+        logUtil.info("Printing help message.");
         System.out.println(helpMessage);
     }
 
     public static void handleCommand(String commandName, String[] args, User currentUser) {
-        Command command = CommandLine.getCommand(commandName);
-
-        if (command != null) {
-            command.execute(args, currentUser);
-        } else {
-            // If the command does not exist, inform the user.
-            System.out.println("Invalid command: " + commandName);
-        }
+        CommandLine.getCommand(commandName)
+            .ifPresentOrElse(
+                command -> command.execute(args, currentUser),
+                () -> System.out.println("Invalid command: " + commandName)
+            );
     }
 
     /**

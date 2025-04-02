@@ -2,11 +2,10 @@ package modmate;
 
 import java.util.Scanner;
 
-import modmate.command.Command;
 import modmate.command.CommandLine;
 import modmate.download.nusmods.NUSModsAPI;
+import modmate.log.LogUtil;
 import modmate.user.User;
-import modmate.log.Log;
 
 /**
  * Main entry point for the ModMate application. It handles user input
@@ -14,6 +13,8 @@ import modmate.log.Log;
  * to/from timetables, and managing bookmarks.
  */
 public class Main {
+
+    private static final LogUtil log = new LogUtil(Main.class);
 
     /**
      * The main command loop of the application that processes user input
@@ -24,14 +25,12 @@ public class Main {
     public static void main(String[] args) {
 
         for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("--log") && i + 1 < args.length) {
-                Log.setLoggingEnabled(Boolean.parseBoolean(args[i + 1]));
-            } else if (args[i].equals("--startYear") && i + 1 < args.length) {
+            if (args[i].equals("--startYear") && i + 1 < args.length) {
                 int startYear = Integer.parseInt(args[i + 1]);
                 CommandCenter.allModCodesAndNames = NUSModsAPI.fetchAllModCodes(startYear);
+                log.info("Start year set to: " + startYear);
             }
         }
-        Log.printLog("Logging is enabled.");
 
         User currentUser = new User();
 
@@ -39,42 +38,54 @@ public class Main {
 
         System.out.println("Welcome to ModMate!");
 
-        boolean invalidCommand = false;
-
         while (true) {
-            if (invalidCommand) {
-                invalidCommand = false;
-            } else {
-                System.out.println("\nEnter command ('exit' to quit, '-h' for help):");
-            }
+            System.out.println("\nEnter command ('exit' to quit, '-h' for help):");
+
             String input = scanner.nextLine().trim();
-            Log.saveLog("\n[MAIN]   Received input: " + input);
+            log.info("Received input: " + input);
 
             String[] inputParts = input.split(" ");
             String commandName = inputParts[0];
 
-            Command command = CommandLine.getCommand(commandName);
-
-            if (command != null) {
-                command.execute(inputParts, currentUser);
+            // Process the command
+            if (CommandLine.isValidCommand(commandName)) {
+                CommandLine.getCommand(commandName).ifPresent(
+                    command -> command.execute(inputParts, currentUser)
+                );
+            } else if (printUtilityCommandOutput(commandName, input)) {
+                break; // Exit the loop if the exit command is issued
             } else {
-                switch (commandName) {
-                case "-h" -> CommandCenter.printHelp();
-                case "exit" -> {
-                    Log.saveLog("[MAIN]   Exiting application.");
-                    System.out.println("Exiting...");
-                    scanner.close();
-                    return;
-                }
-                default -> {
-                    System.out.println("Invalid command \""
-                            + inputParts[0]
-                            + "\"! Please check your command again, or run -h for help.");
-                    invalidCommand = true;
-                    Log.saveLog("[MAIN]   Command: " + input + " is invalid");
-                }
-                }
+                System.out.println("Invalid command \"" + commandName
+                        + "\"! Please check your command again, or run -h for help.");
+                log.warning("Invalid command: " + input);
             }
         }
+
+        scanner.close();
+    }
+
+    /**
+     * Handles utility commands like help and exit.
+     *
+     * @param commandName The command name entered by the user.
+     * @param input       The full input string entered by the user.
+     * @return true if the application should exit, false otherwise.
+     */
+    public static boolean printUtilityCommandOutput(String commandName, String input) {
+        switch (commandName) {
+        case "-h" -> {
+            CommandCenter.printHelp();
+            log.info("Help command executed.");
+        }
+        case "exit" -> {
+            log.info("Exiting application.");
+            System.out.println("Exiting...");
+            return true; // Signal to exit the application
+        }
+        default -> {
+            return false; // Not a utility command
+        }
+        }
+        return false; // Default return for non-exit commands
     }
 }
