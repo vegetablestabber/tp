@@ -1,3 +1,8 @@
+---
+title: About Us
+nav_order: 4
+---
+
 # About us
 
 Display | Name | Github Profile | Portfolio

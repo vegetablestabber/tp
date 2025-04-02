@@ -1,4 +1,13 @@
+---
+title: User Guide
+nav_order: 2
+nav_enabled: true
+---
+
 # User Guide
+
+1. TOC
+{:toc}
 
 ## Introduction
 

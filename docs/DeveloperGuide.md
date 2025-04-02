@@ -1,4 +1,13 @@
+---
+title: Developer Guide
+nav_order: 3
+nav_enabled: true
+---
+
 # Developer Guide
+
+1. TOC
+{:toc}
 
 ## Introduction
 
