@@ -119,7 +119,7 @@ Two core methods in the `User` class:
 
 These methods are supported by `Schedule` class for storage structure:
 
-- `addTimetable(String timetableName)` first checks whether there are any duplicate timetables with the same name. It checks through a list called `List<Schedule> timetables` and if duplicate timetable found, an error message, "Timetable 'X' already exists", will be displayed. If no duplicate timetable found, a new Schedule object is instantiated and a new timetable of `timetableName` will be created. It is added to `timetables` list, after which a success message, "Timetable 'X' created successfully", is displayed.
+- `addTimetable(String timetableName)` first checks whether there are any duplicate timetables with the same name. It checks through a list called `List<Schedule> timetables` and if duplicate timetable found, an error message, "Timetable 'X' already exists", will be displayed. If no duplicate timetable found, a new Schedule object is instantiated and a new timetable of `timetableName` will be created. It is added to `timetables` list, afterwhich a success message, "Timetable 'X' created successfully", is displayed.
 - `getTimetable(String timetableName)` searches through a list called `timetables`, as mentioned earlier. If timetable with corresponding `timetableName` is found, a formatted String is returned which shows, the timetable name, all added modules and module details. If timetable is not found, an error message, "Timetable 'X' not found", will be displayed.
 
 #### **Design Rationale**
@@ -133,6 +133,69 @@ Moreover, with the timetable duplication checking it allows for unnecessary obje
 The following UML Sequence diagram effectively shows how these two methods are implemented with the inclusion of user inputs of `createtimetable` and `timetable` for `addTimetable(String timetableName)` and `getTimetable(String timetableName)` respectively.
 
 ![image.png](img/jahnavi/image.png)
+
+### **Search Module Feature**
+
+#### **Proposed Implementation**
+
+The `searchmod` feature allows users to search for modules by providing a query string. This functionality is implemented in the `SearchModCommand` class and relies on matching the query against module codes and names. The feature ensures that relevant modules are retrieved and displayed in a user-friendly format.
+
+The feature operates as follows:
+- It validates that the input query is neither null nor empty.
+- It searches for modules using the `getSearchResults` method, which matches the query against module codes and names.
+- If matches are found, the results are displayed in order of relevance.
+- If no matches are found, an appropriate message is displayed.
+
+This feature involves the following key operations:
+- `execute(String[] args, User currentUser)`: Main entry point for executing the search command.
+- `getSearchResults(String searchTerm)`: Searches for modules matching the query and retrieves their details.
+
+#### **Example Usage Scenario**
+
+##### Step 1: User Initiates a Search
+- The user enters a search query (e.g., `searchmod CS2113`). The `SearchModCommand` is triggered, and the system logs the search request.
+
+##### Step 2: System Searches for Matching Modules
+- The system uses the `getSearchResults` method to find modules whose codes or names match the query.
+
+##### Step 3a: Matches Found
+- If matching modules are found, their details are displayed to the user, and the action is logged.
+
+##### Step 3b: No Matches Found
+- If no matches are found, a message is displayed to inform the user, and the failure is logged.
+
+![UML Diagram Placeholder](img/searchmod/uml_placeholder.png)
+
+#### **Design Considerations**
+
+##### Aspect: Search Algorithm
+
+Alternative 1 (Current Choice): Case-Insensitive Substring Matching
+- Pros: Simple to implement and intuitive for users.
+- Cons: May return irrelevant results for very short queries.
+
+Alternative 2: Full-Text Search with Ranking
+- Pros: Provides more accurate and relevant results.
+- Cons: Requires additional complexity and computational resources.
+
+##### Aspect: Error Handling
+
+Alternative 1 (Current Choice): Display "No mods found" Message
+- Pros: Provides clear feedback to the user.
+- Cons: Does not suggest alternative queries or corrections.
+
+Alternative 2: Suggest Closest Matches
+- Pros: Helps users refine their search queries.
+- Cons: Adds complexity to the implementation.
+
+#### **Summary**
+
+The `searchmod` feature provides a straightforward way for users to search for modules by code or name. It ensures usability by handling errors gracefully and displaying relevant results. Future enhancements could include advanced search algorithms and suggestions for improving user queries.
+
+#### **Command Parsing**
+- **Purpose**: Maps user input to the `SearchModCommand` class.
+- **Implementation**: The `CommandLine` class identifies the `searchmod` keyword and instantiates the corresponding command object.
+- **Rationale**: This design ensures modularity and simplifies the addition of new commands.
 
 --------------------------------------------------------------------------------------------------------------------
 
