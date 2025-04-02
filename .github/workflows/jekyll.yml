@@ -58,6 +58,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/_site/
+      - name: Debugging
+        run: ls & pwd
 
   # Deployment job
   deploy:
