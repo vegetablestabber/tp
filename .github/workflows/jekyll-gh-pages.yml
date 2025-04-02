@@ -27,6 +27,7 @@ concurrency:
 jobs:
   # Build job
   build:
+    if: ${{ github.repository }} == "AY2425S2-CS2113-W12-1/tp"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
