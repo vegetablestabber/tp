@@ -134,6 +134,69 @@ The following UML Sequence diagram effectively shows how these two methods are i
 
 ![image.png](img/jahnavi/image.png)
 
+### **Search Module Feature**
+
+#### **Proposed Implementation**
+
+The `searchmod` feature allows users to search for modules by providing a query string. This functionality is implemented in the `SearchModCommand` class and relies on matching the query against module codes and names. The feature ensures that relevant modules are retrieved and displayed in a user-friendly format.
+
+The feature operates as follows:
+- It validates that the input query is neither null nor empty.
+- It searches for modules using the `getSearchResults` method, which matches the query against module codes and names.
+- If matches are found, the results are displayed in order of relevance.
+- If no matches are found, an appropriate message is displayed.
+
+This feature involves the following key operations:
+- `execute(String[] args, User currentUser)`: Main entry point for executing the search command.
+- `getSearchResults(String searchTerm)`: Searches for modules matching the query and retrieves their details.
+
+#### **Example Usage Scenario**
+
+##### Step 1: User Initiates a Search
+- The user enters a search query (e.g., `searchmod CS2113`). The `SearchModCommand` is triggered, and the system logs the search request.
+
+##### Step 2: System Searches for Matching Modules
+- The system uses the `getSearchResults` method to find modules whose codes or names match the query.
+
+##### Step 3a: Matches Found
+- If matching modules are found, their details are displayed to the user, and the action is logged.
+
+##### Step 3b: No Matches Found
+- If no matches are found, a message is displayed to inform the user, and the failure is logged.
+
+![Search Mod UML Diagram](https://plantuml.atug.com/svg/bLJBRi8m4BpdAtniAy47L5Kb2hIYWa1vd2jZBy7KiIC_H57BltSDmIIXggWlYNTcxPtTIGhAFcW69DSyfmxQJESvLPny9GGNazHQCWDgs7gaURS6XjKT3jwd_ScqF-kdyyvyC4uZ95JXtJ7rpOFPHK3gRE64Z7kyEhxR0tyArajdOnG-WNa7DxSnaa5vT4ajeNsoJvAaQ6ZYUgkafhojlCMOhObB5pDKPZkJGKKMqyg1Sd7FgQCzOO0vNH424l8gQoKaZBqBifq1cjU02NNh6DXOhSRB3PvN2qseiM1g8THNQ6NXh-vv2Q-pSTenXfwByqQSooyRW4A7mhf0hlHo1OwjEr8U1ip1_WCQ7Iv_sWNmIYpKqTMA0ueA1VMmjTNfdJpsyDswC5vouSIxLkkH38yj8VUnEPMXNia8FJbE14cLyJHvk0dKuwHAQZcs9hMgyjgSvuQ5a7tXgcOEXeNAa7boxM_Q3kP0JjCk31Emg9NMuV422Wn-CfmiT-H5kCLeIBRRRJiJpkSo_1oI7m00)
+
+#### **Design Considerations**
+
+##### Aspect: Search Algorithm
+
+Alternative 1 (Current Choice): Case-Insensitive Substring Matching
+- Pros: Simple to implement and intuitive for users.
+- Cons: May return irrelevant results for very short queries.
+
+Alternative 2: Full-Text Search with Ranking
+- Pros: Provides more accurate and relevant results.
+- Cons: Requires additional complexity and computational resources.
+
+##### Aspect: Error Handling
+
+Alternative 1 (Current Choice): Display "No mods found" Message
+- Pros: Provides clear feedback to the user.
+- Cons: Does not suggest alternative queries or corrections.
+
+Alternative 2: Suggest Closest Matches
+- Pros: Helps users refine their search queries.
+- Cons: Adds complexity to the implementation.
+
+#### **Summary**
+
+The `searchmod` feature provides a straightforward way for users to search for modules by code or name. It ensures usability by handling errors gracefully and displaying relevant results. Future enhancements could include advanced search algorithms and suggestions for improving user queries.
+
+#### **Command Parsing**
+- **Purpose**: Maps user input to the `SearchModCommand` class.
+- **Implementation**: The `CommandLine` class identifies the `searchmod` keyword and instantiates the corresponding command object.
+- **Rationale**: This design ensures modularity and simplifies the addition of new commands.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Product Scope**
