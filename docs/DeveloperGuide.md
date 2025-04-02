@@ -1,5 +1,9 @@
 # Developer Guide
 
+## Introduction
+
+This developer guide provides an in-depth look into the architecture, design, and implementation of **ModMate**, a command-line application designed to help NUS students manage their modules and timetables efficiently. Whether you're a developer looking to contribute or simply curious about how ModMate works under the hood, this guide has everything you need to get started.
+
 ## **Acknowledgements**
 
 * The application integrates with the [NUSMods API](https://nusmods.com/) to fetch module data. Special thanks to the NUSMods team for providing their publicly available API.
