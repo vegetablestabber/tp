@@ -6,7 +6,7 @@
 * Command parsing logic is inspired by [AddressBook-Level3](https://github.com/se-edu/addressbook-level3).
 * UML diagrams were created using [PlantUML](https://plantuml.com/).
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 
 ## **Design**
@@ -34,7 +34,7 @@ The ***Architecture Diagram*** above provides a high-level overview of the syste
 
 This design ensures a clear separation of concerns, making the application modular and easier to maintain.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Implementation**
 
@@ -197,7 +197,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 - **Implementation**: The `CommandLine` class identifies the `searchmod` keyword and instantiates the corresponding command object.
 - **Rationale**: This design ensures modularity and simplifies the addition of new commands.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Product Scope**
 
@@ -210,7 +210,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 
 * Provides a lightweight and efficient way for NUS students to plan and manage their academic schedules and module information, tailored to the unique requirements of the NUS modular system.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **User Stories**
 
@@ -222,7 +222,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 | `* *`    | student          | view all modules in my timetable | get an overview of my academic workload   |
 | `*`      | advanced user    | export my timetable to a file    | share it with others or back it up        |
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Non-Functional Requirements**
 
@@ -231,7 +231,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 3. The application should be able to handle up to 1000 modules without significant performance degradation.
 4. The application should log all user actions and errors to a file for debugging purposes.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Glossary**
 
@@ -239,7 +239,7 @@ The `searchmod` feature provides a straightforward way for users to search for m
 * **Timetable** - A schedule of modules organized by semester.
 * **CLI** - Command Line Interface, a text-based user interface.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Appendix: Instructions for Manual Testing**
 
