@@ -1,0 +1,11 @@
+
+
+===== New Logging Session: 2025-03-27 01:06:25 =====
+Sample log line
+
+
+===== New Logging Session: 2025-03-27 01:10:02 =====
+
+[MAIN]   Received input: exit
+[MAIN]   Exiting application.
+Sample log line
