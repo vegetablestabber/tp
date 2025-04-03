@@ -8,13 +8,15 @@ public class CommandLine {
         Command command;
 
         switch (commandName) {
+        case HelpCommand.CLI_REPRESENTATION -> command = new HelpCommand();
         case AddBreakToTimetableCommand.CLI_REPRESENTATION -> command = new AddBreakToTimetableCommand();
         case AddModToTimetableCommand.CLI_REPRESENTATION -> command = new AddModToTimetableCommand();
         case BookmarkCommand.CLI_REPRESENTATION -> command = new BookmarkCommand();
         case GetBookmarksCommand.CLI_REPRESENTATION -> command = new GetBookmarksCommand();
         case SearchModCommand.CLI_REPRESENTATION -> command = new SearchModCommand();
         case ViewModCommand.CLI_REPRESENTATION -> command = new ViewModCommand();
-
+        case SetModLessonCommand.CLI_REPRESENTATION -> command = new SetModLessonCommand();
+        case ViewModLessonsCommand.CLI_REPRESENTATION -> command = new ViewModLessonsCommand();
         case RemoveModFromTimetableCommand.CLI_REPRESENTATION -> command = new RemoveModFromTimetableCommand();
         case CreateTimetableCommand.CLI_REPRESENTATION -> command = new CreateTimetableCommand();
         case ViewTimetableCommand.CLI_REPRESENTATION -> command = new ViewTimetableCommand();

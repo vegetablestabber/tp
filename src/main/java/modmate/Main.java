@@ -47,45 +47,24 @@ public class Main {
             String[] inputParts = input.split(" ");
             String commandName = inputParts[0];
 
-            // Process the command
-            if (CommandLine.isValidCommand(commandName)) {
-                CommandLine.getCommand(commandName).ifPresent(
-                    command -> command.execute(inputParts, currentUser)
-                );
-            } else if (printUtilityCommandOutput(commandName, input)) {
-                break; // Exit the loop if the exit command is issued
-            } else {
-                System.out.println("Invalid command \"" + commandName
-                        + "\"! Please check your command again, or run -h for help.");
-                log.warning("Invalid command: " + input);
+            // if exit command given
+            if ("exit".equals(commandName)) {
+                log.info("Exiting application.");
+                System.out.println("Exiting...");
+                break; // Signal to exit the application
             }
+
+            // process rest of the other commands
+            CommandLine.getCommand(commandName).ifPresentOrElse(
+                    command -> command.execute(inputParts, currentUser),
+                    () -> {
+                        System.out.println("Invalid command \"" + commandName
+                                + "\"! Please check your command again, or run -h for help.");
+                        log.warning("Invalid command: " + input);
+                    }
+            );
         }
 
         scanner.close();
-    }
-
-    /**
-     * Handles utility commands like help and exit.
-     *
-     * @param commandName The command name entered by the user.
-     * @param input       The full input string entered by the user.
-     * @return true if the application should exit, false otherwise.
-     */
-    public static boolean printUtilityCommandOutput(String commandName, String input) {
-        switch (commandName) {
-        case "-h" -> {
-            CommandCenter.printHelp();
-            log.info("Help command executed.");
-        }
-        case "exit" -> {
-            log.info("Exiting application.");
-            System.out.println("Exiting...");
-            return true; // Signal to exit the application
-        }
-        default -> {
-            return false; // Not a utility command
-        }
-        }
-        return false; // Default return for non-exit commands
     }
 }
