@@ -71,7 +71,7 @@ This design ensures a clear separation of concerns, making the application modul
 
 ## Implementation
 
-### View Module Details Feature
+### **View Module Details Feature**
 
 #### Proposed Implementation
 {: .no_toc }
@@ -124,7 +124,7 @@ This feature involves the following key operations:
 
 The viewMod feature provides a simple way to retrieve and display module details based on user input. It ensures robustness by handling errors and logging events while maintaining a straightforward implementation that prioritizes real-time data retrieval. Future improvements may include caching for performance optimization and enhanced error messaging.
 
-### Timetable Management Feature
+### **Timetable Management Feature**
 
 #### Purpose
 {: .no_toc }
@@ -166,7 +166,7 @@ These methods are supported by `Schedule` class for storage structure:
 
 ![image.png](img/jahnavi/image.png)
 
-### Adding/Removing a mod to a timetable
+### **Adding/Removing a mod to a timetable**
 - Adds/Removes a new module (`Mod`) to a specified timetable.
 
 **Format**: `addModToTimetable TIMETABLE_NAME MOD_CODE_OR_NAME`
@@ -224,7 +224,7 @@ slots they would attend, to allow for more granular selection and modification o
 The class diagram that represents the overview of the Schedule class is shown below:
 [![](https://img.plantuml.biz/plantuml/svg/ZLNVRzem47xFNs7bYMuD4tj42BMRs8G4rTIWldJLPF0DeYOsiYz8rSJ_lekTE0u9tNX1lkzyFxxlphapo3MMHHv5HxvxvNjWSQ54mH76fG4TipyHezykvyQmT7S0KUPG6wjVmYGlW4rPYZgJ-y2-rS1V3I6hpE3iItNw0JfJOkwTFZ8kn5g94QNSg7iXo9kEDu630IJB2enHqhcbWCxjbk7RiKrzopBX3s483OKwWK_pQ8_zJ5IABNAqRKibhw3mq7iF-42DZsxwhLkGWXiBskxNtQuTth3folhUj6KZrX0TxRLpDA02WHqX3EImGwZ9gfXVy-Ei8STPdr_cmOtSsZR4el5jFB_q7CmtfHkdzqDQlMgnAd6MybZYlnLoV5Ywceuzi6fh3CWEgWoyca97dS6mAjIbTc-bNSR-wneg1rygJnAT1vQ8_giT2kIxb6sdnE3-NDihp0f0lisj79lcSDcQ1nnhL_s-KlQhGpmquUV1DdrHtGV3fmqwhfalm21e5xq-34ewwkdGMGQ7T0WDXYoaBTGsi1-RHNSx7Y0daEN05LlSKbmbpGxWDT0biV15FWi_LIa79gljj-4gw7Wseri5Q8wPalDm6TF5Uf5k5e-_9aF6pwsU_c5FaeJ5a_7uGznvPgQCX3PHQ7AUCVFm06hZr0fDcySaQeSYIUOzhmFlUhWilkqflJ3rj4HI8OtWKcjQunENo3WIQziIQJK-CGfneA8fu0b-oYs0hBy4WlrMkleydJ9yYnatx64ItO4KrMVmBm00)](https://editor.plantuml.com/uml/ZLNVRzem47xFNs7bYMuD4tj42BMRs8G4rTIWldJLPF0DeYOsiYz8rSJ_lekTE0u9tNX1lkzyFxxlphapo3MMHHv5HxvxvNjWSQ54mH76fG4TipyHezykvyQmT7S0KUPG6wjVmYGlW4rPYZgJ-y2-rS1V3I6hpE3iItNw0JfJOkwTFZ8kn5g94QNSg7iXo9kEDu630IJB2enHqhcbWCxjbk7RiKrzopBX3s483OKwWK_pQ8_zJ5IABNAqRKibhw3mq7iF-42DZsxwhLkGWXiBskxNtQuTth3folhUj6KZrX0TxRLpDA02WHqX3EImGwZ9gfXVy-Ei8STPdr_cmOtSsZR4el5jFB_q7CmtfHkdzqDQlMgnAd6MybZYlnLoV5Ywceuzi6fh3CWEgWoyca97dS6mAjIbTc-bNSR-wneg1rygJnAT1vQ8_giT2kIxb6sdnE3-NDihp0f0lisj79lcSDcQ1nnhL_s-KlQhGpmquUV1DdrHtGV3fmqwhfalm21e5xq-34ewwkdGMGQ7T0WDXYoaBTGsi1-RHNSx7Y0daEN05LlSKbmbpGxWDT0biV15FWi_LIa79gljj-4gw7Wseri5Q8wPalDm6TF5Uf5k5e-_9aF6pwsU_c5FaeJ5a_7uGznvPgQCX3PHQ7AUCVFm06hZr0fDcySaQeSYIUOzhmFlUhWilkqflJ3rj4HI8OtWKcjQunENo3WIQziIQJK-CGfneA8fu0b-oYs0hBy4WlrMkleydJ9yYnatx64ItO4KrMVmBm00)
 
-### Search Module Feature
+### **Search Module Feature**
 
 #### Proposed Implementation
 {: .no_toc }
