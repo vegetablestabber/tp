@@ -183,7 +183,7 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
 
 ---
 
-### Design Explanation
+#### Design Explanation
 
 #### a. **Method Design**
 
@@ -205,8 +205,9 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
     - **Pros**: Clear and formal error management, making it easier to debug and handle specific cases.
     - **Cons**: Adds complexity, especially if the exception handling needs to be propagated or caught higher in the stack.
 
-### Sequence Diagram
-  ![SequenceDiagram](docs/team/img/image.png)
+#### Sequence Diagram
+
+![SequenceDiagram](img/shu/image.png)
 
 ### Search Module Feature
 
