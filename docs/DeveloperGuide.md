@@ -71,7 +71,7 @@ This design ensures a clear separation of concerns, making the application modul
 
 ## Implementation
 
-### **View Module Details Feature**
+### View Module Details Feature
 
 #### Proposed Implementation
 {: .no_toc }
@@ -124,7 +124,7 @@ This feature involves the following key operations:
 
 The viewMod feature provides a simple way to retrieve and display module details based on user input. It ensures robustness by handling errors and logging events while maintaining a straightforward implementation that prioritizes real-time data retrieval. Future improvements may include caching for performance optimization and enhanced error messaging.
 
-### **Timetable Management Feature**
+### Timetable Management Feature
 
 #### Purpose
 {: .no_toc }
@@ -166,7 +166,7 @@ These methods are supported by `Schedule` class for storage structure:
 
 ![image.png](img/jahnavi/image.png)
 
-### **Adding/Removing a mod to a timetable**
+### Adding/Removing a mod to a timetable
 - Adds/Removes a new module (`Mod`) to a specified timetable.
 
 **Format**: `addModToTimetable TIMETABLE_NAME MOD_CODE_OR_NAME`
@@ -185,8 +185,7 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
 ---
 
 #### Design Explanation
-
-#### a. **Method Design**
+{: .no_toc }
 
 - **`addModToTimetable`**:
     - Loops through the `timetables` list to find a timetable by name (case-insensitive).
@@ -196,7 +195,8 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
 - **`removeModFromTimetable`**:
     - Functions similarly to `addModToTimetable`, but calls `removeMod` instead of `addMod` on the timetable.
 
-#### b. **Alternatives Considered**
+#### Alternatives Considered
+{: .no_toc }
 
 - **Optimization with a Map**:
     - Instead of searching through the entire list of `Timetable` objects every time, we could use a `Map<String, Timetable>`, where the key is the timetable name. This would speed up lookups to O(1) time complexity, providing faster access when managing timetables.
@@ -208,23 +208,24 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
     - **Cons**: Adds complexity, especially if the exception handling needs to be propagated or caught higher in the stack.
 
 #### Sequence Diagram
+{: .no_toc }
 
 ![SequenceDiagram](img/shu/image.png)
 
-### **Schedule Management within Timetables**
+### Schedule Management within Timetables
 - **Purpose**: Allows users to select their preferred modules, based on accurate data provided by NUSMods
-- **Implementation**: The `Schedule` class provides methods to add, remove, and view modules. The class is built on 
+- **Implementation**: The `Schedule` class provides methods to add, remove, and view modules. The class is built on
 top of the `Timetable` class, which is the internal format NUSMods stores its timetable data in. Each class session is
-represented as a `Lesson` object; one of which contains the type (lecture, tutorial, lab, etc.), its period (day & time), 
+represented as a `Lesson` object; one of which contains the type (lecture, tutorial, lab, etc.), its period (day & time),
 and the class venue.
-  - Furthermore, in conjunction with `ScheduleMod`, users can select the lecture, tutorial, and lab 
+  - Furthermore, in conjunction with `ScheduleMod`, users can select the lecture, tutorial, and lab
 slots they would attend, to allow for more granular selection and modification of the timetables.
 - **Rationale**: Encapsulating timetable logic in a dedicated class improves maintainability and testability.
 
 The class diagram that represents the overview of the Schedule class is shown below:
 ![](https://www.plantuml.com/plantuml/png/ZLNVRzem47xFNt7A4zrAj-uH8THkwYOaMaqDsajNJKvyWuZ4Zcm7gPluttUrYRa0qSeBklk--t7tsSwDTSAujgwIP5rAXA8qHOM9tPIg4KRKK5J2sbldJ9ct3kU5Lbdv1-5ZaZIYs8WLGbfhMGk7Lwr5ayBV101266J56cLReNU6tnYKg14ca55AjMB-tA3OM48MfNNJpw_MTpIbbhD8UWz2odijHrHogM-b93QP5unWqP5dWTPg5MWPka2x1FVI74fVGYcZmLCOhFKMOvb7R_9AiHNVv2W_j4eirZXdhz0zY1f75x4a1ttJreD-Uh9c9tYtpT3Mjsuidt4FaUd3TWbJWO4z8InMM3ZSByk-PXFDj5jEy3uzprX4vNrBsgADOpmzdn3iLsqyQJWbrsilbgE8kMfQDwnGVnz-NVJV1nQ77Zs1TybPl55VEtAz2Xu_Zihw6tjJcDC1Pirq4ktEN2Bwfpl4vJkMhT3oKFGDzygLDJgHLrwEPMSSZnO1lxLXtXSj-I7-_mdVdHqpDjL_C6BPuEMRhz4wD3vxPvoLTCHrEBqC0U4BvOUCURcstDzq5ptSSOPiKRKui9cv75oQFu13O2X2CAl7u1zKyYIOpnjtnIQUJYcgHYDSgTMCNyRixlukMzuz_he-v_nqq3C-xEFn6DBhgwjtQU-PcG09RHFk2imK8inHbgTJQD8z9aay5CIQdR3MWZ5YbJZs16ntMXAb7K8wDmOht0hbG7JVDGiVW5AigMbAkCMVAaTK-o-1XD_QG6vmMxgN58I5X-la1fLiw-eV)
 
-### **Search Module Feature**
+### Search Module Feature
 
 #### Proposed Implementation
 {: .no_toc }
@@ -242,6 +243,9 @@ The feature operates as follows:
 This feature involves the following key operations:
 - `execute(String[] args, User currentUser)`: Main entry point for executing the search command.
 - `getSearchResults(String searchTerm)`: Searches for modules matching the query and retrieves their details.
+
+#### Sequence Diagram
+{: .no_toc }
 
 ![Search Mod Sequence Diagram](img/harii/searchmod_seq.svg)
 

@@ -6,26 +6,41 @@ parent: About Us
 
 ### Project: ModMate
 
-AddressBook - Level 3 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+ModMate is a command-line application that leverages the NUSMods API and was developed to help NUS students manage academic schedules and module information efficiently. It streamlines timetable organization, module bookmarking, and data exploration, offering a user-friendly solution for academic planning.
 
-Given below are my contributions to the project.
+<img src="../img/harii/harii_tut.jpg" width="400">
 
-* **New Feature**: Added the ability to undo/redo previous commands.
-  * What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-  * Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-  * Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-  * Credits: *{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}*
 
-* **New Feature**: Added a history command that allows the user to navigate to previous commands using up/down keys.
+Given below are my contributions to the project:
 
-* **Code contributed**: [RepoSense link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=W12-1&sort=groupTitle%20dsc&sortWithin=totalCommits%20dsc&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&optimiseTimeline=true&viewRepoTags=true&tabOpen=true&tabType=authorship&tabAuthor=vegetablestabber&tabRepo=AY2425S2-CS2113-W12-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
+* **New Feature**: Enabled advanced module data handling for NUSMods integration.
+  * **What it does**:
+    * Developed the `Mod` class to represent comprehensive module details, including properties such as faculty, prerequisites, workload, and semester availability.
+    * Developed the `CondensedMod` class to encapsulate essential module details, such as module code and title, for streamlined data representation.
+    * Implemented the `ModAttributes` class to manage comprehensive module metadata, including faculty, prerequisites, workload, and semester availability.
+  * **Justification**: Ensures smooth and efficient processing of module data, enabling features like module search and filtering to function effectively.
+  * **Highlights**: Emphasized creating modular and scalable data structures to support future enhancements and maintainability.
 
-* **Project management**:
-  * Managed major releases `v1.0` and `v2.0` on GitHub
+* **New Feature**: Enabled the application to process and utilize JSON data from the NUSMods API.
+  * **What it does**:
+    * Converts raw JSON data from the NUSMods API into structured and type-safe objects, such as `ModJSONKey`, `TimetableJSONKey`, and `LessonJSONKey`, which represent key-value mappings for module, timetable, and lesson data respectively.
+    * Implements specialized parsers like `ModJSONParser`, `TimetableJSONParser`, and `LessonJSONParser` to handle nested JSON structures and transform them into usable domain objects.
+  * **Justification**: This capability is crucial for powering features like timetable generation and module exploration by ensuring accurate and reliable data handling.
+  * **Highlights**: Required the development of a robust parsing mechanism to handle complex nested JSON structures.
+
+* **Code contributed**: [RepoSense link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=vegetablestabber&sort=groupTitle%20dsc&sortWithin=title&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=vegetablestabber&tabRepo=AY2425S2-CS2113-W12-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
+
+* **Project Management**:
+  * **Release Planning**: Led the planning and execution of v2.0 release, setting milestones, defining deliverables, and ensuring adherence to the timeline.
+  * **Team Coordination**: Facilitated discussions, organized regular meetings, and addressed challenges to maintain progress and alignment.
+  * **Outcome Focused**: Delivered v2.0 on schedule with high-quality standards, ensuring project success.
 
 * **Enhancements to existing features**:
-  * Updated the GUI color scheme (Pull requests [\#33](), [\#34]())
-  * Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests [\#36](), [\#38]())
+  * [#28](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/28), [#52](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/52), [#57](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/57): Refactored the download functionality to improve code readability and maintainability. This involved restructuring the logic to ensure better modularity and testability.
+  * [#78](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/78): Enhanced logging mechanisms to provide more detailed and actionable runtime information, aiding in debugging and monitoring.
+  * [#27](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/27): Reduced excessive null-checking by implementing more robust null-safety practices, leading to cleaner and more reliable code.
+
+__*TODO: Update the contributions below*__
 
 * **Documentation**:
   * User Guide:
