@@ -165,6 +165,49 @@ These methods are supported by `Schedule` class for storage structure:
 
 ![image.png](img/jahnavi/image.png)
 
+### Adding/Removing a mod to a timetable
+- Adds/Removes a new module (`Mod`) to a specified timetable.
+
+**Format**: `addModToTimetable TIMETABLE_NAME MOD_CODE_OR_NAME`
+            `removeModFromTimetable TIMETABLE_NAME MOD_CODE_OR_NAME`
+
+- The `TIMETABLE_NAME` is the name of the timetable to which the module is being added.
+- The `MOD_CODE_OR_NAME` is the code or name of the module to add/remove.
+- The operation checks for the timetable and module's existence, adds/removes the module to the timetable, and saves the updated state.
+
+**Example Usage**:
+
+`addModToTimetable "Fall 2025 Schedule" "CS1010"`
+
+This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
+
+---
+
+### Design Explanation
+
+#### a. **Method Design**
+
+- **`addModToTimetable`**:
+    - Loops through the `timetables` list to find a timetable by name (case-insensitive).
+    - Calls `addMod` on the found timetable to add the `Mod` object.
+    - If no timetable is found, an error message is printed.
+
+- **`removeModFromTimetable`**:
+    - Functions similarly to `addModToTimetable`, but calls `removeMod` instead of `addMod` on the timetable.
+
+#### b. **Alternatives Considered**
+
+- **Optimization with a Map**:
+    - Instead of searching through the entire list of `Timetable` objects every time, we could use a `Map<String, Timetable>`, where the key is the timetable name. This would speed up lookups to O(1) time complexity, providing faster access when managing timetables.
+
+- **Error Handling**:
+    - **Current Approach**: Instead of just printing an error, we could throw a custom exception (e.g., `TimetableNotFoundException`) when a timetable is not found. This would formalize error handling and make it easier to manage error propagation through the system.
+    - **Pros**: Clear and formal error management, making it easier to debug and handle specific cases.
+    - **Cons**: Adds complexity, especially if the exception handling needs to be propagated or caught higher in the stack.
+
+### Sequence Diagram
+  ![SequenceDiagram](docs/team/img/image.png)
+
 ### Search Module Feature
 
 #### Proposed Implementation
