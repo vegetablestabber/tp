@@ -200,6 +200,7 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
 - **Optimization with a Map**:
     - Instead of searching through the entire list of `Timetable` objects every time, we could use a `Map<String, Timetable>`, where the key is the timetable name. This would speed up lookups to O(1) time complexity, providing faster access when managing timetables.
 
+
 - **Error Handling**:
     - **Current Approach**: Instead of just printing an error, we could throw a custom exception (e.g., `TimetableNotFoundException`) when a timetable is not found. This would formalize error handling and make it easier to manage error propagation through the system.
     - **Pros**: Clear and formal error management, making it easier to debug and handle specific cases.
@@ -207,6 +208,19 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
 
 ### Sequence Diagram
   ![SequenceDiagram](docs/team/img/image.png)
+
+### **Schedule Management within Timetables**
+- **Purpose**: Allows users to select their preferred modules, based on accurate data provided by NUSMods
+- **Implementation**: The `Schedule` class provides methods to add, remove, and view modules. The class is built on 
+top of the `Timetable` class, which is the internal format NUSMods stores its timetable data in. Each class session is
+represented as a `Lesson` object; one of which contains the type (lecture, tutorial, lab, etc.), its period (day & time), 
+and the class venue.
+  - Furthermore, in conjunction with `ScheduleMod`, users can select the lecture, tutorial, and lab 
+slots they would attend, to allow for more granular selection and modification of the timetables.
+- **Rationale**: Encapsulating timetable logic in a dedicated class improves maintainability and testability.
+
+The class diagram that represents the overview of the Schedule class is shown below:
+[![](https://img.plantuml.biz/plantuml/svg/ZLNVRzem47xFNs7bYMuD4tj42BMRs8G4rTIWldJLPF0DeYOsiYz8rSJ_lekTE0u9tNX1lkzyFxxlphapo3MMHHv5HxvxvNjWSQ54mH76fG4TipyHezykvyQmT7S0KUPG6wjVmYGlW4rPYZgJ-y2-rS1V3I6hpE3iItNw0JfJOkwTFZ8kn5g94QNSg7iXo9kEDu630IJB2enHqhcbWCxjbk7RiKrzopBX3s483OKwWK_pQ8_zJ5IABNAqRKibhw3mq7iF-42DZsxwhLkGWXiBskxNtQuTth3folhUj6KZrX0TxRLpDA02WHqX3EImGwZ9gfXVy-Ei8STPdr_cmOtSsZR4el5jFB_q7CmtfHkdzqDQlMgnAd6MybZYlnLoV5Ywceuzi6fh3CWEgWoyca97dS6mAjIbTc-bNSR-wneg1rygJnAT1vQ8_giT2kIxb6sdnE3-NDihp0f0lisj79lcSDcQ1nnhL_s-KlQhGpmquUV1DdrHtGV3fmqwhfalm21e5xq-34ewwkdGMGQ7T0WDXYoaBTGsi1-RHNSx7Y0daEN05LlSKbmbpGxWDT0biV15FWi_LIa79gljj-4gw7Wseri5Q8wPalDm6TF5Uf5k5e-_9aF6pwsU_c5FaeJ5a_7uGznvPgQCX3PHQ7AUCVFm06hZr0fDcySaQeSYIUOzhmFlUhWilkqflJ3rj4HI8OtWKcjQunENo3WIQziIQJK-CGfneA8fu0b-oYs0hBy4WlrMkleydJ9yYnatx64ItO4KrMVmBm00)](https://editor.plantuml.com/uml/ZLNVRzem47xFNs7bYMuD4tj42BMRs8G4rTIWldJLPF0DeYOsiYz8rSJ_lekTE0u9tNX1lkzyFxxlphapo3MMHHv5HxvxvNjWSQ54mH76fG4TipyHezykvyQmT7S0KUPG6wjVmYGlW4rPYZgJ-y2-rS1V3I6hpE3iItNw0JfJOkwTFZ8kn5g94QNSg7iXo9kEDu630IJB2enHqhcbWCxjbk7RiKrzopBX3s483OKwWK_pQ8_zJ5IABNAqRKibhw3mq7iF-42DZsxwhLkGWXiBskxNtQuTth3folhUj6KZrX0TxRLpDA02WHqX3EImGwZ9gfXVy-Ei8STPdr_cmOtSsZR4el5jFB_q7CmtfHkdzqDQlMgnAd6MybZYlnLoV5Ywceuzi6fh3CWEgWoyca97dS6mAjIbTc-bNSR-wneg1rygJnAT1vQ8_giT2kIxb6sdnE3-NDihp0f0lisj79lcSDcQ1nnhL_s-KlQhGpmquUV1DdrHtGV3fmqwhfalm21e5xq-34ewwkdGMGQ7T0WDXYoaBTGsi1-RHNSx7Y0daEN05LlSKbmbpGxWDT0biV15FWi_LIa79gljj-4gw7Wseri5Q8wPalDm6TF5Uf5k5e-_9aF6pwsU_c5FaeJ5a_7uGznvPgQCX3PHQ7AUCVFm06hZr0fDcySaQeSYIUOzhmFlUhWilkqflJ3rj4HI8OtWKcjQunENo3WIQziIQJK-CGfneA8fu0b-oYs0hBy4WlrMkleydJ9yYnatx64ItO4KrMVmBm00)
 
 ### Search Module Feature
 
