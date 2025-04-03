@@ -99,6 +99,7 @@ This feature involves the following key operations:
 
 3b. If no module is found, an error message is displayed, and the failure is logged.
 
+![img.png](img/luke/img3.png)
 #### Design Considerations
 {: .no_toc }
 
