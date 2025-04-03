@@ -316,31 +316,32 @@ These instructions are tailored to the application's structure and functionality
     - Run the `Main` class located in `src/main/java/modmate/Main.java`.
     - Verify that the application starts without errors and displays the welcome message.
 
-2. **Adding Modules**:
-    - Enter a valid `add` command (e.g., `add CS2113`) and verify that the module is added to the in-memory timetable.
-    - Test edge cases such as adding duplicate modules or invalid module codes (e.g., `add XYZ123`) and confirm appropriate error messages are displayed.
+2. **Timetable Creation**:
+    - Test the `createtimetable` command (e.g., `createtimetable Semester1`) to generate a new timetable.
+    - Verify that the timetable is initialized correctly and does not overwrite existing data unless explicitly confirmed.
 
-3. **Viewing Timetable**:
-    - Use the `view` command to display all added modules.
+3. **Adding Modules**:
+    - Enter a valid `addmod` command (e.g., `addmod CS2113`) and verify that the module is added to the in-memory timetable.
+    - Test edge cases such as adding duplicate modules or invalid module codes (e.g., `addmod XYZ123`) and confirm appropriate error messages are displayed.
+
+4. **Viewing Timetable**:
+    - Use the `timetable` command (e.g., `timetable Semester1`) to display all added modules.
     - Verify that the output matches the expected timetable, including module codes, names, and semesters.
 
-4. **Removing Modules**:
-    - Enter a valid `remove` command (e.g., `remove CS2113`) and ensure the module is removed from the in-memory timetable.
+5. **Removing Modules**:
+    - Enter a valid `removemod` command (e.g., `removemod CS2113`) and ensure the module is removed from the in-memory timetable.
     - Test edge cases such as removing non-existent modules and verify the application handles them gracefully.
 
-5. **Searching Modules**:
-    - Test the `search` command with valid module codes or names (e.g., `search CS2113` or `search Software`).
+6. **Searching Modules**:
+    - Test the `searchmod` command with valid module codes or names (e.g., `searchmod CS2113` or `searchmod Software`).
     - Verify that the search results are accurate and displayed correctly.
     - Test invalid or partial inputs and confirm that the application provides meaningful feedback.
 
-6. **Bookmarking Modules**:
+7. **Bookmarking Modules**:
     - Use the `bookmark` command to mark a module as a favorite (e.g., `bookmark CS2113`).
-    - Verify that the bookmarked module is displayed when using the `getbookmarks` command.
+    - Verify that the bookmarked module is displayed in a bookmarks list when using the `bookmarks` command.
     - Test edge cases such as bookmarking non-existent modules.
 
-7. **Timetable Creation**:
-    - Test the `createtimetable` command to generate a new timetable.
-    - Verify that the timetable is initialized correctly and does not overwrite existing data unless explicitly confirmed.
 
 ### Error Handling
 
@@ -348,7 +349,7 @@ These instructions are tailored to the application's structure and functionality
 
 2. Test edge cases:
     - Empty input: Press Enter without typing any command.
-    - Invalid module codes: Use non-existent or malformed module codes (e.g., `add XYZ123`).
+    - Invalid module codes: Use non-existent or malformed module codes (e.g., `addmod XYZ123`).
     - Excessively long inputs: Enter commands with overly long descriptions and verify the application handles them gracefully.
 
 ### API Integration
