@@ -8,7 +8,8 @@ parent: About Us
 
 ModMate is a command-line application that leverages the NUSMods API and was developed to help NUS students manage academic schedules and module information efficiently. It streamlines timetable organization, module bookmarking, and data exploration, offering a user-friendly solution for academic planning.
 
-![](../img/harii/harii_tut.jpg)
+<img src="../img/harii/harii_tut.jpg" width="400">
+
 
 Given below are my contributions to the project:
 
