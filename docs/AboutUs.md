@@ -2,6 +2,7 @@
 title: About Us
 layout: default
 nav_order: 4
+has_toc: false
 ---
 
 # About Us
