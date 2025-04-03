@@ -31,19 +31,20 @@ Follow these steps to get started with ModMate:
 
 Here’s a quick reference for all ModMate commands:
 
-| Command                     | Description                                      |
-|-----------------------------|--------------------------------------------------|
-| `createtimetable`           | 🗓️ Create a new timetable.                      |
-| `addmod`                    | ➕ Add a module to a timetable.                  |
-| `removemod`                 | ➖ Remove a module from a timetable.             |
-| `timetable`                 | 👀 View the details of a timetable.             |
-| `searchmod`                 | 🔍 Search for modules by code or name.          |
-| `bookmark`                  | ⭐ Bookmark a module.                            |
-| `bookmarks`                 | 📑 View all bookmarked modules.                 |
-| `setlesson`                 | 📚 Set a specific lesson for a module.          |
-| `addbreak`                  | ☕ Add a break period to a timetable.            |
-| `viewmod`                   | 📖 View detailed information about a module.    |
-| `viewlessons`               | 📝 View all available lessons for a module.     |
+| Command           | Description                                    |
+|-------------------|------------------------------------------------|
+| `createtimetable` | 🗓️ Create a new timetable.                    |
+| `addmod`          | ➕ Add a module to a timetable.                 |
+| `removemod`       | ➖ Remove a module from a timetable.            |
+| `timetable`       | 👀 View the details of a timetable.            |
+| `searchmod`       | 🔍 Search for modules by code or name.         |
+| `bookmark`        | ⭐ Bookmark a module.                           |
+| `bookmarks`       | 📑 View all bookmarked modules.                |
+| `setlesson`       | 📚 Set a specific lesson for a module.         |
+| `addbreak`        | ☕ Add a break period to a timetable.           |
+| `viewmod`         | 📖 View detailed information about a module.   |
+| `viewlessons`     | 📝 View all available lessons for a module.    |
+| `viewallmods`     | 📝 View all available modules in the database. |
 
 ## Features
 
@@ -183,6 +184,17 @@ viewmod CS1010
 **Example:**
 ```
 viewlessons CS1010
+```
+
+### Viewing all Modules (name + code): `viewallmods`
+
+📝 View all available modules.
+
+**Format:** `viewallmods`
+
+**Example:**
+```
+viewallmods
 ```
 
 ## FAQ
