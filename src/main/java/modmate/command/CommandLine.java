@@ -8,6 +8,7 @@ public class CommandLine {
         Command command;
 
         switch (commandName) {
+        case HelpCommand.CLI_REPRESENTATION -> command = new HelpCommand();
         case AddBreakToTimetableCommand.CLI_REPRESENTATION -> command = new AddBreakToTimetableCommand();
         case AddModToTimetableCommand.CLI_REPRESENTATION -> command = new AddModToTimetableCommand();
         case BookmarkCommand.CLI_REPRESENTATION -> command = new BookmarkCommand();
