@@ -67,6 +67,9 @@ createtimetable Semester1
 
 ➕ Add a module to your timetable.
 
+- This command will assign random lessons for each type (lectures, labs, and/or tutorials). 
+You can customize which slots to take with the `setlesson` command.
+
 **Format:** `addmod <timetable_name> <module_code_or_name>`
 
 - The `<module_code_or_name>` can be either the module code (e.g., CS1010) or the module name.
@@ -91,11 +94,14 @@ removemod Semester1 CS1010
 
 👀 View the details of a specific timetable.
 
-**Format:** `timetable <timetable_name>`
+- Adding the argument "timeline" will display your timetable in chronological order as one weekly schedule.
+
+**Format:** `timetable [timeline] <timetable_name>`
 
 **Example:**
 ```
 timetable Semester1
+timetable timeline Semester2
 ```
 
 ### Searching for Modules: `searchmod`
@@ -107,6 +113,7 @@ timetable Semester1
 **Example:**
 ```
 searchmod Programming
+searchmod GESS
 ```
 
 ### Bookmarking a Module: `bookmark`
@@ -118,6 +125,7 @@ searchmod Programming
 **Example:**
 ```
 bookmark CS1010
+bookmark CG2023
 ```
 
 ### Viewing Bookmarked Modules: `bookmarks`
@@ -140,6 +148,8 @@ bookmarks
 **Example:**
 ```
 setlesson Semester1 CS1010 Lecture L1
+setlesson Semester2 LAJ3201 TutorialType2 B1
+setlesson SpecialSem1 EE2026 Laboratory 01
 ```
 
 ### Adding a Break to a Timetable: `addbreak`
