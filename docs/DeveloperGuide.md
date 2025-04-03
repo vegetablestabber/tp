@@ -188,7 +188,7 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
 #### a. **Method Design**
 
 - **`addModToTimetable`**:
-    - Loops through the `timatables` list to find a timetable by name (case-insensitive).
+    - Loops through the `timetables` list to find a timetable by name (case-insensitive).
     - Calls `addMod` on the found timetable to add the `Mod` object.
     - If no timetable is found, an error message is printed.
 
