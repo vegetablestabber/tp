@@ -78,6 +78,7 @@ You can customize which slots to take with the `setlesson` command.
 **Example:**
 ```
 addmod Semester1 CS1010
+addmod Semester1 Programming Methodology
 ```
 
 ### Removing a Module from a Timetable: `removemod`
@@ -89,6 +90,7 @@ addmod Semester1 CS1010
 **Example:**
 ```
 removemod Semester1 CS1010
+removemod Semester1 Programming Methodology
 ```
 
 ### Viewing a Timetable: `timetable`
@@ -155,7 +157,7 @@ setlesson SpecialSem1 EE2026 Laboratory 01
 
 ### Adding a Break to a Timetable: `addbreak`
 
-☕ Add a break period to your timetable.
+☕ Add a break period to your timetable. Note that the timing should be in 24-hour clock.
 
 **Format:** `addbreak <timetable_name> <label> <day> <start_time> <end_time>`
 
