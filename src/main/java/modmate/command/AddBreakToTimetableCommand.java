@@ -39,11 +39,19 @@ public class AddBreakToTimetableCommand implements Command {
             start = LocalTime.parse(startTime);
             end = LocalTime.parse(endTime);
 
+            if (end.isBefore(start) || end.equals(start)) {
+                System.out.println("End time must be after start time.");
+                return;
+            }
+
             assert start != null && end != null : "Start or end time cannot be null";
             assert !end.isBefore(start) : "End time must be after start time";
+            assert start.getHour() < 24 && end.getHour() < 24
+                    : "Time input must be within 00:00 to 23:59";
 
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid input format. Use format: MONDAY 12:00 13:00");
+
+        } catch (Exception e) {
+            System.out.println("Invalid input format. Use correct 24-hour format: MONDAY 12:00 13:00");
             return;
         }
 
