@@ -39,7 +39,6 @@ public class ViewTimetableCommand implements Command {
 
         Schedule timetable = currentUser.getTimetable(inputTimetableName);
         if (!currentUser.hasTimetable(inputTimetableName) || timetable == null) {
-            System.out.println("Timetable \"" + inputTimetableName + "\" not found.");
             logUtil.warning("Timetable '" + inputTimetableName + "' not found.");
             return;
         }
