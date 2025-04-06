@@ -8,6 +8,8 @@ nav_enabled: true
 # Developer Guide
 {: .no_toc }
 
+{% include intro.md %}
+
 ## Table of Contents
 {: .no_toc .text-delta }
 

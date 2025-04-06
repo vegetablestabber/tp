@@ -8,6 +8,8 @@ nav_enabled: true
 # User Guide
 {: .no_toc }
 
+{% include intro.md %}
+
 ## Table of Contents
 {: .no_toc .text-delta }
 
@@ -68,7 +70,7 @@ createtimetable Semester1
 
 ➕ Add a module to your timetable.
 
-- This command will assign random lessons for each type (lectures, labs, and/or tutorials). 
+- This command will assign random lessons for each type (lectures, labs, and/or tutorials).
 You can customize which slots to take with the `setlesson` command.
 
 **Format:** `addmod <timetable_name> <module_code_or_name>`
