@@ -105,8 +105,8 @@ public class ScheduleMod {
                 .equalsIgnoreCase(typeInput.replaceAll("\\s+", "")))
                 .findAny()
                 .orElse(null);
-        if (!getLessonTypes().contains(type)) {
-            System.out.println("Lesson type " + type + " does not exist.");
+        if (type == null) {
+            System.out.println("Lesson type '" + typeInput + "' does not exist.");
             return;
         }
 
@@ -119,7 +119,7 @@ public class ScheduleMod {
         );
 
         if (lessonToAdd.isEmpty()) {
-            System.out.println("Lesson id " + id + " does not exist.");
+            System.out.println("Lesson id '" + id + "' does not exist.");
             return;
         }
 
