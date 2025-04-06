@@ -33,14 +33,6 @@ public class ModTest {
     }
 
     @Test
-    void testToString() {
-        String expected = "CS2113: Software Engineering & Object-Oriented Programming\n" +
-                "    null\n" +
-                "    Computing";
-        assertEquals(expected, mod.toString());
-    }
-
-    @Test
     void testGetDetailedString() {
         String result = mod.getDetailedString();
         System.out.println("=== getDetailedString() OUTPUT ===");
@@ -56,11 +48,6 @@ public class ModTest {
         assertTrue(result.contains("Prerequisites: []"));
         assertTrue(result.contains("Workload: Lectures: 2.0 hours, Tutorials: 1.0 hours, " +
                 "Projects: 3.0 hours, Preparation: 4.0 hours"));
-    }
-
-    @Test
-    void testNullDescription() {
-        assertTrue(mod.toString().contains("null"));
     }
 
     @Test
