@@ -40,6 +40,9 @@ Given below are my contributions to the project:
   * [#78](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/78): Enhanced logging mechanisms to provide more detailed and actionable runtime information, aiding in debugging and monitoring.
   * [#27](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/27): Reduced excessive null-checking by implementing more robust null-safety practices, leading to cleaner and more reliable code.
 
+v2.1:
+PRs: #179, #180
+
 __*TODO: Update the contributions below*__
 
 * **Documentation**:
