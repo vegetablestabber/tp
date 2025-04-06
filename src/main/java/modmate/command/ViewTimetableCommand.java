@@ -24,12 +24,24 @@ public class ViewTimetableCommand implements Command {
         String label;
         Period period;
         boolean isBreak;
+        boolean isClashing;
 
-        TimelineEntry(String label, Period period, boolean isBreak) {
+        TimelineEntry(String label, Period period, boolean isBreak, boolean isClashing) {
             this.label = label;
             this.period = period;
             this.isBreak = isBreak;
+            this.isClashing = isClashing;
         }
+
+        TimelineEntry(String label, Period period, boolean isBreak) {
+            this(label, period, isBreak, false);
+        }
+
+        public void setClashing(boolean isClashing) {
+            this.isClashing = isClashing;
+        }
+
+
     }
 
     @Override
@@ -71,7 +83,12 @@ public class ViewTimetableCommand implements Command {
                                     timeline.put(day, new ArrayList<>());
                                 }
                                 timeline.get(day).add(
-                                        new TimelineEntry(mod.getCode(), lesson.getPeriod(), false)
+                                        new TimelineEntry(
+                                                mod.getCode() +
+                                                " " +
+                                                lesson.getType(),
+                                                lesson.getPeriod(),
+                                                false)
                                 );
                             }
                         }
@@ -101,10 +118,19 @@ public class ViewTimetableCommand implements Command {
                         .sorted(Comparator.comparing(e -> e.period.getStartTime()))
                         .toList();
 
+                entries.forEach(entry -> {
+                    boolean isClashing = entries.stream().anyMatch(
+                            (otherEntry) ->
+                                    !otherEntry.label.equals(entry.label) &&
+                                    otherEntry.period.isClashing(entry.period));
+                    entry.setClashing(isClashing);
+                });
+
                 for (TimelineEntry entry : entries) {
                     String start = entry.period.getStartTime().toString();
                     String end = entry.period.getEndTime().toString();
-                    System.out.println(" | " + entry.label + ": " + start + "-" + end);
+                    String line = entry.isClashing ? " ╳ " : " │ ";
+                    System.out.println(line + entry.label + ": " + start + "-" + end);
                 }
 
             }
