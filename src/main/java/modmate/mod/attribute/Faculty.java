@@ -2,7 +2,8 @@ package modmate.mod.attribute;
 
 /**
  * Represents a faculty with a specific name.
- * This class stores the name of the faculty and provides methods to retrieve and update it.
+ * This class stores the name of the faculty and provides methods to retrieve
+ * and update it.
  */
 public class Faculty {
     private final String name;
@@ -14,6 +15,19 @@ public class Faculty {
      */
     public Faculty(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof Faculty other) {
+            return this.name.equalsIgnoreCase(other.name);
+        }
+
+        return false;
     }
 
     /**

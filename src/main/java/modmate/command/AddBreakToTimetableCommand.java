@@ -7,9 +7,29 @@ import modmate.user.User;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
-public class AddBreakToTimetableCommand implements Command {
+public class AddBreakToTimetableCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "addbreak";
+
+    @Override
+    public String getDescription() {
+        return "Add a break to your timetable.";
+    }
+
+    @Override
+    public String getSyntax() {
+        return CLI_REPRESENTATION + " <timetable> <label> <day> <startTime> <endTime>";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage()
+                + "  <timetable>: The name of the timetable.\n"
+                + "  <label>: A label for the break.\n"
+                + "  <day>: The day of the week (e.g., MONDAY).\n"
+                + "  <startTime>: The start time in HH:mm format.\n"
+                + "  <endTime>: The end time in HH:mm format.";
+    }
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -49,7 +69,6 @@ public class AddBreakToTimetableCommand implements Command {
             assert start.getHour() < 24 && end.getHour() < 24
                     : "Time input must be within 00:00 to 23:59";
 
-
         } catch (Exception e) {
             System.out.println("Invalid input format. Use correct 24-hour format: MONDAY 12:00 13:00");
             return;
@@ -68,9 +87,9 @@ public class AddBreakToTimetableCommand implements Command {
     private String formatTime(String timeInput) {
         assert timeInput != null && !timeInput.trim().isEmpty() : "Time input cannot be null or empty";
 
-        if (timeInput.length() == 4 && timeInput.matches("\\d{4}")) {  // e.g., "1200"
+        if (timeInput.length() == 4 && timeInput.matches("\\d{4}")) { // e.g., "1200"
             return timeInput.substring(0, 2) + ":" + timeInput.substring(2);
         }
-        return timeInput;  // Already in "HH:mm" format
+        return timeInput; // Already in "HH:mm" format
     }
 }

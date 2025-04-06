@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import modmate.download.HttpUtil;
 import modmate.download.json.mod.CondensedModJSONParser;
 import modmate.download.json.mod.ModJSONParser;
+import modmate.exception.ApiException;
 import modmate.log.LogUtil;
 import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
@@ -30,8 +31,33 @@ import modmate.mod.Mod;
  * and fetch module codes for a given academic year.
  */
 public class NUSModsAPI {
-
     private static final LogUtil logUtil = new LogUtil(NUSModsAPI.class);
+    public static final Map<String, CondensedMod> condensedMods = NUSModsAPI.fetchAllModCodes();
+
+/**
+     * Helper method that searches for an exact matching mod by its code or name.
+     *
+     * @param identifier The code or name of the mod to search for.
+     * @return The mod that matches the given code or name, or null if no match is
+     *         found.
+     */
+    public static Mod modFromIdentifier(String identifier) throws ApiException {
+        // First, check for a match with the module code (key)
+        String key = identifier.toUpperCase();
+        Optional<CondensedMod> condensedModOpt = Optional.ofNullable(condensedMods.get(key))
+            .or(() -> condensedMods.values()
+                .stream()
+                .filter(condensedMod -> condensedMod.getName().equalsIgnoreCase(identifier))
+                .findFirst());
+
+        // If a match is found, retrieve mod details using the module code
+        return condensedModOpt.flatMap(module -> NUSModsAPI.fetchModuleByCode(module.getCode()))
+            .orElseThrow(() -> {
+                String message = "Mod '" + identifier + "' not found";
+                logUtil.severe(message);
+                return new ApiException(message);
+            });
+    }
 
     /**
      * Retrieves module information from the NUSMods API using a module code.

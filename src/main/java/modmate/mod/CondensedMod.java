@@ -34,6 +34,16 @@ public class CondensedMod {
     }
 
     /**
+     * Returns a string representation of the mod.
+     *
+     * @return A string representation of the mod.
+     */
+    @Override
+    public String toString() {
+        return code + ": " + name;
+    }
+
+    /**
      * Returns the name of the mod.
      *
      * @return The name of the mod.
