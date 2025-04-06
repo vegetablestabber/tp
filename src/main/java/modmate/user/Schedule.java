@@ -45,6 +45,7 @@ public class Schedule {
 
         if (scheduleMod == null) {
             System.out.println("Mod " + modToSet.getCode() + " is not in the timetable.");
+            return;
         }
 
         scheduleMod.setLesson(type, id);
