@@ -25,7 +25,7 @@ public class SearchModCommand implements Command {
             return;
         }
 
-        String inputSearchQuery = args[1].trim();
+        String inputSearchQuery = CommandCenter.stringFromBetweenPartsXY(args, 1).trim();
 
         assert inputSearchQuery != null && !inputSearchQuery.isEmpty() : "Search query cannot be null or empty";
 
@@ -33,13 +33,10 @@ public class SearchModCommand implements Command {
         List<Mod> searchResults = getSearchResults(inputSearchQuery);
 
         if (!searchResults.isEmpty()) {
-            for (Mod mod : searchResults) {
-                System.out.println(mod);
-            }
-        } else {
             System.out.println("No mods found matching the search query.");
         }
 
+        searchResults.forEach(mod -> System.out.println(mod));
     }
 
     private static List<Mod> getSearchResults(String searchTerm) {
