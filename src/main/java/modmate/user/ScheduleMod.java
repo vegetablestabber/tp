@@ -35,7 +35,7 @@ public class ScheduleMod {
 
             // timetable for course exists. start by figuring how many
             // lesson types this course has (eg. lab, tut, tut2, lec)
-            if (timetable.getLessons() == null) {
+            if (timetable == null || timetable.getLessons() == null) {
                 return;
             }
             timetable
