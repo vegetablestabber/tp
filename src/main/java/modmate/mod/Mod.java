@@ -53,8 +53,7 @@ public class Mod extends CondensedMod {
      */
     @Override
     public String toString() {
-        return code + ": " + name + "\n    " + description + "\n    " +
-                (attributes != null ? attributes.getFaculty() : "No Faculty Information");
+        return code + ": " + name;
     }
 
     /**
@@ -66,14 +65,7 @@ public class Mod extends CondensedMod {
         return "Code: " + code +
                 "\nName: " + name +
                 "\nDescription: " + description +
-                "\nFaculty: " + attributes.getFaculty() +
-                "\nAvailability: " + attributes.listAvailableSemesters() +
-                "\nUnits: " + attributes.getUnits() +
-                "\nGraded: " + attributes.isGraded() +
-                "\nPrerequisites: " + attributes.getPrerequisites() +
-                "\nWorkload: " + attributes.getWorkload()
-                    .map(opt -> opt.toString())
-                    .orElse("No workload information");
+                "\n" + attributes.toString();
     }
 
     /**

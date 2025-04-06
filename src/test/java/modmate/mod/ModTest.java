@@ -1,18 +1,18 @@
 package modmate.mod;
 
-import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.ModAttributes;
 import modmate.mod.attribute.WeeklyWorkload;
 import modmate.timetable.Semester;
 import modmate.timetable.Timetable;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ModTest {
     private Mod mod;
@@ -26,18 +26,10 @@ public class ModTest {
         WeeklyWorkload workload = new WeeklyWorkload(2, 1, 3, 4);
 
         attributes = new ModAttributes(faculty, List.of(Semester.SEMESTER_1, Semester.SEMESTER_2), 4,
-                true, List.of(), Optional.of(workload));
+                true, List.of(), workload);
 
         timetables = List.of();
         mod = new Mod("Software Engineering & Object-Oriented Programming", "CS2113", null, attributes, timetables);
-    }
-
-    @Test
-    void testToString() {
-        String expected = "CS2113: Software Engineering & Object-Oriented Programming\n" +
-                "    null\n" +
-                "    Computing";
-        assertEquals(expected, mod.toString());
     }
 
     @Test
@@ -56,11 +48,6 @@ public class ModTest {
         assertTrue(result.contains("Prerequisites: []"));
         assertTrue(result.contains("Workload: Lectures: 2.0 hours, Tutorials: 1.0 hours, " +
                 "Projects: 3.0 hours, Preparation: 4.0 hours"));
-    }
-
-    @Test
-    void testNullDescription() {
-        assertTrue(mod.toString().contains("null"));
     }
 
     @Test

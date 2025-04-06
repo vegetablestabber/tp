@@ -18,7 +18,7 @@ public class ModAttributes {
     private final double units;
     private final boolean isGraded;
     private final List<Mod> prerequisites;
-    private final Optional<WeeklyWorkload> workload;
+    private final Optional<String> workload;
 
     /**
      * Constructs a ModAttributes object with the given attributes.
@@ -32,7 +32,7 @@ public class ModAttributes {
      * @param workload      The expected weekly workload for the mod.
      */
     public ModAttributes(Faculty faculty, List<Semester> semesters, double units,
-            boolean isGraded, List<Mod> prerequisites, Optional<WeeklyWorkload> workload) {
+            boolean isGraded, List<Mod> prerequisites, Optional<String> workload) {
         this.faculty = faculty;
         this.availableSemesters = semesters;
         this.units = units;
@@ -43,7 +43,24 @@ public class ModAttributes {
 
     public ModAttributes(Faculty faculty, List<Semester> semesters, double units,
             boolean isGraded, List<Mod> prerequisites, WeeklyWorkload workload) {
+        this(faculty, semesters, units, isGraded, prerequisites, Optional.of(workload.toString()));
+    }
+
+    public ModAttributes(Faculty faculty, List<Semester> semesters, double units,
+            boolean isGraded, List<Mod> prerequisites, String workload) {
         this(faculty, semesters, units, isGraded, prerequisites, Optional.of(workload));
+    }
+
+    @Override
+    public String toString() {
+        return "Faculty: " + getFaculty() +
+                "\nAvailability: " + listAvailableSemesters() +
+                "\nUnits: " + getUnits() +
+                "\nGraded: " + isGraded() +
+                "\nPrerequisites: " + getPrerequisites() +
+                "\nWorkload: " + getWorkload()
+                    .map(workload -> workload.toString())
+                    .orElse("No workload information");
     }
 
     /**
@@ -101,7 +118,7 @@ public class ModAttributes {
      *
      * @return The WeeklyWorkload object representing the workload.
      */
-    public Optional<WeeklyWorkload> getWorkload() {
+    public Optional<String> getWorkload() {
         return workload;
     }
 
