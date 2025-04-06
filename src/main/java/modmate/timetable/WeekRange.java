@@ -97,4 +97,19 @@ public class WeekRange {
         return String.join(", ", result);
     }
 
+    /**
+     * checks if another weekrange has overlapping weeks
+     * @param other another weekrange
+     * @return whether the other weekrange has any
+     *      week number that is also included in this weekrange
+     */
+    public boolean isClashing(WeekRange other) {
+        List<Integer> otherWeeks = other.getWeeks();
+        for (Integer week : weeks) {
+            if (otherWeeks.contains(week)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
