@@ -95,4 +95,8 @@ public class Mod extends CondensedMod {
         return attributes;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Mod && ((Mod) o).getCode().equals(code);
+    }
 }
