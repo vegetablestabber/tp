@@ -47,15 +47,18 @@ public class ViewTimetableCommand implements Command {
     @Override
     public void execute(String[] args, User currentUser) {
         if (args.length < 2) {
-            System.out.println("Usage: timetable <timetable>");
+            System.out.println("Usage: timetable [timeline|list] <timetable>");
             return;
         }
 
 
-        String viewtype = "default";
+        String viewtype = "timeline";
         String inputTimetableName;
 
-        if (args.length >= 3 && args[1].equals("timeline")) {
+        if (args.length >= 3 && args[1].equals("list")) {
+            viewtype = "list";
+            inputTimetableName = CommandCenter.stringFromBetweenPartsXY(args, 2);
+        } else if (args.length >= 3 && args[1].equals("timeline")) {
             viewtype = "timeline";
             inputTimetableName = CommandCenter.stringFromBetweenPartsXY(args, 2);
         } else {
