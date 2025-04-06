@@ -111,7 +111,7 @@ timetable timeline Semester2
 
 ### Searching for Modules: `searchmod`
 
-🔍 Search for modules by their code or name.
+🔍 Search for modules from all available modules provided by NUSMods by their code or name.
 
 **Format:** `searchmod <search_query>`
 
