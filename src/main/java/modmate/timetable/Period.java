@@ -101,4 +101,12 @@ public class Period {
     public String toString() {
         return "Weeks " + weekRange.toString() + ", " + day + ", " + startTime + "-" + endTime;
     }
+
+    public boolean isClashing(Period period) {
+        return period.getDay().equals(this.day) &&
+                period.getWeekRange().isClashing(this.weekRange) &&
+                period.getStartTime().isBefore(this.endTime) &&
+                period.getEndTime().isAfter(this.startTime);
+
+    }
 }

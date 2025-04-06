@@ -25,12 +25,17 @@ public class BookmarkCommand implements Command {
         // Bookmark a mod for later reference
 
         CommandCenter.modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
+            if (currentUser.hasBookmark(mod)) {
+                logUtil.warning("Mod '" + mod.getCode() + "' already bookmarked.");
+                System.out.println("Mod " + mod.getCode() + " is already in your bookmarks.");
+                return;
+            }
             currentUser.addBookmark(mod);
-            logUtil.info("Mod '" + inputCodeOrName + "' bookmarked.");
-            System.out.println("Bookmark " + inputCodeOrName + " successfully added to your list.");
+            logUtil.info("Mod '" + mod.getCode() + "' bookmarked.");
+            System.out.println("Mod " + mod.getCode() + " successfully added to your list.");
         }, () -> {
             logUtil.info("Course to bookmark not found.");
-            System.out.println("Course with code '" + inputCodeOrName + "' not found.");
+            System.out.println("Course with code '" + inputCodeOrName.toUpperCase() + "' not found.");
         });
     }
 }
