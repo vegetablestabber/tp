@@ -85,4 +85,13 @@ public class Mod extends CondensedMod {
         return attributes;
     }
 
+    /**
+     * Returns equality of mod with another object. Mod equality
+     * is determined by whether the mods have the same code or not
+     * @param o object to test
+     * @return if the mod is the same (That is, occupies the same code)
+     */
+    public boolean equals(Object o) {
+        return o instanceof Mod && ((Mod) o).getCode().equals(code);
+    }
 }

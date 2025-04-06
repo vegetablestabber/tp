@@ -101,6 +101,10 @@ public class User {
         }
     }
 
+    public boolean hasBookmark(Mod toCheck) {
+        return bookmarks.contains(toCheck);
+    }
+
     public void removeBookmark(Mod toRemove) {
         bookmarks.remove(toRemove);
     }
