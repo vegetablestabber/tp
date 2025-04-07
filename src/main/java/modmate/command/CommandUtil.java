@@ -18,16 +18,13 @@ public class CommandUtil {
             return Optional.empty();
         }
 
-        // Mod codes are stored uppercase, so normalize user input
         String upper = query.toUpperCase();
 
-        // Try to get a condensed mod
         CondensedMod condensed = NUSModsAPI.condensedMods.get(upper);
         if (condensed == null) {
-            return Optional.empty(); // Mod code does not exist
+            return Optional.empty();
         }
-
-        // Fetch full module info
+        
         return NUSModsAPI.fetchModuleByCode(condensed.getCode());
     }
 }
