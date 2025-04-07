@@ -4,7 +4,7 @@ import modmate.CommandCenter;
 import modmate.log.LogUtil;
 import modmate.user.User;
 
-public class RemoveBookmarkCommand implements Command {
+public class RemoveBookmarkCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "removebookmark";
 

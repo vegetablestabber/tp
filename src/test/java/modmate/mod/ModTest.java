@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.ModAttributes;
 import modmate.mod.attribute.WeeklyWorkload;
 import modmate.timetable.Semester;
@@ -21,12 +21,17 @@ public class ModTest {
 
     @BeforeEach
     void setUp() {
-        Faculty faculty = new Faculty("Computing");
+        String facultyStr = "Computing";
 
         WeeklyWorkload workload = new WeeklyWorkload(2, 1, 3, 4);
 
-        attributes = new ModAttributes(faculty, List.of(Semester.SEMESTER_1, Semester.SEMESTER_2), 4,
-                true, List.of(), workload);
+        attributes = new ModAttributes(
+            facultyStr,
+            List.of(Semester.SEMESTER_1, Semester.SEMESTER_2),
+            4 + "",
+            true + "",
+            Optional.of(workload.toString())
+        );
 
         timetables = List.of();
         mod = new Mod("Software Engineering & Object-Oriented Programming", "CS2113", null, attributes, timetables);
@@ -57,7 +62,7 @@ public class ModTest {
 
     @Test
     void testAttributeAccess() {
-        assertEquals("Computing", mod.getAttributes().getFaculty().getName());
-        assertEquals(4, mod.getAttributes().getUnits());
+        assertEquals("Computing", mod.getAttributes().getFacultyOpt().get().getName());
+        assertEquals(4, mod.getAttributes().getUnitsOpt());
     }
 }

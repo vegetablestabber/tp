@@ -2,18 +2,38 @@ package modmate.command;
 
 import modmate.log.LogUtil;
 import modmate.mod.Mod;
+import modmate.ui.Input;
 import modmate.user.User;
 
 import java.util.List;
 
-public class GetBookmarksCommand implements Command {
+public class GetBookmarksCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "bookmarks";
 
     private static final LogUtil logUtil = new LogUtil(GetBookmarksCommand.class);
 
+    public GetBookmarksCommand(Input input) {
+        super(input);
+    }
+
     @Override
-    public void execute(String[] args, User currentUser) {
+    public String getSyntax() {
+        return CLI_REPRESENTATION;
+    }
+
+    @Override
+    public String getDescription() {
+        return "View all bookmarked mods.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage() + "  (No parameters required for this command.)";
+    }
+
+    @Override
+    public void execute(User currentUser) {
         logUtil.info("Viewing bookmarks.");
 
         // View all bookmarked courses

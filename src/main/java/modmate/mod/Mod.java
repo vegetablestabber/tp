@@ -47,16 +47,6 @@ public class Mod extends CondensedMod {
     }
 
     /**
-     * Returns a string representation of the mod.
-     *
-     * @return A string representation of the mod.
-     */
-    @Override
-    public String toString() {
-        return code + ": " + name;
-    }
-
-    /**
      * Returns a detailed string representation of the mod.
      *
      * @return A detailed string representation of the mod.

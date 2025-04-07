@@ -1,17 +1,18 @@
 package modmate.command;
 
 import modmate.log.LogUtil;
+import modmate.ui.Input;
 import modmate.user.User;
 
-public class HelpCommand implements Command {
+public class HelpCommand extends Command {
 
-    public static final String CLI_REPRESENTATION = "-h";
+    public static final String CLI_REPRESENTATION = "help";
 
     private static final LogUtil logutil = new LogUtil(HelpCommand.class);
 
     private static final String helpMessage = """
             Commands:
-            -h: Display this help message
+            help: Display this help message
             exit: Exit the application
             viewmod <mod code or name>: View details of a mod by its mod code or name
             viewlessons <mod code or name>: View available lessons for each mod, sorted by type
@@ -27,8 +28,27 @@ public class HelpCommand implements Command {
             viewallmods: View all available mods
             """;
 
+    public HelpCommand(Input input) {
+        super(input);
+    }
+
     @Override
-    public void execute(String[] args, User currentUser) {
+    public String getSyntax() {
+        return CLI_REPRESENTATION;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Display this help message.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage() + "  (No parameters required for this command.)";
+    }
+
+    @Override
+    public void execute(User currentUser) {
         logutil.info("Printing help message.");
         System.out.println(helpMessage);
     }

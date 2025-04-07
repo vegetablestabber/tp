@@ -1,73 +1,154 @@
 package modmate.command;
 
-import modmate.CommandCenter;
-import modmate.download.nusmods.NUSModsAPI;
-import modmate.log.LogUtil;
-import modmate.mod.CondensedMod;
-import modmate.mod.Mod;
-import modmate.user.User;
-
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class SearchModCommand implements Command {
+import modmate.download.nusmods.NUSModsAPI;
+import modmate.exception.ApiException;
+import modmate.exception.CommandException;
+import modmate.log.LogUtil;
+import modmate.mod.CondensedMod;
+import modmate.mod.attribute.ModAttributes;
+import modmate.timetable.Semester;
+import modmate.ui.Input;
+import modmate.ui.InputParser;
+import modmate.ui.Pagination;
+import modmate.ui.ProgressBar;
+import modmate.user.User;
+
+public class SearchModCommand extends Command {
+
+    private final String identifier;
+    private final ModAttributes attributes;
 
     public static final String CLI_REPRESENTATION = "searchmod";
 
     private static final LogUtil logUtil = new LogUtil(SearchModCommand.class);
 
-    @Override
-    public void execute(String[] args, User currentUser) {
-        if (args.length < 2) {
-            System.out.println("Usage: searchmod <search query>");
-            return;
+    public SearchModCommand(Input input) {
+        super(input);
+
+        this.identifier = input.getArgument();
+        this.attributes = new ModAttributes(
+                input.getFlag("faculty"),
+                input.getFlag("semesters")
+                        .map(str -> Arrays.asList(str.split("\\s+"))
+                                .stream()
+                                .map(numAsStr -> Integer.valueOf(numAsStr))
+                                .map(num -> Semester.fromInt(num))
+                                .toList())
+                        .orElse(Collections.emptyList()),
+                input.getFlag("units"),
+                input.getFlag("graded"),
+                Optional.empty());
+
+        if (this.identifier.isEmpty() && !this.attributes.hasAtLeastOneAttribute()) {
+            throw new CommandException(this,
+                    "Search query cannot be empty or have no filter conditions");
         }
-
-        String inputSearchQuery = CommandCenter.stringFromBetweenPartsXY(args, 1).trim();
-
-        assert inputSearchQuery != null && !inputSearchQuery.isEmpty() : "Search query cannot be null or empty";
-
-        logUtil.info("User is searching for a mod.");
-        List<Mod> searchResults = getSearchResults(inputSearchQuery);
-
-        if (!searchResults.isEmpty()) {
-            System.out.println("No mods found matching the search query.");
-        }
-
-        searchResults.forEach(mod -> System.out.println(mod));
     }
 
-    private static List<Mod> getSearchResults(String searchTerm) {
+    @Override
+    public String getSyntax() {
+        // TODO: Expand on what formats are allowed for the flag parameters
+        String str1 = CommandUtil.concatenate(
+                CLI_REPRESENTATION,
+                "<search query>");
+
+        String str2 = CommandUtil.concatenate(
+                InputParser.FLAG_PREFIX + "faculty <faculty>",
+                InputParser.FLAG_PREFIX + "semesters <semesters>",
+                InputParser.FLAG_PREFIX + "units <units>",
+                InputParser.FLAG_PREFIX + "graded <graded>");
+
+        return str1 + "[" + str2.toString() + "]";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Search for a mod by its code or name.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage() + "  <mod code or name>: The code or name of the mod to search for.\n"
+             + "  --faculty <faculty>: Optional. Filter by faculty.\n"
+             + "  --semesters <semesters>: Optional. Filter by semesters (space-separated).\n"
+             + "  --units <units>: Optional. Filter by modular credits.\n"
+             + "  --graded <graded>: Optional. Filter by grading type.";
+    }
+
+    @Override
+    public void execute(User currentUser) throws ApiException {
+        logUtil.info("User is searching for a mod.");
+
+        int totalModules = NUSModsAPI.condensedMods.size();
+        if (totalModules == 0) {
+            throw new ApiException("No modules available to search.");
+        }
+
+        List<CondensedMod> searchResults = getSearchResultsWithProgress(input.getArgument(), totalModules);
+
+        if (searchResults.isEmpty()) {
+            System.out.println("\nNo mods found matching the search query.");
+        } else {
+            System.out.println("\nSearch results:");
+            Pagination<CondensedMod> pagination = new Pagination<>(searchResults, 15);
+            pagination.display();
+        }
+    }
+
+    private List<CondensedMod> getSearchResultsWithProgress(String searchTerm, int totalModules) {
         logUtil.info("Internally invoking search for " + searchTerm + ".");
-        // Search inside Map allModCodesAndNames for matches
-        // Will have to search through both halves of the map, code and name
-        // If found, return list of getModFromAPIUsingCode(Code of Map pair found)
 
-        ArrayList<Mod> filteredMods = new ArrayList<>();
+        Stream<? extends CondensedMod> condensedModStream = NUSModsAPI.condensedMods
+                .values()
+                .stream()
+                .parallel();
 
-        CommandCenter.allModCodesAndNames.values()
-            .parallelStream()
-            .filter(condensedMod -> {
-                String lowerCaseSearchTerm = searchTerm.toLowerCase();
-                String lowerCaseModCode = condensedMod.getCode().toLowerCase();
-                String lowerCaseModName = condensedMod.getName().toLowerCase();
+        condensedModStream = identifier.isEmpty()
+                ? condensedModStream
+                : condensedModStream.filter(mod -> doesIdentifierMatch(mod));
 
-                return lowerCaseModCode.contains(lowerCaseSearchTerm)
-                    || lowerCaseModName.contains(lowerCaseSearchTerm);
-            })
-            .forEach(condensedMod -> {
-                Optional<Mod> modOptional = NUSModsAPI.fetchModuleByCode(condensedMod.getCode());
-                modOptional.ifPresent(mod -> filteredMods.add(mod));
-            });
+        List<CondensedMod> filteredMods;
 
-        filteredMods.sort(new Comparator<CondensedMod>() {
-            public int compare(CondensedMod o1, CondensedMod o2) {
-                return o1.getCode().compareTo(o2.getCode());
-            };
-        });
+        // Thread-safe counter for progress
+        final int[] processedCount = { 0 };
 
+        if (this.attributes.hasAtLeastOneAttribute()) {
+            condensedModStream = condensedModStream
+                    .map(condensedMod -> NUSModsAPI.fetchModuleByCode(condensedMod.getCode()))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .filter(mod -> this.attributes.equals(mod.getAttributes()));
+        }
+
+        filteredMods = condensedModStream
+                .peek(mod -> {
+                    // Update progress bar
+                    synchronized (processedCount) {
+                        processedCount[0]++;
+                        ProgressBar.print(processedCount[0], totalModules);
+                    }
+                })
+                .collect(Collectors.toList());
+
+        filteredMods.sort(Comparator.comparing(CondensedMod::getCode));
         return filteredMods;
     }
+
+    private boolean doesIdentifierMatch(CondensedMod condensedMod) {
+        String lowerCaseIdentifier = this.identifier.toLowerCase();
+        String lowerCaseModCode = condensedMod.getCode().toLowerCase();
+        String lowerCaseModName = condensedMod.getName().toLowerCase();
+
+        return lowerCaseModCode.contains(lowerCaseIdentifier)
+                || lowerCaseModName.contains(lowerCaseIdentifier);
+    }
+
 }

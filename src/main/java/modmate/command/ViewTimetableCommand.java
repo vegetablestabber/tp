@@ -14,7 +14,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-public class ViewTimetableCommand implements Command {
+public class ViewTimetableCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "timetable";
 
@@ -42,6 +42,23 @@ public class ViewTimetableCommand implements Command {
         }
 
 
+    }
+
+    @Override
+    public String getSyntax() {
+        return CLI_REPRESENTATION + " <timetable> [timeline]";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Display your mod timetable.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage()
+            + "  <timetable>: The name of the timetable to display.\n"
+            + "  [timeline]: Optional. Display timetable as a timeline.";
     }
 
     @Override

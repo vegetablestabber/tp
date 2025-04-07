@@ -1,41 +1,56 @@
 package modmate.command;
 
+import modmate.download.nusmods.NUSModsAPI;
+import modmate.exception.ApiException;
+import modmate.exception.CommandException;
 import modmate.log.LogUtil;
-import modmate.CommandCenter;
+import modmate.mod.Mod;
+import modmate.ui.Input;
 import modmate.user.User;
 
-public class BookmarkCommand implements Command {
+public class BookmarkCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "bookmark";
 
     private static final LogUtil logUtil = new LogUtil(BookmarkCommand.class);
 
-    @Override
-    public void execute(String[] args, User currentUser) {
-        if (args.length < 2) {
-            System.out.println("Usage: bookmark <mod code or name>");
-            return;
+    public BookmarkCommand(Input input) {
+        super(input);
+
+        if (input.getArgument().isEmpty()) {
+            throw new CommandException(this, "Mod code or name cannot be empty");
         }
-
-        String inputCodeOrName = CommandCenter.stringFromBetweenPartsXY(args, 1);
-
-        assert inputCodeOrName != null
-                && !inputCodeOrName.trim().isEmpty() : "Mod code or name cannot be null or empty";
-        logUtil.info("Bookmarking mod.");
-        // Bookmark a mod for later reference
-
-        CommandCenter.modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
-            if (currentUser.hasBookmark(mod)) {
-                logUtil.warning("Mod '" + mod.getCode() + "' already bookmarked.");
-                System.out.println("Mod " + mod.getCode() + " is already in your bookmarks.");
-                return;
-            }
-            currentUser.addBookmark(mod);
-            logUtil.info("Mod '" + mod.getCode() + "' bookmarked.");
-            System.out.println("Mod " + mod.getCode() + " successfully added to your list.");
-        }, () -> {
-            logUtil.info("Course to bookmark not found.");
-            System.out.println("Course with code '" + inputCodeOrName.toUpperCase() + "' not found.");
-        });
     }
+
+    @Override
+    public String getSyntax() {
+        return CommandUtil.concatenate(
+            CLI_REPRESENTATION,
+            "<mod code or name>"
+        );
+    }
+
+    @Override
+    public String getDescription() {
+        return "Bookmark a mod for later reference.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage() + "  <mod code or name>: The code or name of the mod to bookmark.";
+    }
+
+    @Override
+    public void execute(User currentUser) throws ApiException {
+        String identifier = input.getArgument();
+        logUtil.info("Bookmarking mod.");
+
+        // Bookmark a mod for later reference
+        Mod mod = NUSModsAPI.modFromIdentifier(identifier);
+        currentUser.addBookmark(mod);
+
+        logUtil.info("Mod '" + identifier + "' bookmarked.");
+        System.out.println("Bookmark " + identifier + " successfully added to your list.");
+    }
+
 }
