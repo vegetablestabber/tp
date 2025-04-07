@@ -25,7 +25,7 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    public void execute(User currentUser) {
+    public void execute(User user) {
         logUtil.info("Exiting application.");
         System.out.println("Exiting...");
     }

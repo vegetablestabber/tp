@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import modmate.command.Flag;
+import modmate.command.util.Flag;
 import modmate.mod.attribute.Faculty;
 import modmate.timetable.Semester;
 

@@ -1,5 +1,6 @@
 package modmate.command;
 
+import modmate.command.util.Flag;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
 import modmate.exception.UserException;

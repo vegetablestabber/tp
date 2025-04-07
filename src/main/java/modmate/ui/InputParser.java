@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import modmate.command.Flag;
+import modmate.command.util.Flag;
 
 public class InputParser {
 

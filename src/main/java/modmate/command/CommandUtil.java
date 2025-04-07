@@ -3,6 +3,8 @@ package modmate.command;
 import java.util.List;
 import java.util.StringJoiner;
 
+import modmate.command.util.Flag;
+
 public class CommandUtil {
 
     public static String buildSyntax(String commandName, String argument, List<Flag<?>> flags) {

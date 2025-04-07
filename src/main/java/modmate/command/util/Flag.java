@@ -1,4 +1,4 @@
-package modmate.command;
+package modmate.command.util;
 
 import java.util.Optional;
 

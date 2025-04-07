@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 import modmate.command.Command;
 import modmate.command.CommandUtil;
-import modmate.command.Flag;
+import modmate.command.util.Flag;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;

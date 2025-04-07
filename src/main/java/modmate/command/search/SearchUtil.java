@@ -1,6 +1,6 @@
 package modmate.command.search;
 
-import modmate.command.Flag;
+import modmate.command.util.Flag;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.mod.CondensedMod;
 import modmate.mod.attribute.Faculty;
