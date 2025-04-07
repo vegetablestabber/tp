@@ -1,5 +1,7 @@
 package modmate.command;
 
+import modmate.command.search.SearchModCommand;
+import modmate.exception.CommandException;
 import modmate.log.LogUtil;
 import modmate.ui.Input;
 import modmate.user.User;
@@ -28,13 +30,16 @@ public class HelpCommand extends Command {
             viewallmods: View all available mods
             """;
 
+    private final String commandToReceiveHelpFor;
+
     public HelpCommand(Input input) {
         super(input);
+        this.commandToReceiveHelpFor = input.getArgument().trim();
     }
 
     @Override
     public String getSyntax() {
-        return CLI_REPRESENTATION;
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION);
     }
 
     @Override
@@ -43,13 +48,34 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public String getUsage() {
-        return super.getUsage() + "  (No parameters required for this command.)";
-    }
-
-    @Override
     public void execute(User currentUser) {
-        logutil.info("Printing help message.");
-        System.out.println(helpMessage);
+        logutil.info("Executing help command.");
+
+        if (commandToReceiveHelpFor.isEmpty()) {
+            // Display general help message
+            System.out.println(helpMessage);
+            return;
+        }
+
+        // Match the argument to a command's CLI_REPRESENTATION
+        Command command;
+        try {
+            switch (commandToReceiveHelpFor) {
+            case CLI_REPRESENTATION -> command = new HelpCommand(input);
+            case ExitCommand.CLI_REPRESENTATION -> command = new ExitCommand(input);
+            case BookmarkCommand.CLI_REPRESENTATION -> command = new BookmarkCommand(input);
+            case GetBookmarksCommand.CLI_REPRESENTATION -> command = new GetBookmarksCommand(input);
+            case SearchModCommand.CLI_REPRESENTATION -> command = new SearchModCommand(input);
+            case ViewModCommand.CLI_REPRESENTATION -> command = new ViewModCommand(input);
+            case ViewAllModsCommand.CLI_REPRESENTATION -> command = new ViewAllModsCommand(input);
+            default -> throw new IllegalArgumentException("Command not found: " + commandToReceiveHelpFor);
+            }
+        } catch (IllegalArgumentException e) {
+            logutil.severe("Invalid command: " + commandToReceiveHelpFor);
+            throw new CommandException(this, e.getMessage());
+        }
+
+        // Display the usage of the matched command
+        System.out.println(command.getUsage());
     }
 }

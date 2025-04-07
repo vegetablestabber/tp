@@ -6,9 +6,9 @@ import modmate.command.ExitCommand;
 import modmate.command.GetBookmarksCommand;
 import modmate.command.HelpCommand;
 import modmate.command.RemoveBookmarkCommand;
-import modmate.command.SearchModCommand;
 import modmate.command.ViewAllModsCommand;
 import modmate.command.ViewModCommand;
+import modmate.command.search.SearchModCommand;
 import modmate.exception.CommandException;
 
 public class CommandParser {

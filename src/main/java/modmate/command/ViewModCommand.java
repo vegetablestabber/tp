@@ -1,5 +1,7 @@
 package modmate.command;
 
+import java.util.List;
+
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
@@ -14,8 +16,17 @@ public class ViewModCommand extends Command {
 
     private static final LogUtil logUtil = new LogUtil(ViewModCommand.class);
 
+    private final Flag<String> modCodeOrNameFlag;
+
     public ViewModCommand(Input input) {
         super(input);
+        this.modCodeOrNameFlag = new Flag<>(
+            "mod code or name",
+            input.getArgument(),
+            "The code or name of the mod to view.",
+            true,
+            "value"
+        );
 
         if (input.getArgument().isEmpty()) {
             throw new CommandException(this, "Mod code or name cannot be empty");
@@ -24,10 +35,7 @@ public class ViewModCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.concatenate(
-            CLI_REPRESENTATION,
-            "<mod code or name>"
-        );
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION, "", List.of(modCodeOrNameFlag));
     }
 
     @Override
@@ -37,7 +45,7 @@ public class ViewModCommand extends Command {
 
     @Override
     public String getUsage() {
-        return super.getUsage() + "  <mod code or name>: The code or name of the mod to view.";
+        return super.getUsage(List.of(modCodeOrNameFlag));
     }
 
     @Override

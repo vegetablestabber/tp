@@ -8,14 +8,25 @@ import modmate.mod.Mod;
 import modmate.ui.Input;
 import modmate.user.User;
 
+import java.util.List;
+
 public class BookmarkCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "bookmark";
 
     private static final LogUtil logUtil = new LogUtil(BookmarkCommand.class);
 
+    private final Flag<String> modCodeOrNameFlag;
+
     public BookmarkCommand(Input input) {
         super(input);
+        this.modCodeOrNameFlag = new Flag<>(
+            "mod code or name",
+            input.getArgument(),
+            "The code or name of the mod to bookmark.",
+            true,
+            "value"
+        );
 
         if (input.getArgument().isEmpty()) {
             throw new CommandException(this, "Mod code or name cannot be empty");
@@ -24,10 +35,7 @@ public class BookmarkCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.concatenate(
-            CLI_REPRESENTATION,
-            "<mod code or name>"
-        );
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION, "", List.of(modCodeOrNameFlag));
     }
 
     @Override
@@ -37,7 +45,7 @@ public class BookmarkCommand extends Command {
 
     @Override
     public String getUsage() {
-        return super.getUsage() + "  <mod code or name>: The code or name of the mod to bookmark.";
+        return super.getUsage(List.of(modCodeOrNameFlag));
     }
 
     @Override

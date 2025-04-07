@@ -21,19 +21,12 @@ public class ViewAllModsCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CLI_REPRESENTATION;
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION, "", List.of());
     }
 
     @Override
     public String getDescription() {
         return "View all available mods.";
-    }
-
-    @Override
-    public String getUsage() {
-        return "Usage: " + this.getSyntax() + "\n\n"
-            + this.getDescription() + "\nParameters:\n"
-            + "  (No parameters required for this command.)";
     }
 
     @Override

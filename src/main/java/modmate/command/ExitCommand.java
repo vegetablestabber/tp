@@ -16,17 +16,12 @@ public class ExitCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CLI_REPRESENTATION;
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION);
     }
 
     @Override
     public String getDescription() {
         return "Exit the application.";
-    }
-
-    @Override
-    public String getUsage() {
-        return super.getUsage() + "  (No parameters required for this command.)";
     }
 
     @Override
