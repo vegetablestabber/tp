@@ -54,3 +54,12 @@ run {
     standardInput = System.in
     enableAssertions = true
 }
+
+//tasks.withType(JavaCompile) {
+//    exclude '**/RemoveBookmarkCommand.java'
+//    exclude '**/RemoveModFromTimetableCommand.java'
+//    exclude '**/SetModLessonCommand.java'
+//    exclude '**/ViewTimetableCommand.java'
+//    exclude '**/ViewModLessonsCommand.java'
+//}
+
