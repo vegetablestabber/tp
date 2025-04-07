@@ -1,9 +1,13 @@
 package modmate.command;
 
+import modmate.command.util.Argument;
+import modmate.exception.CommandException;
 import modmate.exception.UserException;
 import modmate.log.LogUtil;
 import modmate.ui.Input;
 import modmate.user.User;
+
+import java.util.List;
 
 public class CreateTimetableCommand extends Command {
 
@@ -11,15 +15,27 @@ public class CreateTimetableCommand extends Command {
 
     private static final LogUtil logUtil = new LogUtil(CreateTimetableCommand.class);
 
+    private final Argument<String> timetableNameArg;
+
     public CreateTimetableCommand(Input input) {
         super(input);
+        this.timetableNameArg = new Argument<>(
+                "timetable name",
+                input.getArgument(),
+                "The name of the timetable",
+                true
+        );
+
+        if(timetableNameArg.getValue().isEmpty()) {
+            throw new CommandException(this, "Timetable name cannot be empty");
+        }
     }
 
     @Override
     public String getSyntax() {
         return CommandUtil.buildSyntax(
             CLI_REPRESENTATION,
-            "timetable"
+            List.of(timetableNameArg)
         );
     }
 
@@ -38,6 +54,7 @@ public class CreateTimetableCommand extends Command {
         String inputTimetableName = input.getArgument();
 
         if (user.hasTimetable(inputTimetableName)) {
+            System.out.println("Timetable with this name already exists.");
             logUtil.warning("Timetable " + inputTimetableName + " already exists.");
             throw new UserException("Timetable with this name already exists.");
         }
