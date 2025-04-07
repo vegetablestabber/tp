@@ -16,7 +16,7 @@ public class ExitCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CLI_REPRESENTATION;
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION);
     }
 
     @Override
@@ -25,12 +25,7 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    public String getUsage() {
-        return super.getUsage() + "  (No parameters required for this command.)";
-    }
-
-    @Override
-    public void execute(User currentUser) {
+    public void execute(User user) {
         logUtil.info("Exiting application.");
         System.out.println("Exiting...");
     }

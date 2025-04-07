@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ViewTimetableCommand extends Command {
 
@@ -46,7 +47,12 @@ public class ViewTimetableCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CLI_REPRESENTATION + " <timetable> [timeline]";
+        return CommandUtil.buildSyntax(
+            CLI_REPRESENTATION,
+            "timetable",
+            Map.of(), // No required flags
+            Map.of("timeline", "timeline") // Optional flag
+        );
     }
 
     @Override

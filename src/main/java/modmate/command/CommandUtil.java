@@ -3,16 +3,24 @@ package modmate.command;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
+
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.List;
 import java.util.StringJoiner;
 
+import modmate.command.util.Argument;
+
 public class CommandUtil {
-    public static String concatenate(String... tokens) {
+
+    public static String buildSyntax(String commandName, List<Argument<?>> args) {
         StringJoiner sj = new StringJoiner(" ");
-        Arrays.stream(tokens).forEach(token -> sj.add(token));
+        sj.add(commandName);
+        args.forEach(arg -> sj.add(arg.toString()));
+
         return sj.toString();
     }
+  
     public static Optional<Mod> modFromCodeOrName(String query) {
         if (query == null || query.isBlank()) {
             return Optional.empty();
@@ -26,5 +34,9 @@ public class CommandUtil {
         }
         
         return NUSModsAPI.fetchModuleByCode(condensed.getCode());
+    }
+
+    public static String buildSyntax(String commandName) {
+        return buildSyntax(commandName, List.of());
     }
 }

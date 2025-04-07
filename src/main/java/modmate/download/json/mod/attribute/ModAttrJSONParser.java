@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import modmate.download.json.JSONParser;
+import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.ModAttributes;
 import modmate.timetable.Semester;
 
@@ -21,10 +22,10 @@ public class ModAttrJSONParser extends JSONParser<ModAttrJSONKey> {
 
     public ModAttributes getAttributes() {
         return new ModAttributes(
-            this.getString(ModAttrJSONKey.FACULTY),
+            new Faculty(this.getString(ModAttrJSONKey.FACULTY)),
             this.availableSemesters,
-            this.getDouble(ModAttrJSONKey.UNITS) + "",
-            this.getString(ModAttrJSONKey.IS_GRADED).equals("Graded") + "",
+            this.getDouble(ModAttrJSONKey.UNITS),
+            this.getString(ModAttrJSONKey.IS_GRADED).equals("Graded"),
             this.workloadJSONParser.getWorkload()
         );
     }
