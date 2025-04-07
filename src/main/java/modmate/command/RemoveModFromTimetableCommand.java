@@ -1,6 +1,7 @@
 package modmate.command;
 
 import java.util.Optional;
+import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
 import modmate.exception.UserException;
@@ -45,12 +46,12 @@ public class RemoveModFromTimetableCommand extends Command {
         }
 
         String timetable = args[0];
-        String inputCodeOrName = args[1];
+        String modQuery = args[1];
 
         assert timetable != null
                 && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
-        assert inputCodeOrName != null
-                && !inputCodeOrName.trim().isEmpty() : "Mod code or name cannot be null or empty";
+        assert modQuery != null
+                && !modQuery.trim().isEmpty() : "Mod code or name cannot be null or empty";
 
         if (!currentUser.hasTimetable(timetable)) {
             System.out.println("Timetable \"" + timetable + "\" not found.");
@@ -60,11 +61,13 @@ public class RemoveModFromTimetableCommand extends Command {
 
         logUtil.info("Removing mod from timetable: " + timetable);
 
-        Optional<Mod> modOpt = CommandUtil.modFromCodeOrName(inputCodeOrName);
+        String upperModQuery = modQuery.toUpperCase();
+
+        Optional<Mod> modOpt = NUSModsAPI.fetchModuleByCode(upperModQuery.toUpperCase());
 
         if (modOpt.isEmpty()) {
-            System.out.println("Mod '" + inputCodeOrName + "' not found.");
-            logUtil.severe("Mod '" + inputCodeOrName + "' not found.");
+            System.out.println("Mod '" + modQuery + "' not found.");
+            logUtil.severe("Mod '" + modQuery + "' not found.");
             return;
         }
 
