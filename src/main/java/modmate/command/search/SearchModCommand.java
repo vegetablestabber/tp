@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import modmate.command.Command;
 import modmate.command.CommandUtil;
+import modmate.command.util.Argument;
 import modmate.command.util.Flag;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
@@ -21,12 +22,11 @@ import modmate.user.User;
 
 public class SearchModCommand extends Command {
 
-    private final String identifier;
-
     public static final String CLI_REPRESENTATION = "searchmod";
 
     private static final LogUtil logUtil = new LogUtil(SearchModCommand.class);
 
+    private final Argument<String> identifierArg;
     private final Flag<Faculty> facultyFlag;
     private final Flag<List<Semester>> semestersFlag;
     private final Flag<Double> unitsFlag;
@@ -35,20 +35,20 @@ public class SearchModCommand extends Command {
     public SearchModCommand(Input input) {
         super(input);
 
+        this.identifierArg = SearchFlagBuilder.createIdentifierArg(input.getArgument());
         this.facultyFlag = SearchFlagBuilder.createFacultyFlag(input.getFlag("faculty"));
         this.semestersFlag = SearchFlagBuilder.createSemestersFlag(input.getFlag("semesters"));
         this.unitsFlag = SearchFlagBuilder.createUnitsFlag(input.getFlag("units"));
         this.gradedFlag = SearchFlagBuilder.createGradedFlag(input.getFlag("graded"));
 
-        this.identifier = input.getArgument();
-
-        if (this.identifier.isEmpty() && !hasAtLeastOneFlag()) {
+        if (!hasAtLeastOneArg()) {
             throw new CommandException(this, "Search query cannot be empty or have no filter conditions");
         }
     }
 
-    private boolean hasAtLeastOneFlag() {
-        return facultyFlag.getValue().isPresent()
+    private boolean hasAtLeastOneArg() {
+        return identifierArg.getValue().isPresent()
+            || facultyFlag.getValue().isPresent()
             || semestersFlag.getValue().isPresent()
             || unitsFlag.getValue().isPresent()
             || gradedFlag.getValue().isPresent();
@@ -56,7 +56,7 @@ public class SearchModCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.buildSyntax(CLI_REPRESENTATION, "search query", List.of(facultyFlag, semestersFlag, unitsFlag, gradedFlag));
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION, List.of(identifierArg, facultyFlag, semestersFlag, unitsFlag, gradedFlag));
     }
 
     @Override
@@ -92,14 +92,14 @@ public class SearchModCommand extends Command {
     private List<CondensedMod> getSearchResultsWithProgress(String searchTerm, int totalModules) {
         logUtil.info("Internally invoking search for " + searchTerm + ".");
 
-        Stream<? extends CondensedMod> condensedModStream = NUSModsAPI.condensedMods
+        Stream<CondensedMod> condensedModStream = NUSModsAPI.condensedMods
                 .values()
                 .stream()
                 .parallel();
 
-        condensedModStream = SearchUtil.filterByIdentifier(condensedModStream, identifier);
+        condensedModStream = SearchUtil.filterByIdentifier(condensedModStream, identifierArg);
 
-        if (hasAtLeastOneFlag()) {
+        if (hasAtLeastOneArg()) {
             ModAttributes attributes = SearchUtil.createAttributes(facultyFlag, semestersFlag, unitsFlag, gradedFlag);
             condensedModStream = SearchUtil.filterByAttributes(condensedModStream, attributes);
         }

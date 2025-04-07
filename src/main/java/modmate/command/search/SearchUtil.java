@@ -1,5 +1,6 @@
 package modmate.command.search;
 
+import modmate.command.util.Argument;
 import modmate.command.util.Flag;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.mod.CondensedMod;
@@ -30,8 +31,8 @@ public class SearchUtil {
         );
     }
 
-    public static Stream<? extends CondensedMod> filterByAttributes(
-        Stream<? extends CondensedMod> modStream,
+    public static Stream<CondensedMod> filterByAttributes(
+        Stream<CondensedMod> modStream,
         ModAttributes searchAttrs
     ) {
         return modStream.filter(mod -> {
@@ -44,20 +45,19 @@ public class SearchUtil {
         });
     }
 
-    public static Stream<? extends CondensedMod> filterByIdentifier(
-        Stream<? extends CondensedMod> modStream,
-        String identifier
+    public static Stream<CondensedMod> filterByIdentifier(
+        Stream<CondensedMod> modStream,
+        Argument<String> identifierArg
     ) {
-        if (identifier.isEmpty()) {
-            return modStream;
-        }
-        String lowerCaseIdentifier = identifier.toLowerCase();
-        return modStream.filter(mod -> {
-            String lowerCaseModCode = mod.getCode().toLowerCase();
-            String lowerCaseModName = mod.getName().toLowerCase();
-            return lowerCaseModCode.contains(lowerCaseIdentifier)
-                || lowerCaseModName.contains(lowerCaseIdentifier);
-        });
+        return identifierArg.getValue().map(id -> {
+            String lowerCaseId = id.toLowerCase();
+            return modStream.filter(mod -> {
+                String lowerCaseModCode = mod.getCode().toLowerCase();
+                String lowerCaseModName = mod.getName().toLowerCase();
+                return lowerCaseModCode.contains(lowerCaseId)
+                    || lowerCaseModName.contains(lowerCaseId);
+            });
+        }).orElseGet(() -> modStream);
     }
 
     public static List<CondensedMod> collectWithProgress(

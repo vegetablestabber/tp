@@ -1,6 +1,8 @@
 package modmate.command;
 
-import modmate.command.util.Flag;
+import java.util.List;
+
+import modmate.command.util.Argument;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
@@ -9,24 +11,21 @@ import modmate.mod.Mod;
 import modmate.ui.Input;
 import modmate.user.User;
 
-import java.util.List;
-
 public class BookmarkCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "bookmark";
 
     private static final LogUtil logUtil = new LogUtil(BookmarkCommand.class);
 
-    private final Flag<String> modCodeOrNameFlag;
+    private final Argument<String> modIdentifierArg;
 
     public BookmarkCommand(Input input) {
         super(input);
-        this.modCodeOrNameFlag = new Flag<>(
+        this.modIdentifierArg = new Argument<>(
             "mod code or name",
             input.getArgument(),
             "The code or name of the mod to bookmark.",
-            true,
-            "value"
+            true
         );
 
         if (input.getArgument().isEmpty()) {
@@ -36,7 +35,7 @@ public class BookmarkCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.buildSyntax(CLI_REPRESENTATION, "", List.of(modCodeOrNameFlag));
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION, List.of(modIdentifierArg));
     }
 
     @Override
@@ -46,20 +45,27 @@ public class BookmarkCommand extends Command {
 
     @Override
     public String getUsage() {
-        return super.getUsage(List.of(modCodeOrNameFlag));
+        return super.getUsage(List.of(modIdentifierArg));
     }
 
     @Override
     public void execute(User currentUser) throws ApiException {
-        String identifier = input.getArgument();
         logUtil.info("Bookmarking mod.");
 
-        // Bookmark a mod for later reference
-        Mod mod = NUSModsAPI.modFromIdentifier(identifier);
-        currentUser.addBookmark(mod);
+        modIdentifierArg.getValue()
+            .ifPresent(identifier -> {
+                try {
+                    Mod mod = NUSModsAPI.modFromIdentifier(identifier);
 
-        logUtil.info("Mod '" + identifier + "' bookmarked.");
-        System.out.println("Bookmark " + identifier + " successfully added to your list.");
+                    // Bookmark a mod for later reference
+                    currentUser.addBookmark(mod);
+
+                    logUtil.info("Mod '" + identifier + "' bookmarked.");
+                    System.out.println("Bookmark " + identifier + " successfully added to your list.");
+                } catch (ApiException e) {
+                    System.out.println(e.getMessage());
+                }
+            });
     }
 
 }

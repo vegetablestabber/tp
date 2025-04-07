@@ -4,11 +4,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import modmate.command.util.Argument;
 import modmate.command.util.Flag;
 import modmate.mod.attribute.Faculty;
 import modmate.timetable.Semester;
 
 public class SearchFlagBuilder {
+
+    public static Argument<String> createIdentifierArg(String idInput) {
+        return new Argument<>(
+            "search query",
+            idInput,
+            "Mod code or name.",
+            true
+        );
+    }
 
     public static Flag<Faculty> createFacultyFlag(Optional<String> facultyInput) {
         return new Flag<>(

@@ -19,7 +19,7 @@ public class GetBookmarksCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.buildSyntax(CLI_REPRESENTATION, "", List.of());
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION);
     }
 
     @Override

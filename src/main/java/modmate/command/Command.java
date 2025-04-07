@@ -1,13 +1,14 @@
 package modmate.command;
 
-import modmate.command.util.Flag;
+import java.util.List;
+import java.util.StringJoiner;
+
+import modmate.command.util.Argument;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
 import modmate.exception.UserException;
 import modmate.ui.Input;
 import modmate.user.User;
-import java.util.List;
-import java.util.StringJoiner;
 
 public abstract class Command {
 
@@ -30,12 +31,12 @@ public abstract class Command {
         return getBasicUsage();
     };
 
-    protected String getUsage(List<Flag<?>> flags) {
+    protected String getUsage(List<Argument<?>> arguments) {
         StringJoiner sj = new StringJoiner("\n  ", "  ", "");
-        flags.forEach(flag ->
-            sj.add(Flag.FLAG_PREFIX + flag.getName() + ": " + flag.getDescription()));
+        arguments.forEach(arg ->
+            sj.add(arg.getName() + ": " + arg.getDescription()));
 
-        return getBasicUsage() + "\nParameters:\n" + sj.toString();
+        return getBasicUsage() + "\nArguments:\n" + sj.toString();
     }
 
     public abstract void execute(User user)

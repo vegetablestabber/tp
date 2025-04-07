@@ -21,7 +21,7 @@ public class ViewAllModsCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.buildSyntax(CLI_REPRESENTATION, "", List.of());
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION);
     }
 
     @Override

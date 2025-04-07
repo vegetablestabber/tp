@@ -3,33 +3,19 @@ package modmate.command;
 import java.util.List;
 import java.util.StringJoiner;
 
-import modmate.command.util.Flag;
+import modmate.command.util.Argument;
 
 public class CommandUtil {
 
-    public static String buildSyntax(String commandName, String argument, List<Flag<?>> flags) {
+    public static String buildSyntax(String commandName, List<Argument<?>> args) {
         StringJoiner sj = new StringJoiner(" ");
         sj.add(commandName);
-
-        if (!argument.isEmpty()) {
-            sj.add("<" + argument + ">");
-        }
-
-        for (Flag<?> flag : flags) {
-            String flagSyntax = Flag.FLAG_PREFIX + flag.getName() + (flag.isRequired()
-                ? " <" + flag.getExpectedValue() + ">"
-                : " [<" + flag.getExpectedValue() + ">]");
-            sj.add(flagSyntax);
-        }
+        args.forEach(arg -> sj.add(arg.toString()));
 
         return sj.toString();
     }
 
-    public static String buildSyntax(String commandName, String argument) {
-        return buildSyntax(commandName, argument, List.of());
-    }
-
     public static String buildSyntax(String commandName) {
-        return buildSyntax(commandName, "");
+        return buildSyntax(commandName, List.of());
     }
 }
