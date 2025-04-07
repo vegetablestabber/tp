@@ -17,9 +17,9 @@ public class CreateTimetableCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.concatenate(
+        return CommandUtil.buildSyntax(
             CLI_REPRESENTATION,
-            "<timetable>"
+            "timetable"
         );
     }
 

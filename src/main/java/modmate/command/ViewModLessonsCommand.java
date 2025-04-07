@@ -1,12 +1,12 @@
 package modmate.command;
 
-import modmate.CommandCenter;
 import modmate.log.LogUtil;
 import modmate.timetable.Lesson;
 import modmate.user.ScheduleMod;
 import modmate.user.User;
 
 import java.util.List;
+import java.util.Map;
 
 public class ViewModLessonsCommand extends Command {
 
@@ -26,7 +26,10 @@ public class ViewModLessonsCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CLI_REPRESENTATION + " <mod code or name>";
+        return CommandUtil.buildSyntax(
+            CLI_REPRESENTATION,
+            "mod code or name"
+        );
     }
 
     @Override

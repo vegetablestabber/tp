@@ -1,5 +1,11 @@
 package modmate.command;
 
+import java.util.List;
+import java.util.Optional;
+
+import modmate.command.search.SearchModCommand;
+import modmate.command.util.Argument;
+import modmate.exception.CommandException;
 import modmate.log.LogUtil;
 import modmate.ui.Input;
 import modmate.user.User;
@@ -28,13 +34,21 @@ public class HelpCommand extends Command {
             viewallmods: View all available mods
             """;
 
+    private final Argument<String> commandToHelpArg;
+
     public HelpCommand(Input input) {
         super(input);
+        this.commandToHelpArg = new Argument<>(
+            "command",
+            input.getArgument().trim(),
+            "The command to receive help for.",
+            false
+        );
     }
 
     @Override
     public String getSyntax() {
-        return CLI_REPRESENTATION;
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION, List.of(commandToHelpArg));
     }
 
     @Override
@@ -44,12 +58,45 @@ public class HelpCommand extends Command {
 
     @Override
     public String getUsage() {
-        return super.getUsage() + "  (No parameters required for this command.)";
+        return super.getUsage(List.of(commandToHelpArg));
     }
 
     @Override
-    public void execute(User currentUser) {
-        logutil.info("Printing help message.");
-        System.out.println(helpMessage);
+    public void execute(User currentUser) throws CommandException {
+        logutil.info("Executing help command.");
+
+        commandToHelpArg.getValue()
+            .filter(str -> !str.isEmpty())
+            .ifPresentOrElse(
+                commandStr -> findCommand(commandStr)
+                    .map(command -> {
+                        System.out.println(command.getUsage());
+                        return command;
+                    })
+                    .orElseThrow(() -> {
+                        String message = "Invalid command '" + commandStr + "'";
+                        logutil.severe(message);
+                        return new CommandException(this, message);
+                    }),
+                () -> System.out.println(helpMessage)
+            );
     }
+
+    private Optional<Command> findCommand(String commandStr) {
+        Command command;
+
+        switch (commandStr) {
+        case HelpCommand.CLI_REPRESENTATION -> command = new HelpCommand(input);
+        case ExitCommand.CLI_REPRESENTATION -> command = new ExitCommand(input);
+        case BookmarkCommand.CLI_REPRESENTATION -> command = new BookmarkCommand(input);
+        case GetBookmarksCommand.CLI_REPRESENTATION -> command = new GetBookmarksCommand(input);
+        case SearchModCommand.CLI_REPRESENTATION -> command = new SearchModCommand(input);
+        case ViewModCommand.CLI_REPRESENTATION -> command = new ViewModCommand(input);
+        case ViewAllModsCommand.CLI_REPRESENTATION -> command = new ViewAllModsCommand(input);
+        default -> command = null;
+        }
+
+        return Optional.ofNullable(command);
+    }
+
 }

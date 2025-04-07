@@ -6,13 +6,13 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import modmate.command.util.Flag;
+
 public class InputParser {
 
-    public static final String FLAG_PREFIX = "--";
-
     private static final String REGEX = "^(?<command>\\S+)(?:\\s+(?<argument>(?:(?!"
-        + FLAG_PREFIX + ")\\S+(?:\\s+(?!" + FLAG_PREFIX + ")\\S+)*)))?(?<flags>(?:\\s+"
-        + FLAG_PREFIX + "\\S+(?:\\s+\\S+)*)*)$";
+        + Flag.FLAG_PREFIX + ")\\S+(?:\\s+(?!" + Flag.FLAG_PREFIX
+        + ")\\S+)*)))?(?<flags>(?:\\s+" + Flag.FLAG_PREFIX + "\\S+(?:\\s+\\S+)*)*)$";
 
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
@@ -51,13 +51,13 @@ public class InputParser {
         int endIndex = 0;
 
         while (endIndex < flagsSubstring.length()) {
-            int flagStart = flagsSubstring.indexOf(FLAG_PREFIX, endIndex);
+            int flagStart = flagsSubstring.indexOf(Flag.FLAG_PREFIX, endIndex);
             if (flagStart == -1) {
                 break;
             }
 
-            flagStart += FLAG_PREFIX.length();
-            int nextFlagStart = flagsSubstring.indexOf(FLAG_PREFIX, flagStart);
+            flagStart += Flag.FLAG_PREFIX.length();
+            int nextFlagStart = flagsSubstring.indexOf(Flag.FLAG_PREFIX, flagStart);
 
             String flagPair = (nextFlagStart == -1
                 ? flagsSubstring.substring(flagStart)

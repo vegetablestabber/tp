@@ -22,56 +22,53 @@ public class ModAttributes {
     /**
      * Constructs a ModAttributes object with the given attributes.
      *
-     * @param facultyStrOpt  The faculty offering the mod.
+     * @param facultyOpt  The faculty offering the mod.
      * @param semesters   A list indicating the semesters in which the mod is
      *                    available.
-     * @param unitsStrOpt    The number of units the mod is worth.
-     * @param isGradedStrOpt Whether the mod is graded or pass/fail.
+     * @param unitsOpt    The number of units the mod is worth.
+     * @param isGradedOpt Whether the mod is graded or pass/fail.
      * @param workloadOpt The expected weekly workload for the mod.
      */
-    public ModAttributes(Optional<String> facultyStrOpt, List<Semester> semesters,
-            Optional<String> unitsStrOpt, Optional<String> isGradedStrOpt, Optional<String> workloadOpt) {
-        this.facultyOpt = facultyStrOpt.map(str -> new Faculty(str));
-
+    public ModAttributes(Optional<Faculty> facultyOpt, List<Semester> semesters,
+            Optional<Double> unitsOpt, Optional<Boolean> isGradedOpt, Optional<String> workloadOpt) {
+        this.facultyOpt = facultyOpt;
         this.availableSemesters = semesters;
-
-        this.unitsOpt = unitsStrOpt.flatMap(str -> {
-            try {
-                return Optional.of(Double.valueOf(str));
-            } catch (NumberFormatException e) {
-                return Optional.empty();
-            }
-        });
-
-        this.isGradedOpt = isGradedStrOpt.flatMap(str -> {
-            if (str.equalsIgnoreCase("true") || str.equalsIgnoreCase("false")) {
-                return Optional.of(Boolean.valueOf(str));
-            }
-
-            return Optional.empty();
-        });
-
         this.workloadOpt = workloadOpt;
+        this.unitsOpt = unitsOpt;
+        this.isGradedOpt = isGradedOpt;
     }
 
-    public ModAttributes(String facultyStr, List<Semester> semesters,
-            String unitsStr, String isGradedStr, Optional<String> workload) {
-        this(Optional.of(facultyStr), semesters,
-            Optional.of(unitsStr), Optional.of(isGradedStr), workload);
+    public ModAttributes(Faculty faculty, List<Semester> semesters,
+            double units, boolean isGraded, Optional<String> workload) {
+        this(Optional.of(faculty), semesters, Optional.of(units), Optional.of(isGraded), workload);
     }
 
     @Override
     public String toString() {
-        return "Faculty: " + getUserFriendlyInfo(getFacultyOpt())
+        return "Faculty: " + getUserFriendlyInfo(facultyOpt)
                 + "\nAvailability: " + listAvailableSemesters()
-                + "\nUnits: " + getUserFriendlyInfo(getUnitsOpt())
-                + "\nGraded: " + getUserFriendlyInfo(isGraded())
-                + "\nWorkload: " + getUserFriendlyInfo(getWorkloadOpt());
+                + "\nUnits: " + getUserFriendlyInfo(unitsOpt)
+                + "\nGraded: " + getUserFriendlyInfo(isGradedOpt)
+                + "\nWorkload: " + getUserFriendlyInfo(workloadOpt);
     }
 
     private String getUserFriendlyInfo(Optional<?> opt) {
         return opt.map(value -> value.toString())
                 .orElse("No information provided");
+    }
+
+    /**
+     * Gets a comma-separated string of the semesters in which the mod is available.
+     *
+     * @return A string listing the available semesters.
+     */
+    public String listAvailableSemesters() {
+        assert (availableSemesters != null && !availableSemesters.isEmpty());
+
+        StringJoiner sj = new StringJoiner(", ");
+        availableSemesters.forEach(semester -> sj.add(semester.toString()));
+
+        return sj.toString();
     }
 
     /**
@@ -96,19 +93,19 @@ public class ModAttributes {
         if (obj instanceof ModAttributes other) {
             List<Boolean> conditions = new ArrayList<>();
 
-            this.doesFacultyMatch(other.facultyOpt)
-                .ifPresent(result -> conditions.add(result));
+            doOptionalsMatch(this.facultyOpt, other.facultyOpt)
+                    .ifPresent(result -> conditions.add(result));
 
             conditions.add(this.doSemestersMatch(other.availableSemesters));
 
-            this.doUnitsMatch(other.unitsOpt)
-                .ifPresent(result -> conditions.add(result));
+            doOptionalsMatch(this.unitsOpt, other.unitsOpt)
+                    .ifPresent(result -> conditions.add(result));
 
-            this.doesGradabilityMatch(other.isGradedOpt)
-                .ifPresent(result -> conditions.add(result));
+            doOptionalsMatch(this.isGradedOpt, other.isGradedOpt)
+                    .ifPresent(result -> conditions.add(result));
 
             boolean result = conditions.stream()
-                .allMatch(condition -> condition);
+                    .allMatch(condition -> condition);
 
             return result;
         }
@@ -125,24 +122,6 @@ public class ModAttributes {
         return facultyOpt;
     }
 
-    public List<Semester> getSemesters() {
-        return availableSemesters;
-    }
-
-    /**
-     * Gets a comma-separated string of the semesters in which the mod is available.
-     *
-     * @return A string listing the available semesters.
-     */
-    public String listAvailableSemesters() {
-        assert (availableSemesters != null && !availableSemesters.isEmpty());
-
-        StringJoiner sj = new StringJoiner(", ");
-        availableSemesters.forEach(semester -> sj.add(semester.toString()));
-
-        return sj.toString();
-    }
-
     /**
      * Gets the number of units the mod is worth.
      *
@@ -152,51 +131,13 @@ public class ModAttributes {
         return unitsOpt;
     }
 
-    /**
-     * Checks if the mod is graded.
-     *
-     * @return true if the mod is graded, false otherwise.
-     */
-    public Optional<Boolean> isGraded() {
-        return isGradedOpt;
-    }
-
-    /**
-     * Gets the expected weekly workload for the mod.
-     *
-     * @return The WeeklyWorkload object representing the workload.
-     */
-    public Optional<String> getWorkloadOpt() {
-        return workloadOpt;
-    }
-
-    private Optional<Boolean> doesFacultyMatch(Faculty otherFaculty) {
-        return facultyOpt.map(faculty -> faculty.equals(otherFaculty));
-    }
-
-    private Optional<Boolean> doesFacultyMatch(Optional<Faculty> otherFacultyOpt) {
-        return otherFacultyOpt.flatMap(otherFaculty -> doesFacultyMatch(otherFaculty));
+    private static <T> Optional<Boolean> doOptionalsMatch(Optional<T> firstOpt, Optional<T> secondOpt) {
+        return firstOpt.flatMap(firstValue -> secondOpt.map(secondValue -> firstValue.equals(secondValue)));
     }
 
     private boolean doSemestersMatch(List<Semester> otherSemesters) {
         return availableSemesters.containsAll(otherSemesters)
                 || otherSemesters.containsAll(availableSemesters);
-    }
-
-    private Optional<Boolean> doUnitsMatch(double otherUnits) {
-        return unitsOpt.map(units -> units.equals(otherUnits));
-    }
-
-    private Optional<Boolean> doUnitsMatch(Optional<Double> otherUnitsOpt) {
-        return otherUnitsOpt.flatMap(otherUnits -> doUnitsMatch(otherUnits));
-    }
-
-    private Optional<Boolean> doesGradabilityMatch(boolean otherIsGraded) {
-        return isGradedOpt.map(isGraded -> isGraded == otherIsGraded);
-    }
-
-    private Optional<Boolean> doesGradabilityMatch(Optional<Boolean> otherIsGradedOpt) {
-        return otherIsGradedOpt.flatMap(otherIsGraded -> doesGradabilityMatch(otherIsGraded));
     }
 
 }

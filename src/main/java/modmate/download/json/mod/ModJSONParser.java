@@ -53,11 +53,7 @@ public class ModJSONParser extends JSONParser<ModJSONKey> {
         String name = this.getString(ModJSONKey.NAME);
         String code = this.getString(ModJSONKey.CODE);
         String description = this.getString(ModJSONKey.DESCRIPTION);
-
         ModAttributes attributes = modAttrJSONParser.getAttributes();
-        if (!attributes.getWorkloadOpt().isPresent()) {
-            logUtil.warning("Mod " + code + "doesn't have workload.");
-        }
 
         return new Mod(name, code, description, attributes, timetables);
     }
