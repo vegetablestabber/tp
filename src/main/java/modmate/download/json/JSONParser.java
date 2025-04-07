@@ -38,7 +38,7 @@ public class JSONParser<K extends JSONKey> {
         return Optional.ofNullable(this.jsonObject.optJSONObject(key.toString()));
     }
 
-    public JSONArray getJSONArray(JSONKey key) throws JSONException {
+    public JSONArray getJSONArray(K key) throws JSONException {
         return this.jsonObject.getJSONArray(key.toString());
     }
 

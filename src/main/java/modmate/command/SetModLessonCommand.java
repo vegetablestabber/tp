@@ -4,11 +4,29 @@ import modmate.CommandCenter;
 import modmate.log.LogUtil;
 import modmate.user.User;
 
-public class SetModLessonCommand implements Command {
+public class SetModLessonCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "setlesson";
 
     private static final LogUtil logUtil = new LogUtil(ViewAllModsCommand.class);
+
+    @Override
+    public String getDescription() {
+        return "Set lesson for each mod, by type.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage() + "  <timetable>: The name of the timetable.\n"
+             + "  <mod code or name>: The code or name of the mod.\n"
+             + "  <lesson type>: The type of lesson (e.g., Lecture, Tutorial).\n"
+             + "  <lesson id>: The ID of the lesson to set.";
+    }
+
+    @Override
+    public String getSyntax() {
+        return CLI_REPRESENTATION + " <timetable> <mod code or name> <lesson type> <lesson id>";
+    }
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -46,4 +64,5 @@ public class SetModLessonCommand implements Command {
             logUtil.severe("Mod '" + inputCodeOrName + "' not found.");
         });
     }
+
 }

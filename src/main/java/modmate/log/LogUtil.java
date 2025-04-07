@@ -19,18 +19,19 @@ public class LogUtil {
     private static FileHandler sharedFileHandler; // Shared FileHandler for all LogUtil instances
     private final Logger logger;
 
-    static {
-        try {
-            // Ensure the directory structure exists
-            Path logFilePath = Paths.get(LOG_FILE);
-            Files.createDirectories(logFilePath.getParent());
+    private static synchronized FileHandler getSharedFileHandler() {
+        if (sharedFileHandler == null) {
+            try {
+                Path logFilePath = Paths.get(LOG_FILE);
+                Files.createDirectories(logFilePath.getParent());
 
-            // Initialize the shared FileHandler
-            sharedFileHandler = new FileHandler(LOG_FILE, true); // Append to the log file
-            sharedFileHandler.setFormatter(new SimpleFormatter()); // Use a simple text format
-        } catch (IOException e) {
-            System.err.println("Failed to initialize shared FileHandler for logging: " + e.getMessage());
+                sharedFileHandler = new FileHandler(LOG_FILE, true);
+                sharedFileHandler.setFormatter(new SimpleFormatter());
+            } catch (IOException e) {
+                System.err.println("Failed to initialize shared FileHandler for logging: " + e.getMessage());
+            }
         }
+        return sharedFileHandler;
     }
 
     /**
@@ -41,8 +42,9 @@ public class LogUtil {
     public LogUtil(Class<?> clazz) {
         this.logger = Logger.getLogger(clazz.getCanonicalName());
 
-        if (sharedFileHandler != null) {
-            this.logger.addHandler(sharedFileHandler); // Attach the shared FileHandler
+        FileHandler handler = getSharedFileHandler();
+        if (handler != null) {
+            this.logger.addHandler(handler);
         }
 
         this.logger.setUseParentHandlers(false); // Disable console logging by default

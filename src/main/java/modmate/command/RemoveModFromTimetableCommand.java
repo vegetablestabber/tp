@@ -1,14 +1,31 @@
 package modmate.command;
 
-import modmate.log.LogUtil;
 import modmate.CommandCenter;
+import modmate.log.LogUtil;
 import modmate.user.User;
 
-public class RemoveModFromTimetableCommand implements Command {
+public class RemoveModFromTimetableCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "removemod";
 
     private static final LogUtil logUtil = new LogUtil(RemoveModFromTimetableCommand.class);
+
+    @Override
+    public String getDescription() {
+        return "Remove a mod from your list.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage()
+            + "  <timetable name>: The name of the timetable.\n"
+            + "  <mod code or name>: The code or name of the mod to remove.";
+    }
+
+    @Override
+    public String getSyntax() {
+        return CLI_REPRESENTATION + " <timetable name> <mod code or name>";
+    }
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -46,4 +63,5 @@ public class RemoveModFromTimetableCommand implements Command {
                 logUtil.severe("Mod '" + inputCodeOrName + "' not found.");
             });
     }
+
 }

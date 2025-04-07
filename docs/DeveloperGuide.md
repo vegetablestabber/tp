@@ -8,6 +8,8 @@ nav_enabled: true
 # Developer Guide
 {: .no_toc }
 
+{% include intro.md %}
+
 ## Table of Contents
 {: .no_toc .text-delta }
 
@@ -299,11 +301,17 @@ The `searchmod` feature provides a straightforward way for users to search for m
 
 | Priority | As a …​          | I want to …​                     | So that I can …​                          |
 | -------- | ---------------- | -------------------------------- | ----------------------------------------- |
-| `* * *`  | new user         | see usage instructions           | refer to them when I forget how to use the application |
-| `* * *`  | student          | search for a module by name or code | quickly find information about a specific module |
-| `* *`    | student          | add a module to my timetable     | keep track of my academic schedule        |
-| `* *`    | student          | view all modules in my timetable | get an overview of my academic workload   |
+| `* * * *`  | new user         | see usage instructions           | refer to them when I forget how to use the application |
+| `* * * *`  | student          | search for a module by name or code | quickly find information about a specific module |
+| `* * *`  | student          | view course details              | understand the specifics of a module      |
+| `* * *`    | student          | create a timetable               | organize my academic schedule             |
+| `* * *`    | student          | add a module to my timetable     | keep track of my academic schedule        |
+| `* * *`    | student          | remove a module from my timetable | adjust my schedule as needed              |
+| `* * *`    | student          | view all modules in my timetable | get an overview of my academic workload   |
+| `* *`    | advanced user          | bookmark a course                | easily access my favorite or important modules |
+| `* *`    | advanced user          | get bookmarked courses           | quickly view my saved modules             |
 | `*`      | advanced user    | export my timetable to a file    | share it with others or back it up        |
+
 
 ## Non-Functional Requirements
 

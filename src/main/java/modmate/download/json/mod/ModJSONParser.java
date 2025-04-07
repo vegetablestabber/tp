@@ -55,7 +55,7 @@ public class ModJSONParser extends JSONParser<ModJSONKey> {
         String description = this.getString(ModJSONKey.DESCRIPTION);
 
         ModAttributes attributes = modAttrJSONParser.getAttributes();
-        if (!attributes.getWorkload().isPresent()) {
+        if (!attributes.getWorkloadOpt().isPresent()) {
             logUtil.warning("Mod " + code + "doesn't have workload.");
         }
 

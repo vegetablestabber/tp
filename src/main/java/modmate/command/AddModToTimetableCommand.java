@@ -4,11 +4,28 @@ import modmate.log.LogUtil;
 import modmate.CommandCenter;
 import modmate.user.User;
 
-public class AddModToTimetableCommand implements Command {
+public class AddModToTimetableCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "addmod";
 
     private static final LogUtil logUtil = new LogUtil(AddBreakToTimetableCommand.class);
+
+    @Override
+    public String getSyntax() {
+        return CLI_REPRESENTATION + " <timetable name> <mod code or name>";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Add a mod to your list.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage()
+            + "  <timetable name>: The name of the timetable.\n"
+            + "  <mod code or name>: The code or name of the mod to add.";
+    }
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -45,4 +62,5 @@ public class AddModToTimetableCommand implements Command {
             logUtil.info("Mod '" + inputCodeOrName + "' not found.");
         });
     }
+
 }

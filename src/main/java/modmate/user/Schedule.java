@@ -25,7 +25,7 @@ public class Schedule {
 
     public void addMod(Mod modToAdd) {
         for (ScheduleMod existingMod : mods) {
-            if (existingMod.getMod().getName().equals(modToAdd.getName())) {
+            if (existingMod.getMod().equals(modToAdd)) {
                 System.out.println("Mod " + modToAdd.getCode() + " is already in the timetable.");
                 return;
             }
@@ -45,6 +45,7 @@ public class Schedule {
 
         if (scheduleMod == null) {
             System.out.println("Mod " + modToSet.getCode() + " is not in the timetable.");
+            return;
         }
 
         scheduleMod.setLesson(type, id);

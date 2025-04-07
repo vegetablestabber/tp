@@ -47,17 +47,6 @@ public class Mod extends CondensedMod {
     }
 
     /**
-     * Returns a string representation of the mod.
-     *
-     * @return A string representation of the mod.
-     */
-    @Override
-    public String toString() {
-        return code + ": " + name + "\n    " + description + "\n    " +
-                (attributes != null ? attributes.getFaculty() : "No Faculty Information");
-    }
-
-    /**
      * Returns a detailed string representation of the mod.
      *
      * @return A detailed string representation of the mod.
@@ -66,14 +55,7 @@ public class Mod extends CondensedMod {
         return "Code: " + code +
                 "\nName: " + name +
                 "\nDescription: " + description +
-                "\nFaculty: " + attributes.getFaculty() +
-                "\nAvailability: " + attributes.listAvailableSemesters() +
-                "\nUnits: " + attributes.getUnits() +
-                "\nGraded: " + attributes.isGraded() +
-                "\nPrerequisites: " + attributes.getPrerequisites() +
-                "\nWorkload: " + attributes.getWorkload()
-                    .map(opt -> opt.toString())
-                    .orElse("No workload information");
+                "\n" + attributes.toString();
     }
 
     /**
@@ -103,4 +85,13 @@ public class Mod extends CondensedMod {
         return attributes;
     }
 
+    /**
+     * Returns equality of mod with another object. Mod equality
+     * is determined by whether the mods have the same code or not
+     * @param o object to test
+     * @return if the mod is the same (That is, occupies the same code)
+     */
+    public boolean equals(Object o) {
+        return o instanceof Mod && ((Mod) o).getCode().equals(code);
+    }
 }

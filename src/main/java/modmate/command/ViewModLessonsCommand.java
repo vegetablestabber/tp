@@ -8,10 +8,26 @@ import modmate.user.User;
 
 import java.util.List;
 
-public class ViewModLessonsCommand implements Command {
+public class ViewModLessonsCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "viewlessons";
     private static final LogUtil logUtil = new LogUtil(ViewAllModsCommand.class);
+
+    @Override
+    public String getDescription() {
+        return "View available lessons for each mod, sorted by type.";
+    }
+
+    @Override
+    public String getUsage() {
+        return super.getUsage()
+            + "  <mod code or name>: The code or name of the mod to view lessons for.";
+    }
+
+    @Override
+    public String getSyntax() {
+        return CLI_REPRESENTATION + " <mod code or name>";
+    }
 
     @Override
     public void execute(String[] args, User currentUser) {
@@ -43,4 +59,5 @@ public class ViewModLessonsCommand implements Command {
             logUtil.severe("Mod '" + inputCodeOrName + "' not found.");
         });
     }
+
 }
