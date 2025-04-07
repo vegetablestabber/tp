@@ -20,10 +20,10 @@ public abstract class Command {
 
     public String getUsage() {
         return "Usage: " + this.getSyntax() + "\n\n"
-            + this.getDescription() + "\nParameters:\n";
+                + this.getDescription() + "\nParameters:\n";
     }
 
     public abstract void execute(User user)
-        throws CommandException, UserException, ApiException;
+            throws CommandException, UserException, ApiException;
 
 }

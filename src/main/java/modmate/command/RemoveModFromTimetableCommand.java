@@ -1,7 +1,6 @@
 package modmate.command;
 
 import java.util.Optional;
-import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
 import modmate.exception.UserException;
@@ -61,15 +60,7 @@ public class RemoveModFromTimetableCommand extends Command {
 
         logUtil.info("Removing mod from timetable: " + timetable);
 
-        Optional<Mod> modOpt = NUSModsAPI.fetchModuleByCode(inputCodeOrName);
-
-        if (modOpt.isEmpty()) {
-            modOpt = NUSModsAPI.condensedMods.values().stream()
-                    .filter(cm -> cm.getCode().equalsIgnoreCase(inputCodeOrName)
-                            || cm.getName().equalsIgnoreCase(inputCodeOrName))
-                    .findFirst()
-                    .flatMap(cm -> NUSModsAPI.fetchModuleByCode(cm.getCode()));
-        }
+        Optional<Mod> modOpt = CommandUtil.modFromCodeOrName(inputCodeOrName);
 
         if (modOpt.isEmpty()) {
             System.out.println("Mod '" + inputCodeOrName + "' not found.");
@@ -78,8 +69,9 @@ public class RemoveModFromTimetableCommand extends Command {
         }
 
         Mod mod = modOpt.get();
-        currentUser.removeModFromTimetable(timetable, mod);
-        System.out.println("Removed mod " + mod.getCode() + " from timetable \"" + timetable + "\".");
-        logUtil.info("Mod " + mod.getCode() + " removed from timetable " + timetable);
+        boolean removed = currentUser.removeModFromTimetable(timetable, mod);
+        if (removed) {
+            logUtil.info("Mod " + mod.getCode() + " removed from timetable " + timetable);
+        }
     }
 }

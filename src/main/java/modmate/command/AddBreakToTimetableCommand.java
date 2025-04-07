@@ -1,10 +1,13 @@
 package modmate.command;
 
+import modmate.exception.ApiException;
+import modmate.exception.UserException;
+import modmate.exception.CommandException;
 import modmate.timetable.BreakPeriod;
 import modmate.timetable.Period;
 import modmate.user.User;
 import modmate.ui.Input;
-import modmate.exception.CommandException;
+
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -38,7 +41,8 @@ public class AddBreakToTimetableCommand extends Command {
     }
 
     @Override
-    public void execute(User currentUser) throws CommandException {
+    public void execute(User currentUser)
+            throws CommandException, UserException, ApiException {
         String[] args = input.getArgument().split(" ", 5);
         if (args.length < 5) {
             System.out.println("Usage: " + getSyntax());

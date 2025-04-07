@@ -20,6 +20,6 @@ public class BreakPeriod {
     @Override
     public String toString() {
         return "[" + label + "] " + period.getDay() + ": " +
-                period.getStartTime() + "–" + period.getEndTime();
+                period.getStartTime() + "-" + period.getEndTime();
     }
 }

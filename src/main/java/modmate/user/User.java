@@ -70,14 +70,14 @@ public class User {
         return false;
     }
 
-    public void removeModFromTimetable(String timetableName, Mod mod) {
+    public boolean removeModFromTimetable(String timetableName, Mod mod) {
         for (Schedule timetable : timetables) {
             if (timetable.getName().equalsIgnoreCase(timetableName)) {
-                timetable.removeMod(mod);
-                return;
+                return timetable.removeMod(mod);
             }
         }
         System.out.println("Timetable '" + timetableName + "' not found.");
+        return false;
     }
 
     public boolean addBreakToTimetable(String timetableName, BreakPeriod breakPeriod) {

@@ -1,7 +1,6 @@
 package modmate.command;
 
 import java.util.Optional;
-import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
 import modmate.exception.UserException;
@@ -54,16 +53,7 @@ public class AddModToTimetableCommand extends Command {
             return;
         }
 
-        Optional<Mod> modOpt = NUSModsAPI.fetchModuleByCode(modQuery);
-
-        // If not found, try fuzzy match on code or name
-        if (modOpt.isEmpty()) {
-            modOpt = NUSModsAPI.condensedMods.values().stream()
-                    .filter(cm -> cm.getCode().equalsIgnoreCase(modQuery)
-                            || cm.getName().equalsIgnoreCase(modQuery))
-                    .findFirst()
-                    .flatMap(cm -> NUSModsAPI.fetchModuleByCode(cm.getCode()));
-        }
+        Optional<Mod> modOpt = CommandUtil.modFromCodeOrName(modQuery);
 
         if (modOpt.isEmpty()) {
             System.out.println("Mod \"" + modQuery + "\" not found.");
@@ -73,7 +63,6 @@ public class AddModToTimetableCommand extends Command {
 
         Mod mod = modOpt.get();
         currentUser.addModToTimetable(timetableName, mod);
-        System.out.println("Added mod " + mod.getCode() + " to timetable \"" + timetableName + "\".");
         logUtil.info("Mod " + mod.getCode() + " added to timetable " + timetableName);
     }
 }
