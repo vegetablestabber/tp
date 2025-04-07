@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public class Argument<T> {
 
-    private final String name;
+    protected final String name;
     private Optional<T> value;
     private final String description;
     private final boolean isRequired;

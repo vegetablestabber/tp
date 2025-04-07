@@ -1,5 +1,6 @@
 package modmate.command;
 
+import java.util.List;
 import java.util.Optional;
 
 import modmate.command.search.SearchModCommand;
@@ -47,7 +48,7 @@ public class HelpCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.buildSyntax(CLI_REPRESENTATION);
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION, List.of(commandToHelpArg));
     }
 
     @Override
@@ -56,29 +57,36 @@ public class HelpCommand extends Command {
     }
 
     @Override
+    public String getUsage() {
+        return super.getUsage(List.of(commandToHelpArg));
+    }
+
+    @Override
     public void execute(User currentUser) throws CommandException {
         logutil.info("Executing help command.");
 
-        commandToHelpArg.getValue().ifPresentOrElse(
-            commandStr -> findCommand(commandStr)
-                .map(command -> {
-                    System.out.println(command.getUsage());
-                    return command;
-                })
-                .orElseThrow(() -> {
-                    String message = "Invalid command: " + commandStr;
-                    logutil.severe(message);
-                    return new CommandException(this, message);
-                }),
-            () -> System.out.println(helpMessage)
-        );
+        commandToHelpArg.getValue()
+            .filter(str -> !str.isEmpty())
+            .ifPresentOrElse(
+                commandStr -> findCommand(commandStr)
+                    .map(command -> {
+                        System.out.println(command.getUsage());
+                        return command;
+                    })
+                    .orElseThrow(() -> {
+                        String message = "Invalid command '" + commandStr + "'";
+                        logutil.severe(message);
+                        return new CommandException(this, message);
+                    }),
+                () -> System.out.println(helpMessage)
+            );
     }
 
     private Optional<Command> findCommand(String commandStr) {
         Command command;
 
         switch (commandStr) {
-        case CLI_REPRESENTATION -> command = new HelpCommand(input);
+        case HelpCommand.CLI_REPRESENTATION -> command = new HelpCommand(input);
         case ExitCommand.CLI_REPRESENTATION -> command = new ExitCommand(input);
         case BookmarkCommand.CLI_REPRESENTATION -> command = new BookmarkCommand(input);
         case GetBookmarksCommand.CLI_REPRESENTATION -> command = new GetBookmarksCommand(input);

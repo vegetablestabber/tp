@@ -19,7 +19,12 @@ public class Flag<T> extends Argument<T> {
 
     @Override
     public String toString() {
-        return getName() + " " + expectedValue;
+        return getName() + " <" + expectedValue + ">";
+    }
+
+    @Override
+    public String getName() {
+        return FLAG_PREFIX + name;
     }
 
 }

@@ -66,7 +66,7 @@ public class SearchModCommand extends Command {
 
     @Override
     public String getUsage() {
-        return super.getUsage(List.of(facultyFlag, semestersFlag, unitsFlag, gradedFlag));
+        return super.getUsage(List.of(identifierArg, facultyFlag, semestersFlag, unitsFlag, gradedFlag));
     }
 
     @Override
