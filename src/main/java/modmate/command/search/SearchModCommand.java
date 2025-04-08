@@ -41,17 +41,24 @@ public class SearchModCommand extends Command {
         this.unitsFlag = SearchFlagBuilder.createUnitsFlag(input.getFlag("units"));
         this.gradedFlag = SearchFlagBuilder.createGradedFlag(input.getFlag("graded"));
 
-        if (!hasAtLeastOneArg()) {
+        if (areAllArgsEmpty()) {
             throw new CommandException(this, "Search query cannot be empty or have no filter conditions");
         }
     }
 
-    private boolean hasAtLeastOneArg() {
-        return identifierArg.getValue().isPresent()
-            || facultyFlag.getValue().isPresent()
-            || semestersFlag.getValue().isPresent()
-            || unitsFlag.getValue().isPresent()
-            || gradedFlag.getValue().isPresent();
+    private boolean areAllArgsEmpty() {
+        boolean isArgEmpty = identifierArg.getValue()
+            .map(id -> id.isEmpty())
+            .orElse(true);
+
+        return isArgEmpty && hasNoFlag();
+    }
+
+    private boolean hasNoFlag() {
+        return facultyFlag.getValue().isEmpty()
+            && semestersFlag.getValue().isEmpty()
+            && unitsFlag.getValue().isEmpty()
+            && gradedFlag.getValue().isEmpty();
     }
 
     @Override
@@ -106,7 +113,7 @@ public class SearchModCommand extends Command {
 
         condensedModStream = SearchUtil.filterByIdentifier(condensedModStream, identifierArg);
 
-        if (hasAtLeastOneArg()) {
+        if (!hasNoFlag()) {
             ModAttributes attributes = SearchUtil.createAttributes(facultyFlag, semestersFlag, unitsFlag, gradedFlag);
             condensedModStream = SearchUtil.filterByAttributes(condensedModStream, attributes);
         }
