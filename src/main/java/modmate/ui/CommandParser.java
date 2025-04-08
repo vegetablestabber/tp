@@ -2,13 +2,16 @@ package modmate.ui;
 
 import modmate.command.BookmarkCommand;
 import modmate.command.Command;
+import modmate.command.CreateTimetableCommand;
 import modmate.command.ExitCommand;
 import modmate.command.GetBookmarksCommand;
 import modmate.command.HelpCommand;
 import modmate.command.RemoveBookmarkCommand;
-import modmate.command.SearchModCommand;
+import modmate.command.SetModLessonCommand;
 import modmate.command.ViewAllModsCommand;
 import modmate.command.ViewModCommand;
+import modmate.command.ViewModLessonsCommand;
+import modmate.command.ViewTimetableCommand;
 import modmate.command.search.SearchModCommand;
 import modmate.exception.CommandException;
 import modmate.command.AddModToTimetableCommand;
@@ -29,7 +32,7 @@ public class CommandParser {
         case GetBookmarksCommand.CLI_REPRESENTATION -> command = new GetBookmarksCommand(input);
         case SearchModCommand.CLI_REPRESENTATION -> command = new SearchModCommand(input);
         case ViewModCommand.CLI_REPRESENTATION -> command = new ViewModCommand(input);
-        case RemoveBookmarkCommand.CLI_REPRESENTATION -> command = new RemoveBookmarkCommand();
+        case RemoveBookmarkCommand.CLI_REPRESENTATION -> command = new RemoveBookmarkCommand(input);
         case SetModLessonCommand.CLI_REPRESENTATION -> command = new SetModLessonCommand(input);
         case ViewModLessonsCommand.CLI_REPRESENTATION -> command = new ViewModLessonsCommand(input);
         case RemoveModFromTimetableCommand.CLI_REPRESENTATION -> command = new RemoveModFromTimetableCommand(input);

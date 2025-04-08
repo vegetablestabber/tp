@@ -1,9 +1,13 @@
 package modmate.command;
 
-import modmate.CommandCenter;
+import modmate.download.nusmods.NUSModsAPI;
+import modmate.command.util.Argument;
+import modmate.exception.ApiException;
+import modmate.exception.CommandException;
 import modmate.timetable.BreakPeriod;
 import modmate.timetable.Lesson;
 import modmate.timetable.Period;
+import modmate.ui.Input;
 import modmate.user.Schedule;
 import modmate.log.LogUtil;
 import modmate.user.User;
@@ -20,6 +24,9 @@ public class ViewTimetableCommand extends Command {
     public static final String CLI_REPRESENTATION = "timetable";
 
     private static final LogUtil logUtil = new LogUtil(ViewTimetableCommand.class);
+
+    private final Argument<String> timetableNameArg;
+    private final Argument<String> timetableTypeArg;
 
     private static class TimelineEntry {
         String label;
@@ -45,13 +52,40 @@ public class ViewTimetableCommand extends Command {
 
     }
 
+    public ViewTimetableCommand(Input input) {
+        super(input);
+        String argument = input.getArgument();
+        String type, name;
+        if (argument.startsWith("timeline ") || argument.startsWith("list ")) {
+            name = input.getArgument().replaceFirst("^\\S+\\s?", "");
+            type = input.getArgument().split(" ")[0];
+        } else {
+            name = input.getArgument();
+            type = "timeline";
+        }
+        this.timetableNameArg = new Argument<>(
+                "timetable name",
+                name,
+                "The name of the timetable to display",
+                true
+        );
+        this.timetableTypeArg = new Argument<>(
+                "timetable type",
+                type,
+                "The type of the timetable to display",
+                false
+        );
+
+        if (timetableNameArg.getValue().isEmpty()) {
+            throw new CommandException(this, "Timetable name cannot be empty");
+        }
+    }
+
     @Override
     public String getSyntax() {
         return CommandUtil.buildSyntax(
-            CLI_REPRESENTATION,
-            "timetable",
-            Map.of(), // No required flags
-            Map.of("timeline", "timeline") // Optional flag
+                CLI_REPRESENTATION,
+                List.of(timetableTypeArg, timetableNameArg)
         );
     }
 
@@ -63,42 +97,28 @@ public class ViewTimetableCommand extends Command {
     @Override
     public String getUsage() {
         return super.getUsage()
-            + "  <timetable>: The name of the timetable to display.\n"
-            + "  [timeline]: Optional. Display timetable as a timeline.";
+                + "  [timeline]: Optional. Display timetable as a timeline.\n"
+                + "  <timetable>: The name of the timetable to display.";
     }
 
     @Override
-    public void execute(String[] args, User currentUser) {
-        if (args.length < 2) {
-            System.out.println("Usage: timetable [timeline|list] <timetable>");
-            return;
-        }
+    public void execute(User currentUser) {
+        logUtil.info("Displaying user's mod list.");
 
+        String timetableType = timetableTypeArg.getValue().orElse("timeline");
+        String timetableName = timetableNameArg.getValue().orElse(null);
 
-        String viewtype = "timeline";
-        String inputTimetableName;
+        assert timetableName != null
+                && !timetableName.trim().isEmpty() : "Timetable name cannot be null or empty";
 
-        if (args.length >= 3 && args[1].equals("list")) {
-            viewtype = "list";
-            inputTimetableName = CommandCenter.stringFromBetweenPartsXY(args, 2);
-        } else if (args.length >= 3 && args[1].equals("timeline")) {
-            viewtype = "timeline";
-            inputTimetableName = CommandCenter.stringFromBetweenPartsXY(args, 2);
-        } else {
-            inputTimetableName = CommandCenter.stringFromBetweenPartsXY(args, 1);
-        }
-
-        assert inputTimetableName != null
-                && !inputTimetableName.trim().isEmpty() : "Timetable name cannot be null or empty";
-
-        Schedule timetable = currentUser.getTimetable(inputTimetableName);
-        if (!currentUser.hasTimetable(inputTimetableName) || timetable == null) {
-            logUtil.warning("Timetable '" + inputTimetableName + "' not found.");
+        Schedule timetable = currentUser.getTimetable(timetableName);
+        if (!currentUser.hasTimetable(timetableName) || timetable == null) {
+            logUtil.warning("Timetable '" + timetableName + "' not found.");
             return;
         }
 
         logUtil.info("Displaying user's mod list.");
-        if (viewtype.equals("timeline")) {
+        if (timetableType.equals("timeline")) {
             HashMap<DayOfWeek, List<TimelineEntry>> timeline = new HashMap<>();
             timetable.getMods().forEach(
                     mod -> {
@@ -111,8 +131,8 @@ public class ViewTimetableCommand extends Command {
                                 timeline.get(day).add(
                                         new TimelineEntry(
                                                 mod.getCode() +
-                                                " " +
-                                                lesson.getType(),
+                                                        " " +
+                                                        lesson.getType(),
                                                 lesson.getPeriod(),
                                                 false)
                                 );
@@ -148,7 +168,7 @@ public class ViewTimetableCommand extends Command {
                     boolean isClashing = entries.stream().anyMatch(
                             (otherEntry) ->
                                     !otherEntry.label.equals(entry.label) &&
-                                    otherEntry.period.isClashing(entry.period));
+                                            otherEntry.period.isClashing(entry.period));
                     entry.setClashing(isClashing);
                 });
 
@@ -161,9 +181,8 @@ public class ViewTimetableCommand extends Command {
 
             }
         } else {
-            System.out.println(timetable.toString());
+            System.out.println(timetable);
         }
-        logUtil.info("Displaying user's mod list.");
     }
 
 }

@@ -1,8 +1,15 @@
 package modmate.command;
 
-import modmate.CommandCenter;
+import modmate.command.util.Argument;
+import modmate.download.nusmods.NUSModsAPI;
+import modmate.exception.ApiException;
+import modmate.exception.CommandException;
 import modmate.log.LogUtil;
+import modmate.mod.Mod;
+import modmate.ui.Input;
 import modmate.user.User;
+
+import java.util.List;
 
 public class RemoveBookmarkCommand extends Command {
 
@@ -10,31 +17,54 @@ public class RemoveBookmarkCommand extends Command {
 
     private static final LogUtil logUtil = new LogUtil(RemoveBookmarkCommand.class);
 
-    @Override
-    public void execute(String[] args, User currentUser) {
-        if (args.length < 2) {
-            System.out.println("Usage: removebookmark <mod code or name>");
-            return;
+    private final Argument<String> modIdentifierArg;
+
+    public RemoveBookmarkCommand(Input input) {
+        super(input);
+        this.modIdentifierArg = new Argument<>(
+                "mod code or name",
+                input.getArgument(),
+                "The code or name of the mod to remove bookmark.",
+                true
+        );
+
+        if (input.getArgument().isEmpty()) {
+            throw new CommandException(this, "Mod code or name cannot be empty");
         }
+    }
 
-        String inputCodeOrName = CommandCenter.stringFromBetweenPartsXY(args, 1);
+    @Override
+    public String getSyntax() {
+        return CommandUtil.buildSyntax(CLI_REPRESENTATION, List.of(modIdentifierArg));
+    }
 
-        assert inputCodeOrName != null
-                && !inputCodeOrName.trim().isEmpty() : "Mod code or name cannot be null or empty";
-        logUtil.info("Removing bookmark for mod.");
+    @Override
+    public String getDescription() {
+        return "Remove bookmark of a mod.";
+    }
 
-        CommandCenter.modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
-            if (!currentUser.hasBookmark(mod)) {
-                logUtil.warning("Mod '" + mod.getCode() + "' not in bookmarks.");
-                System.out.println("Mod " + mod.getCode() + " isn't in your bookmarks.");
-                return;
-            }
-            currentUser.removeBookmark(mod);
-            logUtil.info("Removed mod '" + mod.getCode() + "' from bookmarks.");
-            System.out.println("Removed mod " + mod.getCode() + " from bookmarks.");
-        }, () -> {
-            logUtil.info("Course to remove bookmark not found.");
-            System.out.println("Course with code '" + inputCodeOrName.toUpperCase() + "' not found.");
+    @Override
+    public String getUsage() {
+        return super.getUsage(List.of(modIdentifierArg));
+    }
+
+    @Override
+    public void execute(User currentUser) {
+        modIdentifierArg.getValue()
+            .ifPresent(identifier -> {
+                try {
+                    Mod mod = NUSModsAPI.modFromIdentifier(identifier);
+                    if (!currentUser.hasBookmark(mod)) {
+                        logUtil.warning("Mod '" + mod.getCode() + "' not in bookmarks.");
+                        System.out.println("Mod " + mod.getCode() + " isn't in your bookmarks.");
+                        return;
+                    }
+                    currentUser.removeBookmark(mod);
+                    logUtil.info("Removed mod '" + mod.getCode() + "' from bookmarks.");
+                    System.out.println("Removed mod " + mod.getCode() + " from bookmarks.");
+                } catch (ApiException e) {
+                    System.out.println(e.getMessage());
+                }
         });
     }
 }
