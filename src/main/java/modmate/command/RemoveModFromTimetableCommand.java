@@ -1,6 +1,5 @@
 package modmate.command;
 
-import java.util.Optional;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
