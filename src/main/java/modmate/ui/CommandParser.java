@@ -40,7 +40,10 @@ public class CommandParser {
         case ViewTimetableCommand.CLI_REPRESENTATION -> command = new ViewTimetableCommand(input);
         case ViewAllModsCommand.CLI_REPRESENTATION -> command = new ViewAllModsCommand(input);
         case ExitCommand.CLI_REPRESENTATION -> command = new ExitCommand(input);
-        default -> throw new IllegalArgumentException("Input error: Invalid input");
+        default -> throw new IllegalArgumentException(
+                "Invalid command \""
+                        + input.getCommand()
+                        + "\"! Please check your command again, or run 'help'.");
         }
 
         return command;
