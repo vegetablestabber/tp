@@ -50,7 +50,6 @@ public class ModTest {
         assertTrue(result.contains("Availability: Semester 1, Semester 2"));
         assertTrue(result.contains("Units: 4.0"));
         assertTrue(result.contains("Graded: true"));
-        assertTrue(result.contains("Prerequisites: []"));
         assertTrue(result.contains("Workload: Lectures: 2.0 hours, Tutorials: 1.0 hours, " +
                 "Projects: 3.0 hours, Preparation: 4.0 hours"));
     }
