@@ -13,8 +13,7 @@ parent: About Us
 1. TOC
 {:toc}
 
-## Intoduction
-
+## Introduction
 Modmate is a command-line application that helps keep track of your timetables and modules at NUS. It is a very simple way to keep yourself always on track with your classes at NUS.
 
 ---
