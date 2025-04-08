@@ -22,7 +22,6 @@ Modmate is a command-line application that helps keep track of your timetables a
 
 Given below are my contributions to the project.
 
-<iframe src="https://nus-cs2113-ay2425s2.github.io/tp-dashboard/#/widget/?search=W12-1&sort=groupTitle%20dsc&sortWithin=totalCommits%20dsc&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&optimiseTimeline=true&viewRepoTags=true&tabOpen=true&tabType=authorship&tabAuthor=gitHST&tabRepo=AY2425S2-CS2113-W12-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false&chartGroupIndex=0&chartIndex=0" frameBorder="0" width="800px" height="169px"></iframe>
 
 * **New Feature**: Designed and integrated the `HPPTUtil` and `NusModsAPI` classes
   * What it does: Enables efficient, modular retrieval and formatting of data from the NUSMods public API, encapsulating network logic and result parsing.
