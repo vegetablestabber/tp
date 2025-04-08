@@ -42,6 +42,13 @@ ModMate is a command-line application that leverages the NUSMods API and was dev
 
 ## Features
 
+### General
+
+| Feature                  | Description                                                                                     | Justification                                                                            | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Input Handling           | Implemented `InputParser`, `Input`, `Argument`, and `Flag` for structured input parsing.        | Improves input validation and parsing for better user experience and error handling.    | [#185](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/185), [#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186) |
+| Command Parsing          | Developed `CommandParser` to streamline command execution.                                     | Centralizes command handling logic for better maintainability and scalability.          | [#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186)                             |
+
 ### Commands
 
 | Feature                  | Description                                                                                     | Justification                                                                            | Links                                                                                     |
@@ -55,13 +62,12 @@ ModMate is a command-line application that leverages the NUSMods API and was dev
 | JSON Parsing             | Implemented `JSONParser`, `JSONKey`, and specialized parsers (`ModJSONParser`, etc.) for handling API responses. | Ensures accurate and type-safe processing of JSON data from the NUSMods API.            | [#57](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/57), [#52](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/52) |
 | HTTP Utilities           | Developed `HttpUtil` for handling HTTP requests and responses.                                 | Simplifies and standardizes HTTP communication with external APIs.                      | [#28](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/28)                               |
 
-### General
+### UI
 
 | Feature                  | Description                                                                                     | Justification                                                                            | Links                                                                                     |
 |--------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| Input Handling           | Implemented `InputParser`, `Input`, `Argument`, and `Flag` for structured input parsing.        | Improves input validation and parsing for better user experience and error handling.    | [#185](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/185), [#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186) |
+| UI Enhancements          | Refactored the UI class to improve modularity and maintainability, enabling easier integration of new features. | Enhances the overall structure and readability of the UI codebase.                      | [#185](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/185) |
 | Pagination               | Added `Pagination` to improve user experience for commands like `SearchModCommand`.            | Allows users to view large sets of data in manageable chunks.                           | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88)                               |
-| Command Parsing          | Developed `CommandParser` to streamline command execution.                                     | Centralizes command handling logic for better maintainability and scalability.          | [#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186)                             |
 
 ---
 
