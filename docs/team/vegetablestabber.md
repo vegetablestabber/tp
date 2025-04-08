@@ -76,10 +76,11 @@ ModMate is a command-line application that leverages the NUSMods API and was dev
 
 ### User Guide
 
-| Contribution             | Description                                                                                     | Links                                                                                     |
-|--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| Search Module            | Added documentation for the `searchmod` feature.                                               | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88)                               |
-| Cosmetic Tweaks          | Improved clarity and formatting for `clear` and `exit` commands.                               | [#74](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/74)                               |
+| Contribution          | Description                                                                 | Links                                                                                     |
+|-----------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Help Command          | Added documentation for the `help` feature.                              | [#194](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/194)                              |
+| Search Module Command | Added documentation for the `searchmod` feature.                         | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88)                               |
+| Cosmetic Tweaks       | Improved clarity and formatting for `clear` and `exit` commands.         | [#74](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/74)                               |
 
 ### Developer Guide
 
