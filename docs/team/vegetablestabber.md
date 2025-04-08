@@ -5,6 +5,7 @@ parent: About Us
 ---
 
 ### Project: ModMate
+{: .no_toc }
 
 ## Table of Contents
 {: .no_toc .text-delta }
