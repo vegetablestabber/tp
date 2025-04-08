@@ -31,8 +31,9 @@ import modmate.mod.Mod;
  * and fetch module codes for a given academic year.
  */
 public class NUSModsAPI {
+    // its public because or else gradle will scream
+    public static final LogUtil logUtil = new LogUtil(NUSModsAPI.class);
     public static final Map<String, CondensedMod> CONDENSED_MODS = NUSModsAPI.fetchAllModCodes();
-    private static final LogUtil logUtil = new LogUtil(NUSModsAPI.class);
 
     /**
      * Helper method that searches for an exact matching mod by its code or name.
