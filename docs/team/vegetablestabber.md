@@ -101,7 +101,7 @@ ModMate is a command-line application that leverages the NUSMods API and was dev
 | Contribution             | Description                                                                                     | Links                                                                                     |
 |--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
 | PR Reviews               | Reviewed PRs with non-trivial comments.                                                        | [#12](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/12), [#32](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/32) |
-| Bug Reports              | Reported bugs and suggestions for other teams.                                                 | [#169](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/169), [#158](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/158), [#146](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/146), [#145](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/145) |
+| Bug Reports              | Reported bugs and suggestions for other members.                                                 | [#169](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/169), [#158](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/158), [#146](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/146), [#145](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/145) |
 
 ---
 
