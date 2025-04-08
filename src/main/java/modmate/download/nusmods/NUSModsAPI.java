@@ -31,10 +31,10 @@ import modmate.mod.Mod;
  * and fetch module codes for a given academic year.
  */
 public class NUSModsAPI {
+    public static final Map<String, CondensedMod> CONDENSED_MODS = NUSModsAPI.fetchAllModCodes();
     private static final LogUtil logUtil = new LogUtil(NUSModsAPI.class);
-    public static final Map<String, CondensedMod> condensedMods = NUSModsAPI.fetchAllModCodes();
 
-/**
+    /**
      * Helper method that searches for an exact matching mod by its code or name.
      *
      * @param identifier The code or name of the mod to search for.
@@ -44,8 +44,8 @@ public class NUSModsAPI {
     public static Mod modFromIdentifier(String identifier) throws ApiException {
         // First, check for a match with the module code (key)
         String key = identifier.toUpperCase();
-        Optional<CondensedMod> condensedModOpt = Optional.ofNullable(condensedMods.get(key))
-            .or(() -> condensedMods.values()
+        Optional<CondensedMod> condensedModOpt = Optional.ofNullable(CONDENSED_MODS.get(key))
+            .or(() -> CONDENSED_MODS.values()
                 .stream()
                 .filter(condensedMod -> condensedMod.getName().equalsIgnoreCase(identifier))
                 .findFirst());

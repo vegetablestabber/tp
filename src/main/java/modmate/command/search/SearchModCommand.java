@@ -56,7 +56,14 @@ public class SearchModCommand extends Command {
 
     @Override
     public String getSyntax() {
-        return CommandUtil.buildSyntax(CLI_REPRESENTATION, List.of(identifierArg, facultyFlag, semestersFlag, unitsFlag, gradedFlag));
+        return CommandUtil.buildSyntax(
+                CLI_REPRESENTATION,
+                List.of(
+                        identifierArg,
+                        facultyFlag,
+                        semestersFlag,
+                        unitsFlag,
+                        gradedFlag));
     }
 
     @Override
@@ -73,7 +80,7 @@ public class SearchModCommand extends Command {
     public void execute(User currentUser) throws ApiException {
         logUtil.info("User is searching for a mod.");
 
-        int totalModules = NUSModsAPI.condensedMods.size();
+        int totalModules = NUSModsAPI.CONDENSED_MODS.size();
         if (totalModules == 0) {
             throw new ApiException("No modules available to search.");
         }
@@ -92,7 +99,7 @@ public class SearchModCommand extends Command {
     private List<CondensedMod> getSearchResultsWithProgress(String searchTerm, int totalModules) {
         logUtil.info("Internally invoking search for " + searchTerm + ".");
 
-        Stream<CondensedMod> condensedModStream = NUSModsAPI.condensedMods
+        Stream<CondensedMod> condensedModStream = NUSModsAPI.CONDENSED_MODS
                 .values()
                 .stream()
                 .parallel();

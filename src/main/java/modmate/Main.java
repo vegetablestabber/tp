@@ -1,6 +1,5 @@
 package modmate;
 
-import modmate.download.nusmods.NUSModsAPI;
 import modmate.log.LogUtil;
 import modmate.ui.UI;
 import modmate.user.User;

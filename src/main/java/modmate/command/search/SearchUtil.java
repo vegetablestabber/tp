@@ -9,7 +9,9 @@ import modmate.mod.attribute.ModAttributes;
 import modmate.timetable.Semester;
 import modmate.ui.ProgressBar;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

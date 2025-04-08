@@ -1,14 +1,89 @@
 package modmate.command;
 
-import modmate.CommandCenter;
+import modmate.command.util.Argument;
+import modmate.download.nusmods.NUSModsAPI;
+import modmate.exception.ApiException;
+import modmate.exception.CommandException;
 import modmate.log.LogUtil;
+import modmate.mod.Mod;
+import modmate.ui.Input;
 import modmate.user.User;
+
+import java.util.Arrays;
 
 public class SetModLessonCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "setlesson";
 
     private static final LogUtil logUtil = new LogUtil(ViewAllModsCommand.class);
+
+    private final Argument<String> timetableNameArg;
+    private final Argument<String> modIdentifierArg;
+    private final Argument<String> lessonTypeArg;
+    private final Argument<String> lessonIdArg;
+
+    public SetModLessonCommand(Input input) {
+        super(input);
+        String[] arguments = input.getArgument().split(" ");
+
+        switch (arguments.length) {
+        case 0:
+            throw new CommandException(this, "Timetable name cannot be empty");
+        case 1:
+            throw new CommandException(this, "Mod name/code name cannot be empty");
+        case 2:
+            throw new CommandException(this, "Lesson type cannot be empty");
+        case 3:
+            throw new CommandException(this, "Lesson ID cannot be empty");
+        default:
+            String timetableName = String.join(
+                    " ",
+                    Arrays.copyOfRange(arguments, 0, arguments.length - 3));
+            String modIdentifier = arguments[arguments.length - 3];
+            String lessonType = arguments[arguments.length - 2];
+            String lessonId = arguments[arguments.length - 1];
+
+            this.timetableNameArg = new Argument<>(
+                    "timetable name",
+                    timetableName,
+                    "The name of the timetable to display",
+                    true
+            );
+            this.modIdentifierArg = new Argument<>(
+                    "mod name or code",
+                    modIdentifier,
+                    "The mod in the timetable",
+                    true
+            );
+            this.lessonTypeArg = new Argument<>(
+                    "timetable type",
+                    lessonType,
+                    "The lesson type for the course",
+                    true
+            );
+            this.lessonIdArg = new Argument<>(
+                    "timetable type",
+                    lessonId,
+                    "The lesson to replace with",
+                    true
+            );
+
+            if (timetableNameArg.getValue().isEmpty()) {
+                throw new CommandException(this, "Timetable name cannot be empty");
+            }
+            if (modIdentifierArg.getValue().isEmpty()) {
+                throw new CommandException(this, "Mod name/code name cannot be empty");
+            }
+            if (lessonTypeArg.getValue().isEmpty()) {
+                throw new CommandException(this, "Lesson type cannot be empty");
+            }
+            if (lessonIdArg.getValue().isEmpty()) {
+                throw new CommandException(this, "Lesson ID cannot be empty");
+            }
+
+        }
+
+    }
 
     @Override
     public String getDescription() {
@@ -29,40 +104,34 @@ public class SetModLessonCommand extends Command {
     }
 
     @Override
-    public void execute(String[] args, User currentUser) {
-        if (args.length < 4) {
-            System.out.println("Usage: setlesson <timetable> <mod code or name> <lesson type> <lesson id>");
-            return;
-        }
+    public void execute(User currentUser) {
 
-        String timetable = CommandCenter.stringFromBetweenPartsXY(args, 1, 2);
-        String inputCodeOrName = CommandCenter.stringFromBetweenPartsXY(args, 2, 3);
-        String lessonType = CommandCenter.stringFromBetweenPartsXY(args, 3, args.length - 1);
-        String lessonId = CommandCenter.stringFromBetweenPartsXY(args, args.length - 1);
-
-        assert inputCodeOrName != null
-                && !inputCodeOrName.trim().isEmpty() : "Mod code or name cannot be null or empty";
-        logUtil.info("Setting mod lessons for: " + inputCodeOrName + "(" + timetable + ")");
-
-        assert timetable != null
-                && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
-
-        if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
-            System.out.println("Timetable \"" + timetable + "\" not found.");
+        if (!currentUser.hasTimetable(timetableNameArg.getValue().orElse(""))) {
+            System.out.println("Timetable \"" + timetableNameArg.getValue() + "\" not found.");
             logUtil.info("Timetable '"
-                    + timetable
+                    + timetableNameArg.getValue()
                     + "' not found while attempting to setting lesson for mod "
-                    + inputCodeOrName
+                    + modIdentifierArg.getValue()
                     + ".");
             return;
         }
 
-        CommandCenter.modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
-            currentUser.setLessonOnTimetable(timetable, mod, lessonType, lessonId);
-        }, () -> {
-            System.out.println("Mod '" + inputCodeOrName + "' not found.");
-            logUtil.severe("Mod '" + inputCodeOrName + "' not found.");
-        });
+
+        modIdentifierArg.getValue().ifPresent(
+            identifier -> {
+                logUtil.info("Viewing mod details for: " + identifier);
+                try {
+                    Mod mod = NUSModsAPI.modFromIdentifier(identifier);
+                    currentUser.setLessonOnTimetable(
+                            timetableNameArg.getValue().orElse(""),
+                            mod,
+                            lessonTypeArg.getValue().orElse(""),
+                            lessonIdArg.getValue().orElse(""));
+                } catch (ApiException e) {
+                    logUtil.severe("Failed to fetch mod details: " + e.getMessage());
+                    System.out.println(e.getMessage());
+                }
+            });
     }
 
 }
