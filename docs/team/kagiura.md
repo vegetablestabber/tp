@@ -57,3 +57,4 @@ Given below are my contributions to the project.
     * [#71](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/71) Remove case sensitivity for mod code/names
     * [#73](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/73) Allow for mod workload to be null / unavailable
     * [#182](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/182) / [#183](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/183) Fixing bugs related to bookmarks/scheduling
+    * [#201](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/201) Allow `addmod`/`removemod` commands to recognize mod names alongside mod codes
