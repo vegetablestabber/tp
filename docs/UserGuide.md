@@ -49,6 +49,10 @@ Here’s a quick reference for all ModMate commands:
 | `viewlessons`     | 📝 View all available lessons for a module.    |
 | `viewallmods`     | 📝 View all available modules in the database. |
 
+## Features
+
+ModMate offers a variety of features to help you manage your academic life effectively:
+
 ### Displaying Help: `help`
 
 ❓ Display help information for all commands or a specific command.
@@ -63,10 +67,6 @@ Here’s a quick reference for all ModMate commands:
 help
 help searchmod
 ```
-
-## Features
-
-ModMate offers a variety of features to help you manage your academic life effectively:
 
 ### Creating a Timetable: `createtimetable`
 
