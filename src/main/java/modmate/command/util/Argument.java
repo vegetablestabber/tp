@@ -10,6 +10,11 @@ public class Argument<T> {
     private final boolean isRequired;
 
     public Argument(String name, Optional<T> value, String description, boolean isRequired) {
+        if (isRequired) {
+            value.filter(v -> true)
+                .orElseThrow(() -> new IllegalArgumentException("Value not provided for required arg: " + name));
+        }
+
         this.name = name;
         this.value = value;
         this.description = (isRequired ? "" : "Optional. ") + description;

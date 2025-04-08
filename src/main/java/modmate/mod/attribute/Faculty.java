@@ -14,6 +14,10 @@ public class Faculty {
      * @param name the name of the faculty
      */
     public Faculty(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Faculty name cannot be empty");
+        }
+
         this.name = name;
     }
 

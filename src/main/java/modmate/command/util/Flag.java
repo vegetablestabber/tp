@@ -6,7 +6,6 @@ public class Flag<T> extends Argument<T> {
     public static final String FLAG_PREFIX = "--";
     private final String expectedValue;
 
-
     public Flag(String name, Optional<T> value, String description, boolean isRequired, String expectedValue) {
         super(name, value, description, isRequired);
         this.expectedValue = expectedValue;

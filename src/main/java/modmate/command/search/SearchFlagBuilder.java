@@ -1,5 +1,6 @@
 package modmate.command.search;
 
+import java.lang.StackWalker.Option;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -33,10 +34,17 @@ public class SearchFlagBuilder {
     public static Flag<List<Semester>> createSemestersFlag(Optional<String> semestersInput) {
         return new Flag<>(
             "semesters",
-            semestersInput.map(str -> Arrays.stream(str.split("\\s+"))
-                .map(Integer::valueOf)
-                .map(Semester::fromInt)
-                .toList()),
+            semestersInput.map(str ->
+                Arrays.stream(str.split("\\s+"))
+                    .map(s -> {
+                        try {
+                            return Integer.valueOf(str);
+                        } catch (NumberFormatException e) {
+                            throw new IllegalArgumentException("Invalid semester input: " + s);
+                        }
+                    })
+                    .map(Semester::fromInt)
+                    .toList()),
             "Filter by semesters (space-separated).",
             false,
             "value"
@@ -46,11 +54,17 @@ public class SearchFlagBuilder {
     public static Flag<Double> createUnitsFlag(Optional<String> unitsInput) {
         return new Flag<>(
             "units",
-            unitsInput.flatMap(str -> {
+            unitsInput.map(str -> {
                 try {
-                    return Optional.of(Double.valueOf(str));
-                } catch (NumberFormatException e) {
-                    return Optional.empty();
+                    double units = Double.valueOf(str);
+
+                    if (units < 0) {
+                        throw new IllegalArgumentException("Units cannot be negative");
+                    }
+
+                    return units;
+                } catch (IllegalArgumentException e) {
+                    throw new IllegalArgumentException("Invalid units input: " + str);
                 }
             }),
             "Filter by modular credits.",
@@ -62,8 +76,13 @@ public class SearchFlagBuilder {
     public static Flag<Boolean> createGradedFlag(Optional<String> gradedInput) {
         return new Flag<>(
             "graded",
-            gradedInput.filter(str -> str.equalsIgnoreCase("true") || str.equalsIgnoreCase("false"))
-                .map(Boolean::valueOf),
+            gradedInput.map(str -> {
+                if (str.equalsIgnoreCase("true") || str.equalsIgnoreCase("false")) {
+                    return Boolean.valueOf(str);
+                }
+
+                throw new IllegalArgumentException("Graded status must be 'true' or 'false'");
+            }),
             "Filter by grading type.",
             false,
             "value"

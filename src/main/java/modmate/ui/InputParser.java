@@ -64,13 +64,20 @@ public class InputParser {
                 : flagsSubstring.substring(flagStart, nextFlagStart)).trim();
 
             int spaceIndex = flagPair.indexOf(' ');
-            String flagName = flagPair.substring(0, spaceIndex);
 
-            if (spaceIndex == -1 || flagName.isEmpty()) {
-                throw new IllegalArgumentException("Missing or invalid parameter for flag: " + flagPair);
+            String flagName = (spaceIndex == -1)
+                ? flagPair
+                : flagPair.substring(0, spaceIndex);
+
+
+            if (flagName.isEmpty()) {
+                throw new IllegalArgumentException("Flag name is empty");
             }
 
-            String flagValue = flagPair.substring(spaceIndex + 1).trim();
+            String flagValue = (spaceIndex == -1)
+                ? ""
+                : flagPair.substring(spaceIndex + 1).trim();
+
             flagsMap.put(flagName, flagValue);
 
             endIndex = nextFlagStart == -1 ? flagsSubstring.length() : nextFlagStart;
