@@ -6,6 +6,14 @@ parent: About Us
 
 ### Project: ModMate
 
+## Table of Contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+## Introduction
+
 ModMate is a command-line application that leverages the NUSMods API and was developed to help NUS students manage academic schedules and module information efficiently. It streamlines timetable organization, module bookmarking, and data exploration, offering a user-friendly solution for academic planning.
 
 <div style="text-align: center;">
@@ -17,7 +25,7 @@ ModMate is a command-line application that leverages the NUSMods API and was dev
 
 ## Code Contributed
 
-[RepoSense link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=vegetablestabber&sort=groupTitle%20dsc&sortWithin=title&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=vegetablestabber&tabRepo=AY2425S2-CS2113-W12-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
+<iframe src="https://nus-cs2113-ay2425s2.github.io/tp-dashboard/#/widget/?search=W12-1&sort=groupTitle%20dsc&sortWithin=totalCommits%20dsc&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&optimiseTimeline=true&viewRepoTags=true&tabOpen=true&tabType=authorship&tabAuthor=vegetablestabber&tabRepo=AY2425S2-CS2113-W12-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false&chartGroupIndex=0&chartIndex=0" frameBorder="0" width="800px" height="169px"></iframe>
 
 ---
 ## Project Management
@@ -62,13 +70,13 @@ ModMate is a command-line application that leverages the NUSMods API and was dev
 
 | Contribution             | Description                                                                                     | Justification                                                                            | Links                                                                                     |
 |--------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Initial Structure        | Designed the skeleton structure and implemented most of the documentation for the User Guide and Developer Guide. | Provides a strong foundation for comprehensive and organized project documentation.     | [#50](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/50)                               |
 | Jekyll Integration       | Integrated Jekyll and the "Just the Docs" theme for project documentation.                      | Simplifies navigation and improves readability of the documentation.                    | [#92](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/92)                               |
 
 ### User Guide
 
 | Contribution             | Description                                                                                     | Links                                                                                     |
 |--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| Initial Structure        | Designed the skeleton structure and implemented most of the documentation for the User Guide.  | [#50](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/50)                               |
 | Search Module            | Added documentation for the `searchmod` feature.                                               | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88)                               |
 | Cosmetic Tweaks          | Improved clarity and formatting for `clear` and `exit` commands.                               | [#74](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/74)                               |
 
@@ -76,7 +84,6 @@ ModMate is a command-line application that leverages the NUSMods API and was dev
 
 | Contribution             | Description                                                                                     | Links                                                                                     |
 |--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| Initial Structure        | Designed the skeleton structure and implemented most of the documentation for the Developer Guide. | [#50](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/50)                               |
 | Search Module            | Added implementation details and diagrams for the `searchmod` feature.                         | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88)                               |
 
 ---
