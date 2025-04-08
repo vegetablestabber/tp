@@ -71,8 +71,6 @@ ModMate offers a variety of features to help you manage your academic life effec
 **Example:**
 ```
 help
-```
-```
 Commands:
 help: Display this help message
 exit: Exit the application
@@ -92,8 +90,6 @@ viewallmods: View all available mods
 
 ```
 help searchmod
-```
-```
 Description: Search for a mod by its code or name.
 Usage: searchmod <search query> --faculty <value> --semesters <value> --units <value> --graded <value>
 Arguments:
@@ -119,8 +115,6 @@ Arguments:
 **Example:**
 ```
 createtimetable Semester1
-```
-```
 Timetable 'Semester1' created successfully.
 ```
 
@@ -139,15 +133,11 @@ You can customize which slots to take with the `setlesson` command.
 **Example:**
 ```
 addmod Semester1 CS1010
-```
-```
 Mod CS1010 added successfully to Semester1.
 ```
 
 ```
 addmod Semester1 Software Engineering & Object-Oriented Programming
-```
-```
 Mod CS2113 added successfully to Semester1.
 ```
 
@@ -162,10 +152,10 @@ Mod CS2113 added successfully to Semester1.
 **Example:**
 ```
 removemod Semester1 CS1010
-removemod Semester1 Software Engineering & Object-Oriented Programming
-```
-```
 Mod CS1010 removed successfully from Semester1.
+```
+```
+removemod Semester1 Software Engineering & Object-Oriented Programming
 Mod CS2113 removed successfully from Semester1.
 ```
 
@@ -184,8 +174,6 @@ Mod CS2113 removed successfully from Semester1.
 **Example:**
 ```
 timetable Semester1
-```
-```
 [MONDAY]
  │ CS1010 Tutorial: 10:00-12:00
 [TUESDAY]
@@ -196,8 +184,6 @@ timetable Semester1
 ```
 ```
 timetable list Semester2
-```
-```
 Timetable: Semester2
   CS1010: Programming Methodology
   
@@ -246,10 +232,10 @@ searchmod CS1010 --faculty Computing -units 4
 **Example:**
 ```
 bookmark CS1010
-bookmark cg2023
-```
-```
 Bookmark CS1010 successfully added to your list.
+```
+```
+bookmark cg2023
 Bookmark cg2023 successfully added to your list.
 ```
 
@@ -262,8 +248,6 @@ Bookmark cg2023 successfully added to your list.
 **Example:**
 ```
 bookmarks
-```
-```
 You have 2 bookmark(s).
 CS1010: Programming Methodology
 CG2023: Signals and Systems
@@ -281,22 +265,16 @@ CG2023: Signals and Systems
 **Example:**
 ```
 setlesson SpecialSem1 EE2026 Laboratory 01
-```
-```
 Laboratory 01 for EE2026 added.
 ```
 
 ```
 setlesson Semester2 LAJ3201 TutorialType2 B1
-```
-```
 Tutorial Type 2 B1 for LAJ3201 added.
 ```
 
 ```
 setlesson Semester1 CS1010 Lecture L1
-```
-```
 Lesson type 'lecture' does not exist.
 ```
 
@@ -309,15 +287,11 @@ Lesson type 'lecture' does not exist.
 **Example:**
 ```
 addbreak Semester1 LunchBreak Monday 12:00 13:00
-```
-```
 Break [lunchbreak] added to timetable 'semester1'.
 ```
 
 ```
 addbreak semester1 lunch tuesday 1200 1400
-```
-```
 Break [lunch] added to timetable 'semester1'.
 ```
 
@@ -330,8 +304,6 @@ Break [lunch] added to timetable 'semester1'.
 **Example:**
 ```
 viewmod CS1010
-```
-```
 Code: CS1010
 Name: Programming Methodology
 Description: This course introduces the fundamental concepts of problem solving by computing and programming using an imperative programming language. It is the first and foremost introductory course to computing. Topics covered include computational thinking and computational problem solving, designing and specifying an algorithm, basic problem formulation and problem solving approaches, program development, coding, testing and debugging, fundamental programming constructs (variables, types, expressions, assignments, functions, control structures, etc.), fundamental data structures (arrays, strings, composite data types), basic sorting, and recursion.
@@ -351,8 +323,6 @@ Workload: Lectures: 2.0 hours, Tutorials: 1.0 hours, Projects: 3.0 hours, Prepar
 **Example:**
 ```
 viewlessons CS1010
-```
-```
 [Tutorial]
     [01] Weeks 1–13, MONDAY, 10:00-12:00 @ COM1-B108
     [02] Weeks 1–13, MONDAY, 10:00-12:00 @ COM1-B111
@@ -384,8 +354,6 @@ viewallmods
 **Example:**
 ```
 exit
-```
-```
 Exiting...
 
 ```
