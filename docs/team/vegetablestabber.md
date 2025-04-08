@@ -5,58 +5,109 @@ parent: About Us
 ---
 
 ### Project: ModMate
+{: .no_toc }
+
+## Table of Contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+## Introduction
 
 ModMate is a command-line application that leverages the NUSMods API and was developed to help NUS students manage academic schedules and module information efficiently. It streamlines timetable organization, module bookmarking, and data exploration, offering a user-friendly solution for academic planning.
 
-<img src="../img/harii/harii_tut.jpg" width="400">
+<div style="text-align: center;">
+  <img src="../img/harii/harii_tut.jpg" width="400" alt="Learning about UML diagrams during a tutorial">
+  <p><em>Learning about UML diagrams during a tutorial</em></p>
+</div>
 
+---
 
-Given below are my contributions to the project:
+## Code Contributed
 
-* **New Feature**: Enabled advanced module data handling for NUSMods integration.
-  * **What it does**:
-    * Developed the `Mod` class to represent comprehensive module details, including properties such as faculty, prerequisites, workload, and semester availability.
-    * Developed the `CondensedMod` class to encapsulate essential module details, such as module code and title, for streamlined data representation.
-    * Implemented the `ModAttributes` class to manage comprehensive module metadata, including faculty, prerequisites, workload, and semester availability.
-  * **Justification**: Ensures smooth and efficient processing of module data, enabling features like module search and filtering to function effectively.
-  * **Highlights**: Emphasized creating modular and scalable data structures to support future enhancements and maintainability.
+<iframe src="https://nus-cs2113-ay2425s2.github.io/tp-dashboard/#/widget/?search=W12-1&sort=groupTitle%20dsc&sortWithin=totalCommits%20dsc&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&optimiseTimeline=true&viewRepoTags=true&tabOpen=true&tabType=authorship&tabAuthor=vegetablestabber&tabRepo=AY2425S2-CS2113-W12-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false&chartGroupIndex=0&chartIndex=0" frameBorder="0" width="800px" height="169px"></iframe>
 
-* **New Feature**: Enabled the application to process and utilize JSON data from the NUSMods API.
-  * **What it does**:
-    * Converts raw JSON data from the NUSMods API into structured and type-safe objects, such as `ModJSONKey`, `TimetableJSONKey`, and `LessonJSONKey`, which represent key-value mappings for module, timetable, and lesson data respectively.
-    * Implements specialized parsers like `ModJSONParser`, `TimetableJSONParser`, and `LessonJSONParser` to handle nested JSON structures and transform them into usable domain objects.
-  * **Justification**: This capability is crucial for powering features like timetable generation and module exploration by ensuring accurate and reliable data handling.
-  * **Highlights**: Required the development of a robust parsing mechanism to handle complex nested JSON structures.
+---
+## Project Management
 
-* **Code contributed**: [RepoSense link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=vegetablestabber&sort=groupTitle%20dsc&sortWithin=title&since=2025-02-21&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=vegetablestabber&tabRepo=AY2425S2-CS2113-W12-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
+- Set internal deadlines to ensure timely progress and maintain alignment with the overall project timeline.
+- Delegated tasks effectively to leverage team strengths and maximize productivity.
+- Regularly reminded teammates of pending tasks to maintain momentum and avoid delays.
+- Reviewed teammates' PRs thoroughly, providing constructive feedback to improve code quality and functionality.
+- Fixed numerous bugs to enhance application stability and user experience.
+- Applied code quality principles like SLAP to ensure maintainable and readable code.
+- Refactored code extensively to improve modularity and adhere to best practices.
+- Encouraged team collaboration and adherence to high standards for a successful project outcome.
 
-* **Project Management**:
-  * **Release Planning**: Led the planning and execution of v2.0 release, setting milestones, defining deliverables, and ensuring adherence to the timeline.
-  * **Team Coordination**: Facilitated discussions, organized regular meetings, and addressed challenges to maintain progress and alignment.
-  * **Outcome Focused**: Delivered v2.0 on schedule with high-quality standards, ensuring project success.
+## Features
 
-* **Enhancements to existing features**:
-  * [#28](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/28), [#52](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/52), [#57](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/57): Refactored the download functionality to improve code readability and maintainability. This involved restructuring the logic to ensure better modularity and testability.
-  * [#78](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/78): Enhanced logging mechanisms to provide more detailed and actionable runtime information, aiding in debugging and monitoring.
-  * [#27](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/27): Reduced excessive null-checking by implementing more robust null-safety practices, leading to cleaner and more reliable code.
+### General
 
-__*TODO: Update the contributions below*__
+| Feature                  | Description                                                                                     | Justification                                                                            | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Input Handling           | Implemented `InputParser`, `Input`, `Argument`, and `Flag` for structured input parsing.        | Improves input validation and parsing for better user experience and error handling.    | [#185](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/185), [#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186) |
+| Command Parsing          | Developed `CommandParser` to streamline command execution.                                     | Centralizes command handling logic for better maintainability and scalability.          | [#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186)                             |
 
-* **Documentation**:
-  * User Guide:
-    * Added documentation for the features `delete` and `find` [\#72]()
-    * Did cosmetic tweaks to existing documentation of features `clear`, `exit`: [\#74]()
-  * Developer Guide:
-    * Added implementation details of the `delete` feature.
+### Commands
 
-* **Community**:
-  * PRs reviewed (with non-trivial review comments): [\#12](), [\#32](), [\#19](), [\#42]()
-  * Contributed to forum discussions (examples: [1](), [2](), [3](), [4]())
-  * Reported bugs and suggestions for other teams in the class (examples: [1](), [2](), [3]())
-  * Some parts of the history feature I added was adopted by several other class mates ([1](), [2]())
+| Feature                  | Description                                                                                     | Justification                                                                            | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| `SearchModCommand` and Supporting Classes | Enables users to search for modules by code or name with filters for faculty, semesters, etc., supported by utilities like `SearchUtil` and `SearchFlagBuilder`. | Provides efficient module search functionality with reusable utilities and flag handling. | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88), [#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186), [#180](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/180) |
 
-* **Tools**:
-  * Integrated a third party library (Natty) to the project ([\#42]())
-  * Integrated a new Github plugin (CircleCI) to the team repo
+### Networking
 
-* _{you can add/remove categories in the list above}_
+| Feature                  | Description                                                                                     | Justification                                                                            | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| JSON Parsing             | Implemented `JSONParser`, `JSONKey`, and specialized parsers (`ModJSONParser`, etc.) for handling API responses. | Ensures accurate and type-safe processing of JSON data from the NUSMods API.            | [#57](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/57), [#52](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/52) |
+| HTTP Utilities           | Developed `HttpUtil` for handling HTTP requests and responses.                                 | Simplifies and standardizes HTTP communication with external APIs.                      | [#28](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/28)                               |
+
+### UI
+
+| Feature                  | Description                                                                                     | Justification                                                                            | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| UI Enhancements          | Refactored the UI class to improve modularity and maintainability, enabling easier integration of new features. | Enhances the overall structure and readability of the UI codebase.                      | [#185](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/185) |
+| Pagination               | Added `Pagination` to improve user experience for commands like `SearchModCommand`.            | Allows users to view large sets of data in manageable chunks.                           | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88)                               |
+
+---
+
+## Documentation
+
+### General
+
+| Contribution             | Description                                                                                     | Justification                                                                            | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Initial Structure        | Designed the skeleton structure and implemented most of the documentation for the User Guide and Developer Guide. | Provides a strong foundation for comprehensive and organized project documentation.     | [#50](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/50)                               |
+| Jekyll Integration       | Integrated Jekyll and the "Just the Docs" theme for project documentation.                      | Simplifies navigation and improves readability of the documentation.                    | [#92](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/92)                               |
+
+### User Guide
+
+| Contribution          | Description                                                                 | Links                                                                                     |
+|-----------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Help Command          | Added documentation for the `help` feature.                              | [#194](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/194)                              |
+| Search Module Command | Added documentation for the `searchmod` feature.                         | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88)                               |
+| Cosmetic Tweaks       | Improved clarity and formatting for `exit` commands.         | [#74](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/74)                               |
+
+### Developer Guide
+
+| Contribution             | Description                                                                                     | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Search Module            | Added implementation details and diagrams for the `searchmod` feature.                         | [#88](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/88)                               |
+
+---
+
+## Community
+
+| Contribution             | Description                                                                                     | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| PR Reviews               | Reviewed PRs with non-trivial comments.                                                        | [#12](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/12), [#32](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/32) |
+| Bug Reports              | Reported bugs and suggestions for other members.                                                 | [#169](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/169), [#158](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/158), [#146](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/146), [#145](https://github.com/AY2425S2-CS2113-W12-1/tp/issues/145) |
+
+---
+
+## Tools
+
+| Tool                     | Description                                                                                     | Links                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| Jekyll                   | Used for generating static documentation sites.                                                | [#92](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/92)                               |
+| Just the Docs            | Integrated as the theme for the documentation.                                                 | [#92](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/92)                               |

@@ -35,11 +35,12 @@ Here’s a quick reference for all ModMate commands:
 
 | Command           | Description                                    |
 |-------------------|------------------------------------------------|
+| `help`            | ❓ Display help information for commands.      |
 | `createtimetable` | 🗓️ Create a new timetable.                    |
 | `addmod`          | ➕ Add a module to a timetable.                 |
 | `removemod`       | ➖ Remove a module from a timetable.            |
 | `timetable`       | 👀 View the details of a timetable.            |
-| `searchmod`       | 🔍 Search for modules by code or name.         |
+| `searchmod`       | 🔍 Search for modules by code, name, or filters.|
 | `bookmark`        | ⭐ Bookmark a module.                           |
 | `bookmarks`       | 📑 View all bookmarked modules.                |
 | `setlesson`       | 📚 Set a specific lesson for a module.         |
@@ -51,6 +52,21 @@ Here’s a quick reference for all ModMate commands:
 ## Features
 
 ModMate offers a variety of features to help you manage your academic life effectively:
+
+### Displaying Help: `help`
+
+❓ Display help information for all commands or a specific command.
+
+**Format:** `help [command]`
+
+- If no command is specified, a list of all commands and their descriptions will be displayed.
+- If a command is specified, detailed usage information for that command will be displayed.
+
+**Example:**
+```
+help
+help searchmod
+```
 
 ### Creating a Timetable: `createtimetable`
 
@@ -111,15 +127,34 @@ timetable timeline Semester2
 
 ### Searching for Modules: `searchmod`
 
-🔍 Search for modules from all available modules provided by NUSMods by their code or name.
+🔍 Search for modules from all available modules provided by NUSMods by their code, name, or using filters.
 
-**Format:** `searchmod <search_query>`
+**Format:** `searchmod [search_query] [--faculty FACULTY] [--semesters SEMESTERS] [--units UNITS] [--graded true|false]`
 
-**Example:**
+- `[search_query]`: Search by module code or name (e.g., "CS1010" or "Programming").
+- `--faculty`: Filter by faculty (e.g., "Computing").
+- `--semesters`: Filter by semesters (space-separated, e.g., "1 2").
+- `--units`: Filter by modular credits (e.g., "4").
+- `--graded`: Filter by grading type (true for graded, false for ungraded).
+
+**Notes:**
+- You can use either the search query or filters, or combine them for more specific results.
+- At least one argument or filter must be provided.
+
+**Examples:**
 ```
+searchmod CS1010
 searchmod Programming
-searchmod GESS
+searchmod --faculty Computing
+searchmod --semesters 1 2
+searchmod --units 4
+searchmod --graded true
+searchmod CS1010 --faculty Computing -units 4
 ```
+
+**Output:**
+- Displays a list of matching modules with their codes and names.
+- If no matches are found, a message will indicate that no modules were found.
 
 ### Bookmarking a Module: `bookmark`
 
