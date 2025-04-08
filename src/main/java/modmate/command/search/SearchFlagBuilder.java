@@ -1,6 +1,5 @@
 package modmate.command.search;
 
-import java.lang.StackWalker.Option;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
