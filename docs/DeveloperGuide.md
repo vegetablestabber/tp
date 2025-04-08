@@ -212,7 +212,7 @@ This will add the module `CS1010` to the timetable **"Fall 2025 Schedule"**.
 #### Sequence Diagram
 {: .no_toc }
 
-![SequenceDiagram](img/shu/image.png)
+![SequenceDiagram](img/shu/updated.png)
 
 ### Schedule Management within Timetables
 - **Purpose**: Allows users to select their preferred modules, based on accurate data provided by NUSMods
