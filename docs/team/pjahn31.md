@@ -10,36 +10,34 @@ Modmate is a command-line application that helps keep track of your timetables a
 
 Given below are my contributions to the project.
 
-* **New Feature**: Added a `createtimetable` command that allows the user to create a timetable 
+* **New Feature**: Added a `createtimetable` command that allows the user to create a timetable [#21](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/21)
   * What it does: allows the user to create a timetable with their desired timetable name, user can create multiple timetables
 
-* **New Feature**: Added a `timetable` command that allows the user to view their created timetable
+* **New Feature**: Added a `timetable` command that allows the user to view their created timetable [#21](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/21)
   * What it does: displays the timetable that the user wants to view, it can display the modules that the user has added to the respective timetable
+
+* **Test Cases**: Added test cases for classes `CondensedMod`, `Mod`, `Schedule`, `User` [#58](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/58)
+  * These classes are the foundation of our code, out of which the rest of our code builds upon
 
 * **Code contributed**: [RepoSense link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=w12-1)
 
 * **Project management**:
-  * Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+  * Assisted in guiding the team towards delivering v2.0 on schedule with good quality
+  * Ensured good communication en route delivery of v2.1
 
 * **Enhancements to existing features**:
-  * Updated the GUI color scheme (Pull requests [\#33](), [\#34]())
-  * Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests [\#36](), [\#38]())
+  * Implemented a modular command pattern architecture [#77](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/77)
+    * Decoupled command logic into discrete, single-responsibility classes
+    * Designed with extensibility in mind - new commands can be added without modifying existing code
 
 * **Documentation**:
   * User Guide:
-    * Added documentation for the features `delete` and `find` [\#72]()
-    * Did cosmetic tweaks to existing documentation of features `clear`, `exit`: [\#74]()
+    * Added documentation for the feature `viewallmods` [#114](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/104)
+    * Added output example for all features [\#72]()
   * Developer Guide:
-    * Added implementation details of the `delete` feature.
+    * Added implementation details of the `createtimetable` and `timetable` feature. [#83](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/83)
+    * Added sequence diagram for `createtimetable` and `timetable` feature. [#188](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/188)
 
 * **Community**:
-  * PRs reviewed (with non-trivial review comments): [\#12](), [\#32](), [\#19](), [\#42]()
-  * Contributed to forum discussions (examples: [1](), [2](), [3](), [4]())
-  * Reported bugs and suggestions for other teams in the class (examples: [1](), [2](), [3]())
-  * Some parts of the history feature I added was adopted by several other class mates ([1](), [2]())
-
-* **Tools**:
-  * Integrated a third party library (Natty) to the project ([\#42]())
-  * Integrated a new Github plugin (CircleCI) to the team repo
-
-* _{you can add/remove categories in the list above}_
+  * PRs reviewed (with non-trivial review comments): [#50](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/50), [#57](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/57), [#174](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/174), [#178](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/178)
+  * Occasional bug fixing: [#99](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/99), []
