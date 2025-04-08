@@ -29,15 +29,16 @@ Given below are my contributions to the project.
   * Implemented a modular command pattern architecture [#77](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/77)
     * Decoupled command logic into discrete, single-responsibility classes
     * Designed with extensibility in mind - new commands can be added without modifying existing code
+    * Code is now easier to read
 
 * **Documentation**:
   * User Guide:
     * Added documentation for the feature `viewallmods` [#114](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/104)
-    * Added output example for all features [\#72]()
+    * Added output example for all features [#204](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/204)
   * Developer Guide:
     * Added implementation details of the `createtimetable` and `timetable` feature. [#83](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/83)
     * Added sequence diagram for `createtimetable` and `timetable` feature. [#188](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/188)
 
 * **Community**:
   * PRs reviewed (with non-trivial review comments): [#50](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/50), [#57](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/57), [#174](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/174), [#178](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/178)
-  * Occasional bug fixing: [#99](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/99), []
+  * Occasional bug fixing: [#99](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/99), [#196](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/196)
