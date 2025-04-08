@@ -19,21 +19,6 @@ public class LogUtil {
     private static FileHandler sharedFileHandler; // Shared FileHandler for all LogUtil instances
     private final Logger logger;
 
-    private static synchronized FileHandler getSharedFileHandler() {
-        if (sharedFileHandler == null) {
-            try {
-                Path logFilePath = Paths.get(LOG_FILE);
-                Files.createDirectories(logFilePath.getParent());
-
-                sharedFileHandler = new FileHandler(LOG_FILE, true);
-                sharedFileHandler.setFormatter(new SimpleFormatter());
-            } catch (IOException e) {
-                System.err.println("Failed to initialize shared FileHandler for logging: " + e.getMessage());
-            }
-        }
-        return sharedFileHandler;
-    }
-
     /**
      * Constructs a Log instance for the given class.
      *
@@ -48,6 +33,21 @@ public class LogUtil {
         }
 
         this.logger.setUseParentHandlers(false); // Disable console logging by default
+    }
+
+    private static synchronized FileHandler getSharedFileHandler() {
+        if (sharedFileHandler == null) {
+            try {
+                Path logFilePath = Paths.get(LOG_FILE);
+                Files.createDirectories(logFilePath.getParent());
+
+                sharedFileHandler = new FileHandler(LOG_FILE, true);
+                sharedFileHandler.setFormatter(new SimpleFormatter());
+            } catch (IOException e) {
+                System.err.println("Failed to initialize shared FileHandler for logging: " + e.getMessage());
+            }
+        }
+        return sharedFileHandler;
     }
 
     /**

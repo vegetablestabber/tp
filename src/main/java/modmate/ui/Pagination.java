@@ -33,19 +33,19 @@ public class Pagination<T> {
 
     private boolean processInput(String input, Scanner scanner) {
         switch (input) {
-            case "n":
-                goToNextPage();
-                break;
-            case "p":
-                goToPreviousPage();
-                break;
-            case "j":
-                jumpToPage(scanner);
-                break;
-            case "q":
-                return false;
-            default:
-                System.out.println("Invalid input. Please try again.");
+        case "n":
+            goToNextPage();
+            break;
+        case "p":
+            goToPreviousPage();
+            break;
+        case "j":
+            jumpToPage(scanner);
+            break;
+        case "q":
+            return false;
+        default:
+            System.out.println("Invalid input. Please try again.");
         }
         return true;
     }

@@ -34,5 +34,4 @@ public class Input {
             .filter(str -> !str.isEmpty())
             .map(str -> str.trim());
     }
-
 }

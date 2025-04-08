@@ -23,7 +23,7 @@ public class BreakPeriodTest {
         Period period = new Period(DayOfWeek.FRIDAY, LocalTime.of(14, 0), LocalTime.of(15, 0));
         BreakPeriod breakPeriod = new BreakPeriod("Gym", period);
 
-        String expected = "[Gym] FRIDAY: 14:00–15:00";
+        String expected = "[Gym] FRIDAY: 14:00-15:00";
         assertEquals(expected, breakPeriod.toString());
     }
 }

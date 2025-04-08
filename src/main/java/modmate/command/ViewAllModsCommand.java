@@ -33,7 +33,7 @@ public class ViewAllModsCommand extends Command {
     public void execute(User user) {
         logUtil.info("Viewing all mods.");
 
-        List<String> modList = NUSModsAPI.condensedMods
+        List<String> modList = NUSModsAPI.CONDENSED_MODS
             .entrySet()
             .stream()
             .sorted(Map.Entry.comparingByKey())

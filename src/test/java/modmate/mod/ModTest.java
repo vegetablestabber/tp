@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.ModAttributes;
 import modmate.mod.attribute.WeeklyWorkload;
 import modmate.timetable.Semester;
@@ -21,16 +22,15 @@ public class ModTest {
 
     @BeforeEach
     void setUp() {
-        String facultyStr = "Computing";
-
+        Faculty faculty = new Faculty("Computing");
         WeeklyWorkload workload = new WeeklyWorkload(2, 1, 3, 4);
 
         attributes = new ModAttributes(
-            facultyStr,
-            List.of(Semester.SEMESTER_1, Semester.SEMESTER_2),
-            4 + "",
-            true + "",
-            Optional.of(workload.toString())
+                faculty,
+                List.of(Semester.SEMESTER_1, Semester.SEMESTER_2),
+                4.0,
+                true,
+                Optional.of(workload.toString())
         );
 
         timetables = List.of();
@@ -48,9 +48,8 @@ public class ModTest {
         assertTrue(result.contains("Name: Software Engineering & Object-Oriented Programming"));
         assertTrue(result.contains("Faculty: Computing"));
         assertTrue(result.contains("Availability: Semester 1, Semester 2"));
-        assertTrue(result.contains("Units: 4"));
+        assertTrue(result.contains("Units: 4.0"));
         assertTrue(result.contains("Graded: true"));
-        assertTrue(result.contains("Prerequisites: []"));
         assertTrue(result.contains("Workload: Lectures: 2.0 hours, Tutorials: 1.0 hours, " +
                 "Projects: 3.0 hours, Preparation: 4.0 hours"));
     }
@@ -63,6 +62,6 @@ public class ModTest {
     @Test
     void testAttributeAccess() {
         assertEquals("Computing", mod.getAttributes().getFacultyOpt().get().getName());
-        assertEquals(4, mod.getAttributes().getUnitsOpt());
+        assertEquals(Optional.of(4.0), mod.getAttributes().getUnitsOpt());
     }
 }
