@@ -1,6 +1,5 @@
 package modmate.command;
 
-import java.util.Optional;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
@@ -54,19 +53,14 @@ public class AddModToTimetableCommand extends Command {
             return;
         }
 
-        String upperModQuery = modQuery.toUpperCase();
-
-        Optional<Mod> modOpt = NUSModsAPI.fetchModuleByCode(upperModQuery.toUpperCase());
-
-        if (modOpt.isEmpty()) {
+        try {
+            Mod mod = NUSModsAPI.modFromIdentifier(modQuery);
+            currentUser.addModToTimetable(timetableName, mod);
+            logUtil.info("Mod " + mod.getCode() + " added to timetable " + timetableName);
+        } catch (ApiException e) {
             System.out.println("Mod \"" + modQuery + "\" not found.");
-            logUtil.warning("Mod '" + modQuery + "' not found.");
-            return;
+            logUtil.severe("Failed to fetch mod details: " + e.getMessage());
         }
-
-        Mod mod = modOpt.get();
-        currentUser.addModToTimetable(timetableName, mod);
-        logUtil.info("Mod " + mod.getCode() + " added to timetable " + timetableName);
     }
 }
 
