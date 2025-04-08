@@ -15,24 +15,27 @@ Given below are my contributions to the project.
 
 * **New Feature**: Added the ability for users to select lecture, lab, and tutorial sessions for their timetables [(#84)](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/84)
   * This brings ModMate on par with services like NUSMods, which allows users to create individualized timetables and account for potential scheduling conflicts.
-  * Additionally, the timetable command has been customized to allow users to view their timetable sorted by course, or by day of the week. When sorted chronologically, the timetable is shown as below. This allows the user to browser their schedule and use the program as a reference to their weekly workload.
+  * Additionally, the timetable command has been customized to allow users to view their timetable sorted by course, or by day of the week. When sorted chronologically, the timetable is shown as below. This allows the user to browser their schedule and use the program as a reference to their weekly workload. Clashes are also shown when two lessons overlap.
 ```
 [MONDAY]
- | EE2026: [01] Weeks 1–13, MONDAY, 09:00-12:00 @ E4-03-06
- | EE2026: [01] Weeks 1–13, MONDAY, 17:00-18:00 @ LT6
+ ╳ CG2023 Laboratory: 14:00-17:00
+ ╳ LAJ3202 Tutorial: 14:00-16:00
+ │ EE2026 Lecture: 17:00-18:00
 [TUESDAY]
- | CG2023: [02] Weeks 1–13, TUESDAY, 09:00-12:00 @ E4-03-06
- | CG2023: [03] Weeks 1–13, TUESDAY, 16:00-18:00 @ EA-06-03
+ │ CG2023 Lecture: 16:00-18:00
 [WEDNESDAY]
- | CS2113: [5] Weeks 1–13, WEDNESDAY, 12:00-13:00 @ COM1-0210
+ │ EE2026 Laboratory: 14:00-17:00
 [THURSDAY]
- | EE2026: [01] Weeks 1–13, THURSDAY, 09:00-11:00 @ LT6
- | EE2026: [08] Weeks 1–13, THURSDAY, 13:00-14:00 @ E3-06-02
- | EE2211: [25] Weeks 1–13, THURSDAY, 14:00-16:00 @ E3-06-06
- | CG2023: [03] Weeks 1–13, THURSDAY, 16:00-18:00 @ EA-06-03
+ │ EE2026 Lecture: 09:00-11:00
+ │ CS2113 Tutorial: 11:00-12:00
+ │ EE2026 Tutorial: 13:00-14:00
+ │ EE2211 Tutorial: 14:00-16:00
+ ╳ CG2023 Lecture: 16:00-18:00
+ ╳ LAJ3202 Tutorial Type 2: 16:00-18:00
 [FRIDAY]
- | EE2211: [01] Weeks 1–13, FRIDAY, 12:00-14:00 @ E-Learn_A
- | CS2113: [1] Weeks 1–13, FRIDAY, 16:00-18:00 @ LT16
+ │ EE2211 Lecture: 12:00-14:00
+ │ CS2113 Lecture: 16:00-18:00
+ │ LAJ3202 Lecture: 18:00-20:00
 ```
 
 * **Code contributed**: [RepoSense link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=w12-1)
@@ -40,6 +43,7 @@ Given below are my contributions to the project.
 * **Enhancements to existing features**:
   * Add more descriptive error messages on invalid commands [(#62)](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/62)
   * Add sorting to `viewallmods` to display them alphabetically [(#63)](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/63)
+  * Updating both of my features from using the old command parsing systems to the new InputParser class [(#193)](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/193)
 
 * **Documentation**:
   * User Guide:
@@ -48,4 +52,8 @@ Given below are my contributions to the project.
     * Added implementation details of the timetabling feature, with the appropriate UML diagrams.
 
 * **Community**:
-  * Fix occasional bugs: [#70](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/70), [#71](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/71), [#73](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/73)
+  * Fix occasional bugs: 
+    * [#70](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/70) Fixing addmod / removemod parsing
+    * [#71](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/71) Remove case sensitivity for mod code/names
+    * [#73](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/73) Allow for mod workload to be null / unavailable
+    * [#182](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/182) / [#183](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/183) Fixing bugs related to bookmarks/scheduling
