@@ -48,11 +48,6 @@ public class RemoveModFromTimetableCommand extends Command {
         String timetable = args[0];
         String modQuery = args[1];
 
-        assert timetable != null
-                && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
-        assert modQuery != null
-                && !modQuery.trim().isEmpty() : "Mod code or name cannot be null or empty";
-
         if (!currentUser.hasTimetable(timetable)) {
             System.out.println("Timetable \"" + timetable + "\" not found.");
             logUtil.severe("Timetable '" + timetable + "' not found while attempting to remove mod.");
@@ -61,20 +56,15 @@ public class RemoveModFromTimetableCommand extends Command {
 
         logUtil.info("Removing mod from timetable: " + timetable);
 
-        String upperModQuery = modQuery.toUpperCase();
-
-        Optional<Mod> modOpt = NUSModsAPI.fetchModuleByCode(upperModQuery.toUpperCase());
-
-        if (modOpt.isEmpty()) {
-            System.out.println("Mod '" + modQuery + "' not found.");
-            logUtil.severe("Mod '" + modQuery + "' not found.");
-            return;
-        }
-
-        Mod mod = modOpt.get();
-        boolean removed = currentUser.removeModFromTimetable(timetable, mod);
-        if (removed) {
-            logUtil.info("Mod " + mod.getCode() + " removed from timetable " + timetable);
+        try {
+            Mod mod = NUSModsAPI.modFromIdentifier(modQuery);
+            boolean removed = currentUser.removeModFromTimetable(timetable, mod);
+            if (removed) {
+                logUtil.info("Mod " + mod.getCode() + " removed from timetable " + timetable);
+            }
+        } catch (ApiException e) {
+            System.out.println("Mod \"" + modQuery + "\" not found.");
+            logUtil.severe("Failed to fetch mod details: " + e.getMessage());
         }
     }
 }
