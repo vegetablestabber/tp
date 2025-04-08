@@ -51,16 +51,22 @@ public class Schedule {
         scheduleMod.setLesson(type, id);
     }
 
-    public void removeMod(Mod modToRemove) {
-        for (ScheduleMod existingMod : mods) {
-            if (existingMod.getMod().getCode().equalsIgnoreCase(modToRemove.getCode())) {
-                mods.remove(existingMod);
-                System.out.println("Mod " + modToRemove.getCode() + " removed successfully from " + name + ".");
-                return;
-            }
+    public boolean removeMod(Mod modToRemove) {
+        ScheduleMod toRemove = mods.stream()
+                .filter(m -> m.getMod().getCode().equalsIgnoreCase(modToRemove.getCode()))
+                .findFirst()
+                .orElse(null);
+
+        if (toRemove == null) {
+            System.out.println("Mod " + modToRemove.getCode() + " is not in the timetable.");
+            return false;
         }
-        System.out.println("Mod " + modToRemove.getCode() + " is not in the timetable.");
+
+        mods.remove(toRemove);
+        System.out.println("Mod " + modToRemove.getCode() + " removed successfully from " + name + ".");
+        return true;
     }
+
 
     public void addBreak(BreakPeriod breakPeriod) {
         breaks.add(breakPeriod);

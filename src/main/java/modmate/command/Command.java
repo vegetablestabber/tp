@@ -40,6 +40,6 @@ public abstract class Command {
     }
 
     public abstract void execute(User user)
-        throws CommandException, UserException, ApiException;
+            throws CommandException, UserException, ApiException;
 
 }

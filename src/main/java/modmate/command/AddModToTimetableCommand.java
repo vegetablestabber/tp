@@ -1,14 +1,24 @@
 package modmate.command;
 
+import java.util.Optional;
+import modmate.download.nusmods.NUSModsAPI;
+import modmate.exception.ApiException;
+import modmate.exception.CommandException;
+import modmate.exception.UserException;
+import modmate.mod.Mod;
 import modmate.log.LogUtil;
-import modmate.CommandCenter;
+import modmate.ui.Input;
 import modmate.user.User;
 
 public class AddModToTimetableCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "addmod";
 
-    private static final LogUtil logUtil = new LogUtil(AddBreakToTimetableCommand.class);
+    private static final LogUtil logUtil = new LogUtil(AddModToTimetableCommand.class);
+
+    public AddModToTimetableCommand(Input input) {
+        super(input);
+    }
 
     @Override
     public String getSyntax() {
@@ -28,39 +38,35 @@ public class AddModToTimetableCommand extends Command {
     }
 
     @Override
-    public void execute(String[] args, User currentUser) {
-        if (args.length < 3) {
-            System.out.println("Usage: addmod <timetable name> <mod code or name>");
+    public void execute(User currentUser) throws CommandException, UserException, ApiException {
+        String[] args = input.getArgument().split(" ", 2);
+        if (args.length < 2) {
+            System.out.println("Usage: " + getSyntax());
             return;
         }
 
-        String timetable = args[1];
-        String inputCodeOrName = CommandCenter.stringFromBetweenPartsXY(args, 2);
+        String timetableName = args[0];
+        String modQuery = args[1];
 
-        assert timetable != null
-                && !timetable.trim().isEmpty() : "Timetable name cannot be null or empty";
-        assert inputCodeOrName != null
-                && !inputCodeOrName.trim().isEmpty() : "Mod code or name cannot be null or empty";
-
-        if (timetable.trim().isEmpty() || !currentUser.hasTimetable(timetable)) {
-            System.out.println("Timetable \"" + timetable + "\" not found.");
-            logUtil.warning("Timetable '"
-                    + timetable
-                    + "' not found while attempting to add mod "
-                    + inputCodeOrName
-                    + " to timetable.");
+        if (!currentUser.hasTimetable(timetableName)) {
+            System.out.println("Timetable \"" + timetableName + "\" not found.");
+            logUtil.warning("Timetable '" + timetableName + "' not found.");
             return;
         }
 
-        logUtil.info("Adding mod to timetable: " + timetable);
+        String upperModQuery = modQuery.toUpperCase();
 
-        CommandCenter.modFromCodeOrName(inputCodeOrName).ifPresentOrElse(mod -> {
-            currentUser.addModToTimetable(timetable, mod);
-            logUtil.info("Mod " + mod.getCode() + " added to timetable " + timetable);
-        }, () -> {
-            System.out.println("Mod '" + inputCodeOrName + "' not found.");
-            logUtil.info("Mod '" + inputCodeOrName + "' not found.");
-        });
+        Optional<Mod> modOpt = NUSModsAPI.fetchModuleByCode(upperModQuery.toUpperCase());
+
+        if (modOpt.isEmpty()) {
+            System.out.println("Mod \"" + modQuery + "\" not found.");
+            logUtil.warning("Mod '" + modQuery + "' not found.");
+            return;
+        }
+
+        Mod mod = modOpt.get();
+        currentUser.addModToTimetable(timetableName, mod);
+        logUtil.info("Mod " + mod.getCode() + " added to timetable " + timetableName);
     }
-
 }
+

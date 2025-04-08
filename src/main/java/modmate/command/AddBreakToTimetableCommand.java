@@ -1,8 +1,13 @@
 package modmate.command;
 
+import modmate.exception.ApiException;
+import modmate.exception.UserException;
+import modmate.exception.CommandException;
 import modmate.timetable.BreakPeriod;
 import modmate.timetable.Period;
 import modmate.user.User;
+import modmate.ui.Input;
+
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -10,6 +15,10 @@ import java.time.LocalTime;
 public class AddBreakToTimetableCommand extends Command {
 
     public static final String CLI_REPRESENTATION = "addbreak";
+
+    public AddBreakToTimetableCommand(Input input) {
+        super(input);
+    }
 
     @Override
     public String getDescription() {
@@ -32,14 +41,19 @@ public class AddBreakToTimetableCommand extends Command {
     }
 
     @Override
-    public void execute(String[] args, User currentUser) {
-        if (args.length < 6) {
-            System.out.println("Usage: addbreak <timetable> <label> <day> <startTime> <endTime>");
+    public void execute(User currentUser)
+            throws CommandException, UserException, ApiException {
+        String[] args = input.getArgument().split(" ", 5);
+        if (args.length < 5) {
+            System.out.println("Usage: " + getSyntax());
             return;
         }
 
-        String timetableName = args[1];
-        String label = args[2];
+        String timetableName = args[0];
+        String label = args[1];
+        String dayInput = args[2];
+        String startTimeInput = args[3];
+        String endTimeInput = args[4];
 
         assert timetableName != null && !timetableName.trim().isEmpty() : "Timetable name cannot be null or empty";
         assert label != null && !label.trim().isEmpty() : "Label cannot be null or empty";
@@ -49,25 +63,22 @@ public class AddBreakToTimetableCommand extends Command {
         LocalTime end;
 
         try {
-            day = DayOfWeek.valueOf(args[3].toUpperCase());
+            day = DayOfWeek.valueOf(dayInput.toUpperCase());
 
-            assert day != null : "Day cannot be null";
-
-            String startTime = formatTime(args[4]);
-            String endTime = formatTime(args[5]);
+            String startTime = formatTime(startTimeInput);
+            String endTime = formatTime(endTimeInput);
 
             start = LocalTime.parse(startTime);
             end = LocalTime.parse(endTime);
 
-            if (end.isBefore(start) || end.equals(start)) {
+            if (!end.isAfter(start)) {
                 System.out.println("End time must be after start time.");
                 return;
             }
 
             assert start != null && end != null : "Start or end time cannot be null";
             assert !end.isBefore(start) : "End time must be after start time";
-            assert start.getHour() < 24 && end.getHour() < 24
-                    : "Time input must be within 00:00 to 23:59";
+            assert start.getHour() < 24 && end.getHour() < 24 : "Time input must be within 00:00 to 23:59";
 
         } catch (Exception e) {
             System.out.println("Invalid input format. Use correct 24-hour format: MONDAY 12:00 13:00");
@@ -85,11 +96,14 @@ public class AddBreakToTimetableCommand extends Command {
     }
 
     private String formatTime(String timeInput) {
-        assert timeInput != null && !timeInput.trim().isEmpty() : "Time input cannot be null or empty";
+        if (timeInput == null || timeInput.trim().isEmpty()) {
+            throw new IllegalArgumentException("Time input cannot be null or empty");
+        }
 
-        if (timeInput.length() == 4 && timeInput.matches("\\d{4}")) { // e.g., "1200"
+        if (timeInput.length() == 4 && timeInput.matches("\\d{4}")) {
             return timeInput.substring(0, 2) + ":" + timeInput.substring(2);
         }
-        return timeInput; // Already in "HH:mm" format
+
+        return timeInput;
     }
 }
