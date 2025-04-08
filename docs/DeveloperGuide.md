@@ -166,7 +166,7 @@ These methods are supported by `Schedule` class for storage structure:
 
 - The following UML Sequence diagram effectively shows how these two methods are implemented with the inclusion of user inputs of `createtimetable` and `timetable` for `addTimetable(String timetableName)` and `getTimetable(String timetableName)` respectively.
 
-![image.png](img/jahnavi/image.png)
+![image.png](img/jahnavi/image2.png)
 
 ### Adding/Removing a mod to a timetable
 - Adds/Removes a new module (`Mod`) to a specified timetable.
