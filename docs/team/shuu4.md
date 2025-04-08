@@ -43,5 +43,5 @@ Given below are my contributions to the project.
     * Added implementation details of the `addmod` `removemod` and `addbreak`feature: [\#86](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/86), [\#98](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/98) 
 
 * **Community**:
-  * PRs reviewed: [\#24](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/24), [\#89](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/89), [\#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186, [\#209](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/209).
+  * PRs reviewed: [\#24](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/24), [\#89](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/89), [\#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186), [\#209](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/209).
   * Bug fix: [\#178](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/178)
