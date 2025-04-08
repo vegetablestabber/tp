@@ -12,7 +12,6 @@ import modmate.user.ScheduleMod;
 import modmate.user.User;
 
 import java.util.List;
-import java.util.Map;
 
 public class ViewModLessonsCommand extends Command {
 
@@ -77,7 +76,7 @@ public class ViewModLessonsCommand extends Command {
                     logUtil.severe("Failed to fetch mod details: " + e.getMessage());
                     System.out.println(e.getMessage());
                 }
-        });
+            });
     }
 
 

@@ -10,7 +10,6 @@ import modmate.ui.Input;
 import modmate.user.User;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class SetModLessonCommand extends Command {
 
@@ -36,52 +35,54 @@ public class SetModLessonCommand extends Command {
             throw new CommandException(this, "Lesson type cannot be empty");
         case 3:
             throw new CommandException(this, "Lesson ID cannot be empty");
+        default:
+            String timetableName = String.join(
+                    " ",
+                    Arrays.copyOfRange(arguments, 0, arguments.length - 3));
+            String modIdentifier = arguments[arguments.length - 3];
+            String lessonType = arguments[arguments.length - 2];
+            String lessonId = arguments[arguments.length - 1];
+
+            this.timetableNameArg = new Argument<>(
+                    "timetable name",
+                    timetableName,
+                    "The name of the timetable to display",
+                    true
+            );
+            this.modIdentifierArg = new Argument<>(
+                    "mod name or code",
+                    modIdentifier,
+                    "The mod in the timetable",
+                    true
+            );
+            this.lessonTypeArg = new Argument<>(
+                    "timetable type",
+                    lessonType,
+                    "The lesson type for the course",
+                    true
+            );
+            this.lessonIdArg = new Argument<>(
+                    "timetable type",
+                    lessonId,
+                    "The lesson to replace with",
+                    true
+            );
+
+            if (timetableNameArg.getValue().isEmpty()) {
+                throw new CommandException(this, "Timetable name cannot be empty");
+            }
+            if (modIdentifierArg.getValue().isEmpty()) {
+                throw new CommandException(this, "Mod name/code name cannot be empty");
+            }
+            if (lessonTypeArg.getValue().isEmpty()) {
+                throw new CommandException(this, "Lesson type cannot be empty");
+            }
+            if (lessonIdArg.getValue().isEmpty()) {
+                throw new CommandException(this, "Lesson ID cannot be empty");
+            }
+
         }
 
-        String timetableName = String.join(
-                " ",
-                Arrays.copyOfRange(arguments, 0, arguments.length - 3));
-        String modIdentifier = arguments[arguments.length - 3];
-        String lessonType = arguments[arguments.length - 2];
-        String lessonId = arguments[arguments.length - 1];
-
-        this.timetableNameArg = new Argument<>(
-                "timetable name",
-                timetableName,
-                "The name of the timetable to display",
-                true
-        );
-        this.modIdentifierArg = new Argument<>(
-                "mod name or code",
-                modIdentifier,
-                "The mod in the timetable",
-                true
-        );
-        this.lessonTypeArg = new Argument<>(
-                "timetable type",
-                lessonType,
-                "The lesson type for the course",
-                true
-        );
-        this.lessonIdArg = new Argument<>(
-                "timetable type",
-                lessonId,
-                "The lesson to replace with",
-                true
-        );
-
-        if (timetableNameArg.getValue().isEmpty()) {
-            throw new CommandException(this, "Timetable name cannot be empty");
-        }
-        if (modIdentifierArg.getValue().isEmpty()) {
-            throw new CommandException(this, "Mod name/code name cannot be empty");
-        }
-        if (lessonTypeArg.getValue().isEmpty()) {
-            throw new CommandException(this, "Lesson type cannot be empty");
-        }
-        if (lessonIdArg.getValue().isEmpty()) {
-            throw new CommandException(this, "Lesson ID cannot be empty");
-        }
     }
 
     @Override
@@ -130,7 +131,7 @@ public class SetModLessonCommand extends Command {
                     logUtil.severe("Failed to fetch mod details: " + e.getMessage());
                     System.out.println(e.getMessage());
                 }
-        });
+            });
     }
 
 }

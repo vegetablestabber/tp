@@ -1,8 +1,6 @@
 package modmate.command;
 
-import modmate.download.nusmods.NUSModsAPI;
 import modmate.command.util.Argument;
-import modmate.exception.ApiException;
 import modmate.exception.CommandException;
 import modmate.timetable.BreakPeriod;
 import modmate.timetable.Lesson;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ViewTimetableCommand extends Command {
 
@@ -55,7 +52,8 @@ public class ViewTimetableCommand extends Command {
     public ViewTimetableCommand(Input input) {
         super(input);
         String argument = input.getArgument();
-        String type, name;
+        String type;
+        String name;
         if (argument.startsWith("timeline ") || argument.startsWith("list ")) {
             name = input.getArgument().replaceFirst("^\\S+\\s?", "");
             type = input.getArgument().split(" ")[0];

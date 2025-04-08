@@ -65,6 +65,6 @@ public class RemoveBookmarkCommand extends Command {
                 } catch (ApiException e) {
                     System.out.println(e.getMessage());
                 }
-        });
+            });
     }
 }
