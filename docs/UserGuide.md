@@ -29,25 +29,31 @@ Follow these steps to get started with ModMate:
 4. ▶️ Run the application using the command: `java -jar ModMate.jar`.
 5. 🎮 Start exploring ModMate by entering commands. Type `-h` to view the list of available commands.
 
+## Limitations
+
+- Modmate only allows you to add modules from Semester 2
+- Modmate does not accurately show individual weeks for each lesson
+
 ## Command Summary
 
 Here’s a quick reference for all ModMate commands:
 
-| Command           | Description                                    |
-|-------------------|------------------------------------------------|
-| `help`            | ❓ Display help information for commands.      |
-| `createtimetable` | 🗓️ Create a new timetable.                    |
-| `addmod`          | ➕ Add a module to a timetable.                 |
-| `removemod`       | ➖ Remove a module from a timetable.            |
-| `timetable`       | 👀 View the details of a timetable.            |
-| `searchmod`       | 🔍 Search for modules by code, name, or filters.|
-| `bookmark`        | ⭐ Bookmark a module.                           |
-| `bookmarks`       | 📑 View all bookmarked modules.                |
-| `setlesson`       | 📚 Set a specific lesson for a module.         |
-| `addbreak`        | ☕ Add a break period to a timetable.           |
-| `viewmod`         | 📖 View detailed information about a module.   |
-| `viewlessons`     | 📝 View all available lessons for a module.    |
-| `viewallmods`     | 📝 View all available modules in the database. |
+| Command           | Description                                      |
+|-------------------|--------------------------------------------------|
+| `help`            | ❓ Display help information for commands.         |
+| `createtimetable` | 🗓️ Create a new timetable.                      |
+| `addmod`          | ➕ Add a module to a timetable.                   |
+| `removemod`       | ➖ Remove a module from a timetable.              |
+| `timetable`       | 👀 View the details of a timetable.              |
+| `searchmod`       | 🔍 Search for modules by code, name, or filters. |
+| `bookmark`        | ⭐ Bookmark a module.                             |
+| `bookmarks`       | 📑 View all bookmarked modules.                  |
+| `setlesson`       | 📚 Set a specific lesson for a module.           |
+| `addbreak`        | ☕ Add a break period to a timetable.             |
+| `viewmod`         | 📖 View detailed information about a module.     |
+| `viewlessons`     | 📝 View all available lessons for a module.      |
+| `viewallmods`     | 📝 View all available modules in the database.   |
+| `exit`            | 📝 Exit the program.                             |
 
 ### Displaying Help: `help`
 
@@ -56,12 +62,42 @@ Here’s a quick reference for all ModMate commands:
 **Format:** `help [command]`
 
 - If no command is specified, a list of all commands and their descriptions will be displayed.
-- If a command is specified, detailed usage information for that command will be displayed.
+- If a command is specified, detailed usage information for that command will be displayed. (only for searchmod)
 
 **Example:**
 ```
 help
+```
+```
+Commands:
+help: Display this help message
+exit: Exit the application
+viewmod <mod code or name>: View details of a mod by its mod code or name
+viewlessons <mod code or name>: View available lessons for each mod, sorted by type
+setlesson <timetable> <mod code or name> <lesson type> <lesson id>: Set lesson for each mod, by type
+searchmod <mod code or name>: Search for a mod by its code or name
+bookmark <mod code or name>: Bookmark a mod for later reference
+bookmarks: View all bookmarked mods
+addmod <timetable> <mod code or name>: Add a mod to your list
+removemod <timetable> <mod code or name>: Remove a mod from your list
+createtimetable <timetable>: Create a new timetable
+addbreak <timetable> <label> <day> <startTime> <endTime>: Add a break
+timetable <timetable>: Display your mod timetable
+viewallmods: View all available mods
+```
+
+```
 help searchmod
+```
+```
+Description: Search for a mod by its code or name.
+Usage: searchmod <search query> --faculty <value> --semesters <value> --units <value> --graded <value>
+Arguments:
+  <search query>: Optional. Mod code or name.
+  --faculty: Optional. Filter by faculty.
+  --semesters: Optional. Filter by semesters (space-separated).
+  --units: Optional. Filter by modular credits.
+  --graded: Optional. Filter by grading type.
 ```
 
 ## Features
@@ -76,10 +112,16 @@ ModMate offers a variety of features to help you manage your academic life effec
 
 - The `<timetable_name>` must be unique.
 - Timetable names are case-insensitive.
+- Timetable names can only be one word (no spaces in between)
+  - `timetable Semester1` is okay
+  - `timetable Semester 1` is not okay
 
 **Example:**
 ```
 createtimetable Semester1
+```
+```
+Timetable 'Semester1' created successfully.
 ```
 
 ### Adding a Module to a Timetable: `addmod`
@@ -88,42 +130,81 @@ createtimetable Semester1
 
 - This command will assign random lessons for each type (lectures, labs, and/or tutorials).
 You can customize which slots to take with the `setlesson` command.
+- **WARNING!** Be careful when adding modules with names similar to other modules. You are advised to use module code to add instead.
 
 **Format:** `addmod <timetable_name> <module_code_or_name>`
 
-- The `<module_code_or_name>` can be either the module code (e.g., CS1010) or the module name.
+- The `<module_code_or_name>` can be either the module code (e.g., CS1010) or the exact module name (case-insensitive).
 
 **Example:**
 ```
 addmod Semester1 CS1010
-addmod Semester1 Programming Methodology
+```
+```
+Mod CS1010 added successfully to Semester1.
+```
+
+```
+addmod Semester1 Software Engineering & Object-Oriented Programming
+```
+```
+Mod CS2113 added successfully to Semester1.
 ```
 
 ### Removing a Module from a Timetable: `removemod`
 
 ➖ Remove a module from your timetable.
 
+- **WARNING!** Be careful when removing modules with names similar to other modules. You are advised to use module code to add instead.
+
 **Format:** `removemod <timetable_name> <module_code_or_name>`
 
 **Example:**
 ```
 removemod Semester1 CS1010
-removemod Semester1 Programming Methodology
+removemod Semester1 Software Engineering & Object-Oriented Programming
+```
+```
+Mod CS1010 removed successfully from Semester1.
+Mod CS2113 removed successfully from Semester1.
 ```
 
 ### Viewing a Timetable: `timetable`
 
 👀 View the details of a specific timetable.
 
-- Adding the argument "timeline" will display your timetable in chronological order as one weekly schedule.
+- Adding the argument "list" will display your timetable as a list
+- By default, your timetable will be displayed in chronological order as one weekly schedule.
 
-**Format:** `timetable [timeline] <timetable_name>`
+`X` denotes lessons that overlap with another lesson in your timetable.
+`|` denotes lessons that do not overlap with another lesson in your timetable.
+
+**Format:** `timetable [line] <timetable_name>`
 
 **Example:**
 ```
 timetable Semester1
-timetable timeline Semester2
 ```
+```
+[MONDAY]
+ │ CS1010 Tutorial: 10:00-12:00
+[TUESDAY]
+ │ CS1010 Sectional Teaching: 10:00-12:00
+[WEDNESDAY]
+[THURSDAY]
+[FRIDAY]
+```
+```
+timetable list Semester2
+```
+```
+Timetable: Semester2
+  CS1010: Programming Methodology
+  
+      Tutorial: [[01] Weeks 1–13, MONDAY, 10:00-12:00 @ COM1-B108]
+      Sectional Teaching: [[1] Weeks 1–13, TUESDAY, 10:00-12:00 @ COM4-02-01]
+```
+
 
 ### Searching for Modules: `searchmod`
 
@@ -165,7 +246,11 @@ searchmod CS1010 --faculty Computing -units 4
 **Example:**
 ```
 bookmark CS1010
-bookmark CG2023
+bookmark cg2023
+```
+```
+Bookmark CS1010 successfully added to your list.
+Bookmark cg2023 successfully added to your list.
 ```
 
 ### Viewing Bookmarked Modules: `bookmarks`
@@ -178,18 +263,41 @@ bookmark CG2023
 ```
 bookmarks
 ```
+```
+You have 2 bookmark(s).
+CS1010: Programming Methodology
+CG2023: Signals and Systems
+```
 
 ### Setting a Lesson for a Module: `setlesson`
 
 📚 Set a specific lesson for a module in your timetable.
 
+-**WARNING!** Lesson type has to be exact, with spaces removed.
+-**WARNING!** Lesson id has to be exact. Take note of leading zeros e.g. 01
+
 **Format:** `setlesson <timetable_name> <module_code_or_name> <lesson_type> <lesson_id>`
 
 **Example:**
 ```
-setlesson Semester1 CS1010 Lecture L1
-setlesson Semester2 LAJ3201 TutorialType2 B1
 setlesson SpecialSem1 EE2026 Laboratory 01
+```
+```
+Laboratory 01 for EE2026 added.
+```
+
+```
+setlesson Semester2 LAJ3201 TutorialType2 B1
+```
+```
+Tutorial Type 2 B1 for LAJ3201 added.
+```
+
+```
+setlesson Semester1 CS1010 Lecture L1
+```
+```
+Lesson type 'lecture' does not exist.
 ```
 
 ### Adding a Break to a Timetable: `addbreak`
@@ -202,6 +310,16 @@ setlesson SpecialSem1 EE2026 Laboratory 01
 ```
 addbreak Semester1 LunchBreak Monday 12:00 13:00
 ```
+```
+Break [lunchbreak] added to timetable 'semester1'.
+```
+
+```
+addbreak semester1 lunch tuesday 1200 1400
+```
+```
+Break [lunch] added to timetable 'semester1'.
+```
 
 ### Viewing Module Details: `viewmod`
 
@@ -212,6 +330,16 @@ addbreak Semester1 LunchBreak Monday 12:00 13:00
 **Example:**
 ```
 viewmod CS1010
+```
+```
+Code: CS1010
+Name: Programming Methodology
+Description: This course introduces the fundamental concepts of problem solving by computing and programming using an imperative programming language. It is the first and foremost introductory course to computing. Topics covered include computational thinking and computational problem solving, designing and specifying an algorithm, basic problem formulation and problem solving approaches, program development, coding, testing and debugging, fundamental programming constructs (variables, types, expressions, assignments, functions, control structures, etc.), fundamental data structures (arrays, strings, composite data types), basic sorting, and recursion.
+Faculty: Computing
+Availability: Semester 1, Semester 2
+Units: 4.0
+Graded: true
+Workload: Lectures: 2.0 hours, Tutorials: 1.0 hours, Projects: 3.0 hours, Preparation: 3.0 hours
 ```
 
 ### Viewing Lessons for a Module: `viewlessons`
@@ -224,6 +352,17 @@ viewmod CS1010
 ```
 viewlessons CS1010
 ```
+```
+[Tutorial]
+    [01] Weeks 1–13, MONDAY, 10:00-12:00 @ COM1-B108
+    [02] Weeks 1–13, MONDAY, 10:00-12:00 @ COM1-B111
+    [03] Weeks 1–13, MONDAY, 10:00-12:00 @ COM1-B110
+    [04] Weeks 1–13, MONDAY, 12:00-14:00 @ COM1-B108
+    [05] Weeks 1–13, MONDAY, 12:00-14:00 @ COM1-B111
+    [06] Weeks 1–13, MONDAY, 12:00-14:00 @ COM1-B110
+[Sectional Teaching]
+    [1] Weeks 1–13, TUESDAY, 10:00-12:00 @ COM4-02-01
+```
 
 ### Viewing all Modules (name + code): `viewallmods`
 
@@ -234,6 +373,21 @@ viewlessons CS1010
 **Example:**
 ```
 viewallmods
+```
+
+### Exit Program: `exit`
+
+📝 Exit to quit the program.
+
+**Format:** `exit`
+
+**Example:**
+```
+exit
+```
+```
+Exiting...
+
 ```
 
 ## FAQ
